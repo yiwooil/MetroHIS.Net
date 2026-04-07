@@ -1,0 +1,353 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{FCC0BAA9-BAF3-4F41-89D6-FE2BB848277E}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ADD7003E</RootNamespace>
+    <AssemblyName>ADD7003E</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DevExpress.Data.v12.2, Version=12.2.18.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Printing.v12.2.Core, Version=12.2.18.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Utils.v12.2, Version=12.2.18.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraEditors.v12.2, Version=12.2.18.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraGrid.v12.2, Version=12.2.18.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraLayout.v12.2, Version=12.2.18.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="Hira.Ef.Eform, Version=1.0.0.8, Culture=neutral, PublicKeyToken=945c93a55f16cfb7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\HIRA\HIRAIEA\Hira.Ef.Eform.dll</HintPath>
+    </Reference>
+    <Reference Include="MetroLib, Version=1.0.7867.26824, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\MetroLib\MetroLib\bin\Debug\MetroLib.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ADD7003E.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ADD7003E.Designer.cs">
+      <DependentUpon>ADD7003E.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ADD7003E_1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ADD7003E_1.Designer.cs">
+      <DependentUpon>ADD7003E_1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CData.cs" />
+    <Compile Include="CFmtHelper.cs" />
+    <Compile Include="CTI84A.cs" />
+    <Compile Include="CUtil.cs" />
+    <Compile Include="ERD001_Data.cs" />
+    <Compile Include="INIHelper.cs" />
+    <Compile Include="RAA001_Diag.cs" />
+    <Compile Include="RAA001_Info.cs" />
+    <Compile Include="RAA001_Mdct.cs" />
+    <Compile Include="RAA001_Vtsg.cs" />
+    <Compile Include="RAR001_Emss.cs" />
+    <Compile Include="RAR001_Info.cs" />
+    <Compile Include="RAR001_Pain.cs" />
+    <Compile Include="RAR001_Rcov.cs" />
+    <Compile Include="RAR001_Vtsg.cs" />
+    <Compile Include="RCC001_Diag.cs" />
+    <Compile Include="RCC001_Info.cs" />
+    <Compile Include="RDD001_Info.cs" />
+    <Compile Include="RDD001_Rcd.cs" />
+    <Compile Include="REE001_Diag.cs" />
+    <Compile Include="ERR001_Data.cs" />
+    <Compile Include="REE001_Sdr.cs" />
+    <Compile Include="REE001_Sopr.cs" />
+    <Compile Include="RII001_Diag.cs" />
+    <Compile Include="RII001_Info.cs" />
+    <Compile Include="RIP001_Diag.cs" />
+    <Compile Include="RIP001_Elaps.cs" />
+    <Compile Include="RIP001_Info.cs" />
+    <Compile Include="RIY001.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RIY001.Designer.cs">
+      <DependentUpon>RIY001.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RIY001_Info.cs" />
+    <Compile Include="RIZ001.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RIZ001.Designer.cs">
+      <DependentUpon>RIZ001.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RIZ001_Info.cs" />
+    <Compile Include="RMM001_Data.cs" />
+    <Compile Include="RNE001.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RNE001.Designer.cs">
+      <DependentUpon>RNE001.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RNE001_Info.cs" />
+    <Compile Include="RNE001_Rcd.cs" />
+    <Compile Include="RNE001_Stat.cs" />
+    <Compile Include="RNH001.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RNH001.Designer.cs">
+      <DependentUpon>RNH001.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RNH001_Bldd.cs" />
+    <Compile Include="RNH001_Diag.cs" />
+    <Compile Include="RNH001_Info.cs" />
+    <Compile Include="RNH001_Rcd.cs" />
+    <Compile Include="RNH001_Vtsg.cs" />
+    <Compile Include="RNO001_Asm.cs" />
+    <Compile Include="RNO001_Info.cs" />
+    <Compile Include="RNO001_Rcd.cs" />
+    <Compile Include="RNP001_Info.cs" />
+    <Compile Include="RNS001_Diag.cs" />
+    <Compile Include="RNS001_Info.cs" />
+    <Compile Include="RNS001_Mds.cs" />
+    <Compile Include="RNS001_Sopr.cs" />
+    <Compile Include="RNS001_Tmcat.cs" />
+    <Compile Include="RSS001_Data.cs" />
+    <Compile Include="CDoc.cs" />
+    <Compile Include="REE001_Info.cs" />
+    <Compile Include="CInfoTable.cs" />
+    <Compile Include="RSS001_Info.cs" />
+    <Compile Include="RWI001_Dscg.cs" />
+    <Compile Include="CSQLHelper.cs" />
+    <Compile Include="CSubmitDocument.cs" />
+    <Compile Include="RWI001_Info.cs" />
+    <Compile Include="RWI001_Diag.cs" />
+    <Compile Include="ERD001.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ERD001.Designer.cs">
+      <DependentUpon>ERD001.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ERR001.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ERR001.Designer.cs">
+      <DependentUpon>ERR001.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="ADD7003E.resx">
+      <DependentUpon>ADD7003E.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ADD7003E_1.resx">
+      <DependentUpon>ADD7003E_1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ERD001.resx">
+      <DependentUpon>ERD001.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ERR001.resx">
+      <DependentUpon>ERR001.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\licenses.licx" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RAA001.resx">
+      <DependentUpon>RAA001.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RAR001.resx">
+      <DependentUpon>RAR001.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RCC001.resx">
+      <DependentUpon>RCC001.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RDD001.resx">
+      <DependentUpon>RDD001.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="REE001.resx">
+      <DependentUpon>REE001.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RII001.resx">
+      <DependentUpon>RII001.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RIP001.resx">
+      <DependentUpon>RIP001.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RIY001.resx">
+      <DependentUpon>RIY001.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RIZ001.resx">
+      <DependentUpon>RIZ001.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RMM001.resx">
+      <DependentUpon>RMM001.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RNE001.resx">
+      <DependentUpon>RNE001.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RNH001.resx">
+      <DependentUpon>RNH001.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RNO001.resx">
+      <DependentUpon>RNO001.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RNP001.resx">
+      <DependentUpon>RNP001.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RNS001.resx">
+      <DependentUpon>RNS001.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RSS001.resx">
+      <DependentUpon>RSS001.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RWI001.resx">
+      <DependentUpon>RWI001.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WaitForm1.resx">
+      <DependentUpon>WaitForm1.cs</DependentUpon>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="RAA001.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RAA001.Designer.cs">
+      <DependentUpon>RAA001.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RAA001_Sopr.cs" />
+    <Compile Include="RAR001.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RAR001.Designer.cs">
+      <DependentUpon>RAR001.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RCC001.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RCC001.Designer.cs">
+      <DependentUpon>RCC001.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RDD001.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RDD001.Designer.cs">
+      <DependentUpon>RDD001.cs</DependentUpon>
+    </Compile>
+    <Compile Include="REE001.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="REE001.Designer.cs">
+      <DependentUpon>REE001.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RII001.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RII001.Designer.cs">
+      <DependentUpon>RII001.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RIP001.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RIP001.Designer.cs">
+      <DependentUpon>RIP001.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RMM001.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RMM001.Designer.cs">
+      <DependentUpon>RMM001.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RNO001.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RNO001.Designer.cs">
+      <DependentUpon>RNO001.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RNP001.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RNP001.Designer.cs">
+      <DependentUpon>RNP001.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RNS001.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RNS001.Designer.cs">
+      <DependentUpon>RNS001.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RSS001.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RSS001.Designer.cs">
+      <DependentUpon>RSS001.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RWI001.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RWI001.Designer.cs">
+      <DependentUpon>RWI001.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WaitForm1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WaitForm1.Designer.cs">
+      <DependentUpon>WaitForm1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RIP001_Sopr.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

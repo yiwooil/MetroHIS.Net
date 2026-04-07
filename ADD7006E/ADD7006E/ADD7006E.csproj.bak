@@ -1,0 +1,279 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{4BCEFB10-00BC-4993-8CD6-80563760D337}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ADD7006E</RootNamespace>
+    <AssemblyName>ADD7006E</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DevExpress.Data.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Printing.v12.2.Core, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Utils.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraEditors.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraGrid.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraLayout.v12.2, Version=12.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="Hira.Dynamic, Version=1.0.0.3, Culture=neutral, PublicKeyToken=945c93a55f16cfb7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\HIRA\HIRAIEA\Hira.Dynamic.dll</HintPath>
+    </Reference>
+    <Reference Include="MetroLib, Version=1.0.8248.26881, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\MetroLib\MetroLib\bin\Debug\MetroLib.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ADD7006E_ERR001.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ADD7006E_ERR001.Designer.cs">
+      <DependentUpon>ADD7006E_ERR001.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ADD7006E.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ADD7006E.Designer.cs">
+      <DependentUpon>ADD7006E.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ADD7006E_ERD001.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ADD7006E_ERD001.Designer.cs">
+      <DependentUpon>ADD7006E_ERD001.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ADD7006E_RAA001.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ADD7006E_RAA001.Designer.cs">
+      <DependentUpon>ADD7006E_RAA001.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ADD7006E_RCC001.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ADD7006E_RCC001.Designer.cs">
+      <DependentUpon>ADD7006E_RCC001.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ADD7006E_RDD001.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ADD7006E_RDD001.Designer.cs">
+      <DependentUpon>ADD7006E_RDD001.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ADD7006E_REE001.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ADD7006E_REE001.Designer.cs">
+      <DependentUpon>ADD7006E_REE001.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ADD7006E_RII001.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ADD7006E_RII001.Designer.cs">
+      <DependentUpon>ADD7006E_RII001.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ADD7006E_RIP001.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ADD7006E_RIP001.Designer.cs">
+      <DependentUpon>ADD7006E_RIP001.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ADD7006E_RMM001.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ADD7006E_RMM001.Designer.cs">
+      <DependentUpon>ADD7006E_RMM001.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ADD7006E_RNP001.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ADD7006E_RNP001.Designer.cs">
+      <DependentUpon>ADD7006E_RNP001.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ADD7006E_RSS001.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ADD7006E_RSS001.Designer.cs">
+      <DependentUpon>ADD7006E_RSS001.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ADD7006E_RWI001.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ADD7006E_RWI001.Designer.cs">
+      <DependentUpon>ADD7006E_RWI001.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ADD7006E_RWW001.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ADD7006E_RWW001.Designer.cs">
+      <DependentUpon>ADD7006E_RWW001.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CData.cs" />
+    <Compile Include="CDataERD001.cs" />
+    <Compile Include="CDataERR001.cs" />
+    <Compile Include="CDataRAA001.cs" />
+    <Compile Include="CDataRCC001.cs" />
+    <Compile Include="CDataRDD001.cs" />
+    <Compile Include="CDataREE001.cs" />
+    <Compile Include="CDataRII001.cs" />
+    <Compile Include="CDataRIP001.cs" />
+    <Compile Include="CDataRMM001.cs" />
+    <Compile Include="CDataRNP001.cs" />
+    <Compile Include="CDataRSS001.cs" />
+    <Compile Include="CDataRWI001.cs" />
+    <Compile Include="CDataRWW001.cs" />
+    <Compile Include="CHiraERD001.cs" />
+    <Compile Include="CHiraERR001.cs" />
+    <Compile Include="CHiraRAA001.cs" />
+    <Compile Include="CHiraRCC001.cs" />
+    <Compile Include="CHiraRDD001.cs" />
+    <Compile Include="CHiraREE001.cs" />
+    <Compile Include="CHiraRII001.cs" />
+    <Compile Include="CHiraRIP001.cs" />
+    <Compile Include="CHiraRNP001.cs" />
+    <Compile Include="CHiraRSS001.cs" />
+    <Compile Include="CHiraRWI001.cs" />
+    <Compile Include="CHiraRWW001.cs" />
+    <Compile Include="CMakeERD001.cs" />
+    <Compile Include="CMakeERR001.cs" />
+    <Compile Include="CMakeRAA001.cs" />
+    <Compile Include="CMakeRCC001.cs" />
+    <Compile Include="CMakeRDD001.cs" />
+    <Compile Include="CMakeREE001.cs" />
+    <Compile Include="CMakeRII001.cs" />
+    <Compile Include="CMakeRIP001.cs" />
+    <Compile Include="CMakeRMM001.cs" />
+    <Compile Include="CMakeRNP001.cs" />
+    <Compile Include="CMakeRSS001.cs" />
+    <Compile Include="CMakeRWI001.cs" />
+    <Compile Include="CMakeRWW001.cs" />
+    <Compile Include="CSubDACD.cs" />
+    <Compile Include="CSubICU_InOut.cs" />
+    <Compile Include="CSubINTAKE_OUTPUT.cs" />
+    <Compile Include="CSubOP.cs" />
+    <Compile Include="CSubPHARM.cs" />
+    <Compile Include="CSubPN.cs" />
+    <Compile Include="CSubTREAT.cs" />
+    <Compile Include="CSubVTSG.cs" />
+    <Compile Include="MyEventArgs.cs" />
+    <Compile Include="MySendResult.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="ADD7006E.resx">
+      <DependentUpon>ADD7006E.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ADD7006E_ERD001.resx">
+      <DependentUpon>ADD7006E_ERD001.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ADD7006E_ERR001.resx">
+      <DependentUpon>ADD7006E_ERR001.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ADD7006E_RAA001.resx">
+      <DependentUpon>ADD7006E_RAA001.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ADD7006E_RCC001.resx">
+      <DependentUpon>ADD7006E_RCC001.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ADD7006E_RDD001.resx">
+      <DependentUpon>ADD7006E_RDD001.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ADD7006E_REE001.resx">
+      <DependentUpon>ADD7006E_REE001.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ADD7006E_RII001.resx">
+      <DependentUpon>ADD7006E_RII001.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ADD7006E_RIP001.resx">
+      <DependentUpon>ADD7006E_RIP001.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ADD7006E_RMM001.resx">
+      <DependentUpon>ADD7006E_RMM001.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ADD7006E_RNP001.resx">
+      <DependentUpon>ADD7006E_RNP001.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ADD7006E_RSS001.resx">
+      <DependentUpon>ADD7006E_RSS001.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ADD7006E_RWI001.resx">
+      <DependentUpon>ADD7006E_RWI001.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ADD7006E_RWW001.resx">
+      <DependentUpon>ADD7006E_RWW001.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\licenses.licx" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WaitForm1.resx">
+      <DependentUpon>WaitForm1.cs</DependentUpon>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="WaitForm1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WaitForm1.Designer.cs">
+      <DependentUpon>WaitForm1.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

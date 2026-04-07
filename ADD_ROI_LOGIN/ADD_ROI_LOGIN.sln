@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ADD_ROI_LOGIN", "ADD_ROI_LOGIN\ADD_ROI_LOGIN.csproj", "{3849AF87-4FCF-4B42-B057-5783BC522FB1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3849AF87-4FCF-4B42-B057-5783BC522FB1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3849AF87-4FCF-4B42-B057-5783BC522FB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3849AF87-4FCF-4B42-B057-5783BC522FB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3849AF87-4FCF-4B42-B057-5783BC522FB1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

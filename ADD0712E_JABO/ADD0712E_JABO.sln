@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ADD0712E_JABO", "ADD0712E_JABO\ADD0712E_JABO.csproj", "{2F3D9300-99E8-4339-862F-24176C605739}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2F3D9300-99E8-4339-862F-24176C605739}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F3D9300-99E8-4339-862F-24176C605739}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F3D9300-99E8-4339-862F-24176C605739}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F3D9300-99E8-4339-862F-24176C605739}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

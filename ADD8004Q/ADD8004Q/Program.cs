@@ -1,0 +1,44 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows.Forms;
+
+namespace ADD8004Q
+{
+    static class Program
+    {
+        /// <summary>
+        /// 해당 응용 프로그램의 주 진입점입니다.
+        /// </summary>
+        [STAThread]
+        static void Main(String[] args)
+        {
+            MetroLib.SubModule.CheckSubModuleAndDown();
+
+            String user = "";
+            String pwd = "";
+            String prjcd = "";
+
+            if (args.Length > 0)
+            {
+                ParseArg(args[0], ref user, ref pwd, ref prjcd);
+            }
+
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new ADD8004Q(user, pwd, prjcd));
+        }
+
+        private static void ParseArg(String arg, ref String user, ref String pwd, ref String prjcd)
+        {
+            String[] aryArg = (arg + ',').Split(',');
+            for (int i = 0; i < aryArg.Length; i++)
+            {
+                String[] val = (aryArg[i] + '=').Split('=');
+                if ("USER".Equals(val[0].ToUpper())) user = val[1];
+                else if ("PWD".Equals(val[0].ToUpper())) pwd = val[1];
+                else if ("PRJCD".Equals(val[0].ToUpper())) prjcd = val[1];
+            }
+        }
+    }
+}
