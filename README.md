@@ -1,8 +1,8 @@
 # MetroHIS.Net
 
 ## 개발환경
-Microsoft Visual Studio 2008
-DevExpress 12.2.18
+- Microsoft Visual Studio 2008
+- DevExpress 12.2.18
 
 ## 사용라이브러리
 - C:\HIRA\HIRAIEA\Hira.Dynamic.dll
