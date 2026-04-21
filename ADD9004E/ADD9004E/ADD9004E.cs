@@ -375,7 +375,7 @@ namespace ADD9004E
             {
                 if (grdMainView.RowCount < 2) return; // 조회된 건이 없으면 종료
                 if (grdMainView.FocusedRowHandle == 0) return; // 맨 윗줄이면 종료
-                if (grdMainView.FocusedRowHandle == grdMainView.RowCount - 1) return; // 맨 아래줄이면 종료
+                //if (grdMainView.FocusedRowHandle == grdMainView.RowCount - 1) return; // 맨 아래줄이면 종료
 
                 SwapRow(grdMainView.FocusedRowHandle - 1, grdMainView.FocusedRowHandle);
                 grdMainView.FocusedRowHandle--;
@@ -393,7 +393,7 @@ namespace ADD9004E
             {
                 if (grdMainView.RowCount < 2) return; // 조회된 건이 없으면 종료
                 if (grdMainView.FocusedRowHandle == grdMainView.RowCount - 1) return; // 맨 아래줄이면 종료
-                if (grdMainView.FocusedRowHandle == grdMainView.RowCount - 2) return; // 맨 아래줄 바로 윗줄이면 종료
+                //if (grdMainView.FocusedRowHandle == grdMainView.RowCount - 2) return; // 맨 아래줄 바로 윗줄이면 종료
 
                 SwapRow(grdMainView.FocusedRowHandle, grdMainView.FocusedRowHandle + 1);
                 grdMainView.FocusedRowHandle++;
