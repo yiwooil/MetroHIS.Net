@@ -165,6 +165,9 @@ namespace ADD7007E
 
         public void ReadDataFromEMR(OleDbConnection conn, OleDbTransaction p_tran)
         {
+            System.Windows.Forms.Application.DoEvents();
+
+            ClearMe();
         }
 
         public void InsData(string p_sysdt, string p_systm, string p_user, OleDbConnection p_conn, OleDbTransaction p_tran, bool del_fg)

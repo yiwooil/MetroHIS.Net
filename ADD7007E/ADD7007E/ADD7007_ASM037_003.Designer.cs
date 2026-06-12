@@ -38,7 +38,6 @@
             this.txtPid = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label30 = new System.Windows.Forms.Label();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.label5 = new System.Windows.Forms.Label();
             this.txtIPAT_DD = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -54,7 +53,6 @@
             this.gridColumn9 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridColumn5 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridColumn6 = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.panel10 = new System.Windows.Forms.Panel();
             this.rbLFB_FS_LVL_3 = new System.Windows.Forms.RadioButton();
             this.rbLFB_FS_LVL_2 = new System.Windows.Forms.RadioButton();
@@ -73,7 +71,6 @@
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
-            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.panel3 = new System.Windows.Forms.Panel();
             this.rbASM_PRSC_YN_2 = new System.Windows.Forms.RadioButton();
             this.rbASM_PRSC_YN_1 = new System.Windows.Forms.RadioButton();
@@ -93,7 +90,6 @@
             this.grdANM_DIAGView = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.gridColumn15 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridColumn19 = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.panel4 = new System.Windows.Forms.Panel();
             this.rbANM_DIAG_YN_2 = new System.Windows.Forms.RadioButton();
             this.rbANM_DIAG_YN_1 = new System.Windows.Forms.RadioButton();
@@ -103,7 +99,6 @@
             this.grdANM_REFMView = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.gridColumn20 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridColumn21 = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.panel5 = new System.Windows.Forms.Panel();
             this.rbANM_REFM_YN_2 = new System.Windows.Forms.RadioButton();
             this.rbANM_REFM_YN_1 = new System.Windows.Forms.RadioButton();
@@ -115,7 +110,6 @@
             this.gridColumn24 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridColumn25 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridColumn26 = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
             this.panel6 = new System.Windows.Forms.Panel();
             this.rbHG_EXM_ENFC_YN_2 = new System.Windows.Forms.RadioButton();
             this.rbHG_EXM_ENFC_YN_1 = new System.Windows.Forms.RadioButton();
@@ -136,7 +130,6 @@
             this.gridColumn37 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridColumn38 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridColumn39 = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
             this.panel7 = new System.Windows.Forms.Panel();
             this.rbBLTS_YN_2 = new System.Windows.Forms.RadioButton();
             this.rbBLTS_YN_1 = new System.Windows.Forms.RadioButton();
@@ -154,8 +147,6 @@
             this.btnInsRowEXM = new System.Windows.Forms.Button();
             this.btnDelRowBLTS = new System.Windows.Forms.Button();
             this.btnInsRowBLTS = new System.Windows.Forms.Button();
-            this.label20 = new System.Windows.Forms.Label();
-            this.tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
             this.panel8 = new System.Windows.Forms.Panel();
             this.rbSOPR_YN_2 = new System.Windows.Forms.RadioButton();
             this.rbSOPR_YN_1 = new System.Windows.Forms.RadioButton();
@@ -164,35 +155,27 @@
             this.btnSendTmp = new System.Windows.Forms.Button();
             this.btnExcept = new System.Windows.Forms.Button();
             this.btnSend = new System.Windows.Forms.Button();
-            this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdSOPR)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grdSOPRView)).BeginInit();
-            this.tableLayoutPanel2.SuspendLayout();
             this.panel10.SuspendLayout();
             this.panel9.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
-            this.tableLayoutPanel3.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdPRSC)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grdPRSCView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grdANM_DIAG)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grdANM_DIAGView)).BeginInit();
-            this.tableLayoutPanel4.SuspendLayout();
             this.panel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdANM_REFM)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grdANM_REFMView)).BeginInit();
-            this.tableLayoutPanel5.SuspendLayout();
             this.panel5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdEXM)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grdEXMView)).BeginInit();
-            this.tableLayoutPanel6.SuspendLayout();
             this.panel6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdBLTS)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grdBLTSView)).BeginInit();
-            this.tableLayoutPanel7.SuspendLayout();
             this.panel7.SuspendLayout();
-            this.tableLayoutPanel8.SuspendLayout();
             this.panel8.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -288,31 +271,10 @@
             this.label30.Text = "기본정보";
             this.label30.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // tableLayoutPanel1
-            // 
-            this.tableLayoutPanel1.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
-            this.tableLayoutPanel1.ColumnCount = 4;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel1.Controls.Add(this.label5, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.txtIPAT_DD, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.label4, 2, 0);
-            this.tableLayoutPanel1.Controls.Add(this.txtDSCG_DD, 3, 0);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(18, 70);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 1;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 31F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(702, 32);
-            this.tableLayoutPanel1.TabIndex = 186;
-            // 
             // label5
             // 
-            this.label5.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(4, 10);
+            this.label5.Location = new System.Drawing.Point(24, 75);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(53, 12);
             this.label5.TabIndex = 9;
@@ -320,17 +282,15 @@
             // 
             // txtIPAT_DD
             // 
-            this.txtIPAT_DD.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.txtIPAT_DD.Location = new System.Drawing.Point(179, 5);
+            this.txtIPAT_DD.Location = new System.Drawing.Point(85, 71);
             this.txtIPAT_DD.Name = "txtIPAT_DD";
             this.txtIPAT_DD.Size = new System.Drawing.Size(67, 21);
             this.txtIPAT_DD.TabIndex = 10;
             // 
             // label4
             // 
-            this.label4.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(354, 10);
+            this.label4.Location = new System.Drawing.Point(159, 76);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(53, 12);
             this.label4.TabIndex = 11;
@@ -338,8 +298,7 @@
             // 
             // txtDSCG_DD
             // 
-            this.txtDSCG_DD.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.txtDSCG_DD.Location = new System.Drawing.Point(529, 5);
+            this.txtDSCG_DD.Location = new System.Drawing.Point(218, 69);
             this.txtDSCG_DD.Name = "txtDSCG_DD";
             this.txtDSCG_DD.Size = new System.Drawing.Size(67, 21);
             this.txtDSCG_DD.TabIndex = 12;
@@ -347,7 +306,7 @@
             // label6
             // 
             this.label6.BackColor = System.Drawing.SystemColors.ScrollBar;
-            this.label6.Location = new System.Drawing.Point(16, 110);
+            this.label6.Location = new System.Drawing.Point(15, 98);
             this.label6.Name = "label6";
             this.label6.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
             this.label6.Size = new System.Drawing.Size(704, 21);
@@ -357,7 +316,7 @@
             // 
             // grdSOPR
             // 
-            this.grdSOPR.Location = new System.Drawing.Point(16, 171);
+            this.grdSOPR.Location = new System.Drawing.Point(15, 155);
             this.grdSOPR.MainView = this.grdSOPRView;
             this.grdSOPR.Name = "grdSOPR";
             this.grdSOPR.Size = new System.Drawing.Size(704, 87);
@@ -456,39 +415,15 @@
             this.gridColumn6.VisibleIndex = 7;
             this.gridColumn6.Width = 95;
             // 
-            // tableLayoutPanel2
-            // 
-            this.tableLayoutPanel2.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
-            this.tableLayoutPanel2.ColumnCount = 4;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35F));
-            this.tableLayoutPanel2.Controls.Add(this.panel10, 3, 0);
-            this.tableLayoutPanel2.Controls.Add(this.panel9, 3, 1);
-            this.tableLayoutPanel2.Controls.Add(this.panel2, 1, 1);
-            this.tableLayoutPanel2.Controls.Add(this.panel1, 1, 0);
-            this.tableLayoutPanel2.Controls.Add(this.label7, 0, 0);
-            this.tableLayoutPanel2.Controls.Add(this.label8, 2, 0);
-            this.tableLayoutPanel2.Controls.Add(this.label9, 0, 1);
-            this.tableLayoutPanel2.Controls.Add(this.label10, 2, 1);
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(16, 264);
-            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 2;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(704, 60);
-            this.tableLayoutPanel2.TabIndex = 189;
-            // 
             // panel10
             // 
+            this.panel10.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel10.Controls.Add(this.rbLFB_FS_LVL_3);
             this.panel10.Controls.Add(this.rbLFB_FS_LVL_2);
             this.panel10.Controls.Add(this.rbLFB_FS_LVL_1);
-            this.panel10.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel10.Location = new System.Drawing.Point(459, 4);
+            this.panel10.Location = new System.Drawing.Point(428, 248);
             this.panel10.Name = "panel10";
-            this.panel10.Size = new System.Drawing.Size(241, 22);
+            this.panel10.Size = new System.Drawing.Size(241, 25);
             this.panel10.TabIndex = 165;
             // 
             // rbLFB_FS_LVL_3
@@ -529,10 +464,10 @@
             // 
             // panel9
             // 
+            this.panel9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel9.Controls.Add(this.rbKNJN_RPMT_RGN_CD_2);
             this.panel9.Controls.Add(this.rbKNJN_RPMT_RGN_CD_1);
-            this.panel9.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel9.Location = new System.Drawing.Point(459, 33);
+            this.panel9.Location = new System.Drawing.Point(428, 279);
             this.panel9.Name = "panel9";
             this.panel9.Size = new System.Drawing.Size(241, 23);
             this.panel9.TabIndex = 164;
@@ -541,7 +476,7 @@
             // 
             this.rbKNJN_RPMT_RGN_CD_2.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.rbKNJN_RPMT_RGN_CD_2.AutoSize = true;
-            this.rbKNJN_RPMT_RGN_CD_2.Location = new System.Drawing.Point(55, 3);
+            this.rbKNJN_RPMT_RGN_CD_2.Location = new System.Drawing.Point(55, 2);
             this.rbKNJN_RPMT_RGN_CD_2.Name = "rbKNJN_RPMT_RGN_CD_2";
             this.rbKNJN_RPMT_RGN_CD_2.Size = new System.Drawing.Size(47, 16);
             this.rbKNJN_RPMT_RGN_CD_2.TabIndex = 13;
@@ -553,7 +488,7 @@
             // 
             this.rbKNJN_RPMT_RGN_CD_1.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.rbKNJN_RPMT_RGN_CD_1.AutoSize = true;
-            this.rbKNJN_RPMT_RGN_CD_1.Location = new System.Drawing.Point(4, 2);
+            this.rbKNJN_RPMT_RGN_CD_1.Location = new System.Drawing.Point(4, 1);
             this.rbKNJN_RPMT_RGN_CD_1.Name = "rbKNJN_RPMT_RGN_CD_1";
             this.rbKNJN_RPMT_RGN_CD_1.Size = new System.Drawing.Size(47, 16);
             this.rbKNJN_RPMT_RGN_CD_1.TabIndex = 12;
@@ -563,10 +498,10 @@
             // 
             // panel2
             // 
+            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel2.Controls.Add(this.rbKNJN_RPMT_YN_2);
             this.panel2.Controls.Add(this.rbKNJN_RPMT_YN_1);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(179, 33);
+            this.panel2.Location = new System.Drawing.Point(171, 272);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(133, 23);
             this.panel2.TabIndex = 162;
@@ -575,7 +510,7 @@
             // 
             this.rbKNJN_RPMT_YN_2.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.rbKNJN_RPMT_YN_2.AutoSize = true;
-            this.rbKNJN_RPMT_YN_2.Location = new System.Drawing.Point(55, 3);
+            this.rbKNJN_RPMT_YN_2.Location = new System.Drawing.Point(55, 2);
             this.rbKNJN_RPMT_YN_2.Name = "rbKNJN_RPMT_YN_2";
             this.rbKNJN_RPMT_YN_2.Size = new System.Drawing.Size(39, 16);
             this.rbKNJN_RPMT_YN_2.TabIndex = 13;
@@ -587,7 +522,7 @@
             // 
             this.rbKNJN_RPMT_YN_1.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.rbKNJN_RPMT_YN_1.AutoSize = true;
-            this.rbKNJN_RPMT_YN_1.Location = new System.Drawing.Point(4, 2);
+            this.rbKNJN_RPMT_YN_1.Location = new System.Drawing.Point(4, 1);
             this.rbKNJN_RPMT_YN_1.Name = "rbKNJN_RPMT_YN_1";
             this.rbKNJN_RPMT_YN_1.Size = new System.Drawing.Size(45, 16);
             this.rbKNJN_RPMT_YN_1.TabIndex = 12;
@@ -597,10 +532,10 @@
             // 
             // panel1
             // 
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel1.Controls.Add(this.rbLFB_FS_YN_2);
             this.panel1.Controls.Add(this.rbLFB_FS_YN_1);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(179, 4);
+            this.panel1.Location = new System.Drawing.Point(171, 247);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(133, 22);
             this.panel1.TabIndex = 14;
@@ -609,7 +544,7 @@
             // 
             this.rbLFB_FS_YN_2.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.rbLFB_FS_YN_2.AutoSize = true;
-            this.rbLFB_FS_YN_2.Location = new System.Drawing.Point(55, 3);
+            this.rbLFB_FS_YN_2.Location = new System.Drawing.Point(55, 2);
             this.rbLFB_FS_YN_2.Name = "rbLFB_FS_YN_2";
             this.rbLFB_FS_YN_2.Size = new System.Drawing.Size(39, 16);
             this.rbLFB_FS_YN_2.TabIndex = 13;
@@ -621,7 +556,7 @@
             // 
             this.rbLFB_FS_YN_1.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.rbLFB_FS_YN_1.AutoSize = true;
-            this.rbLFB_FS_YN_1.Location = new System.Drawing.Point(4, 2);
+            this.rbLFB_FS_YN_1.Location = new System.Drawing.Point(4, 1);
             this.rbLFB_FS_YN_1.Name = "rbLFB_FS_YN_1";
             this.rbLFB_FS_YN_1.Size = new System.Drawing.Size(45, 16);
             this.rbLFB_FS_YN_1.TabIndex = 12;
@@ -631,9 +566,8 @@
             // 
             // label7
             // 
-            this.label7.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(4, 9);
+            this.label7.Location = new System.Drawing.Point(15, 252);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(145, 12);
             this.label7.TabIndex = 10;
@@ -641,9 +575,8 @@
             // 
             // label8
             // 
-            this.label8.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(319, 9);
+            this.label8.Location = new System.Drawing.Point(323, 255);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(99, 12);
             this.label8.TabIndex = 15;
@@ -651,9 +584,8 @@
             // 
             // label9
             // 
-            this.label9.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(4, 38);
+            this.label9.Location = new System.Drawing.Point(19, 274);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(133, 12);
             this.label9.TabIndex = 161;
@@ -661,9 +593,8 @@
             // 
             // label10
             // 
-            this.label10.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(319, 38);
+            this.label10.Location = new System.Drawing.Point(320, 282);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(105, 12);
             this.label10.TabIndex = 163;
@@ -672,7 +603,7 @@
             // label11
             // 
             this.label11.BackColor = System.Drawing.SystemColors.ScrollBar;
-            this.label11.Location = new System.Drawing.Point(15, 333);
+            this.label11.Location = new System.Drawing.Point(14, 315);
             this.label11.Name = "label11";
             this.label11.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
             this.label11.Size = new System.Drawing.Size(706, 21);
@@ -680,28 +611,12 @@
             this.label11.Text = "수혈 체크리스트 사용 현황";
             this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // tableLayoutPanel3
-            // 
-            this.tableLayoutPanel3.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
-            this.tableLayoutPanel3.ColumnCount = 2;
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.Controls.Add(this.panel3, 0, 0);
-            this.tableLayoutPanel3.Controls.Add(this.label12, 0, 0);
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(16, 357);
-            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-            this.tableLayoutPanel3.RowCount = 1;
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 31F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(243, 32);
-            this.tableLayoutPanel3.TabIndex = 191;
-            // 
             // panel3
             // 
+            this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel3.Controls.Add(this.rbASM_PRSC_YN_2);
             this.panel3.Controls.Add(this.rbASM_PRSC_YN_1);
-            this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(125, 4);
+            this.panel3.Location = new System.Drawing.Point(106, 339);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(114, 24);
             this.panel3.TabIndex = 15;
@@ -710,7 +625,7 @@
             // 
             this.rbASM_PRSC_YN_2.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.rbASM_PRSC_YN_2.AutoSize = true;
-            this.rbASM_PRSC_YN_2.Location = new System.Drawing.Point(55, 4);
+            this.rbASM_PRSC_YN_2.Location = new System.Drawing.Point(55, 3);
             this.rbASM_PRSC_YN_2.Name = "rbASM_PRSC_YN_2";
             this.rbASM_PRSC_YN_2.Size = new System.Drawing.Size(39, 16);
             this.rbASM_PRSC_YN_2.TabIndex = 13;
@@ -722,7 +637,7 @@
             // 
             this.rbASM_PRSC_YN_1.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.rbASM_PRSC_YN_1.AutoSize = true;
-            this.rbASM_PRSC_YN_1.Location = new System.Drawing.Point(4, 3);
+            this.rbASM_PRSC_YN_1.Location = new System.Drawing.Point(4, 2);
             this.rbASM_PRSC_YN_1.Name = "rbASM_PRSC_YN_1";
             this.rbASM_PRSC_YN_1.Size = new System.Drawing.Size(45, 16);
             this.rbASM_PRSC_YN_1.TabIndex = 12;
@@ -732,9 +647,8 @@
             // 
             // label12
             // 
-            this.label12.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(4, 10);
+            this.label12.Location = new System.Drawing.Point(23, 344);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(77, 12);
             this.label12.TabIndex = 11;
@@ -742,7 +656,7 @@
             // 
             // grdPRSC
             // 
-            this.grdPRSC.Location = new System.Drawing.Point(16, 388);
+            this.grdPRSC.Location = new System.Drawing.Point(16, 372);
             this.grdPRSC.MainView = this.grdPRSCView;
             this.grdPRSC.Name = "grdPRSC";
             this.grdPRSC.Size = new System.Drawing.Size(704, 94);
@@ -852,7 +766,7 @@
             // 
             // grdANM_DIAG
             // 
-            this.grdANM_DIAG.Location = new System.Drawing.Point(726, 101);
+            this.grdANM_DIAG.Location = new System.Drawing.Point(725, 100);
             this.grdANM_DIAG.MainView = this.grdANM_DIAGView;
             this.grdANM_DIAG.Name = "grdANM_DIAG";
             this.grdANM_DIAG.Size = new System.Drawing.Size(474, 81);
@@ -891,28 +805,12 @@
             this.gridColumn19.VisibleIndex = 1;
             this.gridColumn19.Width = 300;
             // 
-            // tableLayoutPanel4
-            // 
-            this.tableLayoutPanel4.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
-            this.tableLayoutPanel4.ColumnCount = 2;
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel4.Controls.Add(this.panel4, 0, 0);
-            this.tableLayoutPanel4.Controls.Add(this.label13, 0, 0);
-            this.tableLayoutPanel4.Location = new System.Drawing.Point(726, 70);
-            this.tableLayoutPanel4.Name = "tableLayoutPanel4";
-            this.tableLayoutPanel4.RowCount = 1;
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 31F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(243, 32);
-            this.tableLayoutPanel4.TabIndex = 194;
-            // 
             // panel4
             // 
+            this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel4.Controls.Add(this.rbANM_DIAG_YN_2);
             this.panel4.Controls.Add(this.rbANM_DIAG_YN_1);
-            this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel4.Location = new System.Drawing.Point(125, 4);
+            this.panel4.Location = new System.Drawing.Point(813, 70);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(114, 24);
             this.panel4.TabIndex = 15;
@@ -921,7 +819,7 @@
             // 
             this.rbANM_DIAG_YN_2.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.rbANM_DIAG_YN_2.AutoSize = true;
-            this.rbANM_DIAG_YN_2.Location = new System.Drawing.Point(55, 4);
+            this.rbANM_DIAG_YN_2.Location = new System.Drawing.Point(55, 3);
             this.rbANM_DIAG_YN_2.Name = "rbANM_DIAG_YN_2";
             this.rbANM_DIAG_YN_2.Size = new System.Drawing.Size(39, 16);
             this.rbANM_DIAG_YN_2.TabIndex = 13;
@@ -933,7 +831,7 @@
             // 
             this.rbANM_DIAG_YN_1.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.rbANM_DIAG_YN_1.AutoSize = true;
-            this.rbANM_DIAG_YN_1.Location = new System.Drawing.Point(4, 3);
+            this.rbANM_DIAG_YN_1.Location = new System.Drawing.Point(4, 2);
             this.rbANM_DIAG_YN_1.Name = "rbANM_DIAG_YN_1";
             this.rbANM_DIAG_YN_1.Size = new System.Drawing.Size(45, 16);
             this.rbANM_DIAG_YN_1.TabIndex = 12;
@@ -943,9 +841,8 @@
             // 
             // label13
             // 
-            this.label13.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(4, 10);
+            this.label13.Location = new System.Drawing.Point(730, 74);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(77, 12);
             this.label13.TabIndex = 11;
@@ -964,7 +861,7 @@
             // 
             // grdANM_REFM
             // 
-            this.grdANM_REFM.Location = new System.Drawing.Point(726, 243);
+            this.grdANM_REFM.Location = new System.Drawing.Point(725, 221);
             this.grdANM_REFM.MainView = this.grdANM_REFMView;
             this.grdANM_REFM.Name = "grdANM_REFM";
             this.grdANM_REFM.Size = new System.Drawing.Size(474, 81);
@@ -1002,28 +899,12 @@
             this.gridColumn21.Visible = true;
             this.gridColumn21.VisibleIndex = 1;
             // 
-            // tableLayoutPanel5
-            // 
-            this.tableLayoutPanel5.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
-            this.tableLayoutPanel5.ColumnCount = 2;
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel5.Controls.Add(this.panel5, 0, 0);
-            this.tableLayoutPanel5.Controls.Add(this.label15, 0, 0);
-            this.tableLayoutPanel5.Location = new System.Drawing.Point(726, 212);
-            this.tableLayoutPanel5.Name = "tableLayoutPanel5";
-            this.tableLayoutPanel5.RowCount = 1;
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 31F));
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(243, 32);
-            this.tableLayoutPanel5.TabIndex = 196;
-            // 
             // panel5
             // 
+            this.panel5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel5.Controls.Add(this.rbANM_REFM_YN_2);
             this.panel5.Controls.Add(this.rbANM_REFM_YN_1);
-            this.panel5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel5.Location = new System.Drawing.Point(125, 4);
+            this.panel5.Location = new System.Drawing.Point(817, 187);
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(114, 24);
             this.panel5.TabIndex = 15;
@@ -1032,7 +913,7 @@
             // 
             this.rbANM_REFM_YN_2.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.rbANM_REFM_YN_2.AutoSize = true;
-            this.rbANM_REFM_YN_2.Location = new System.Drawing.Point(55, 4);
+            this.rbANM_REFM_YN_2.Location = new System.Drawing.Point(55, 3);
             this.rbANM_REFM_YN_2.Name = "rbANM_REFM_YN_2";
             this.rbANM_REFM_YN_2.Size = new System.Drawing.Size(39, 16);
             this.rbANM_REFM_YN_2.TabIndex = 13;
@@ -1044,7 +925,7 @@
             // 
             this.rbANM_REFM_YN_1.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.rbANM_REFM_YN_1.AutoSize = true;
-            this.rbANM_REFM_YN_1.Location = new System.Drawing.Point(4, 3);
+            this.rbANM_REFM_YN_1.Location = new System.Drawing.Point(4, 2);
             this.rbANM_REFM_YN_1.Name = "rbANM_REFM_YN_1";
             this.rbANM_REFM_YN_1.Size = new System.Drawing.Size(45, 16);
             this.rbANM_REFM_YN_1.TabIndex = 12;
@@ -1054,9 +935,8 @@
             // 
             // label15
             // 
-            this.label15.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(4, 10);
+            this.label15.Location = new System.Drawing.Point(734, 194);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(77, 12);
             this.label15.TabIndex = 11;
@@ -1064,7 +944,7 @@
             // 
             // grdEXM
             // 
-            this.grdEXM.Location = new System.Drawing.Point(726, 388);
+            this.grdEXM.Location = new System.Drawing.Point(725, 372);
             this.grdEXM.MainView = this.grdEXMView;
             this.grdEXM.Name = "grdEXM";
             this.grdEXM.Size = new System.Drawing.Size(474, 94);
@@ -1132,28 +1012,12 @@
             this.gridColumn26.VisibleIndex = 4;
             this.gridColumn26.Width = 95;
             // 
-            // tableLayoutPanel6
-            // 
-            this.tableLayoutPanel6.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
-            this.tableLayoutPanel6.ColumnCount = 2;
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel6.Controls.Add(this.panel6, 0, 0);
-            this.tableLayoutPanel6.Controls.Add(this.label16, 0, 0);
-            this.tableLayoutPanel6.Location = new System.Drawing.Point(726, 357);
-            this.tableLayoutPanel6.Name = "tableLayoutPanel6";
-            this.tableLayoutPanel6.RowCount = 1;
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 31F));
-            this.tableLayoutPanel6.Size = new System.Drawing.Size(243, 32);
-            this.tableLayoutPanel6.TabIndex = 199;
-            // 
             // panel6
             // 
+            this.panel6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel6.Controls.Add(this.rbHG_EXM_ENFC_YN_2);
             this.panel6.Controls.Add(this.rbHG_EXM_ENFC_YN_1);
-            this.panel6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel6.Location = new System.Drawing.Point(125, 4);
+            this.panel6.Location = new System.Drawing.Point(890, 339);
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(114, 24);
             this.panel6.TabIndex = 15;
@@ -1162,7 +1026,7 @@
             // 
             this.rbHG_EXM_ENFC_YN_2.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.rbHG_EXM_ENFC_YN_2.AutoSize = true;
-            this.rbHG_EXM_ENFC_YN_2.Location = new System.Drawing.Point(55, 4);
+            this.rbHG_EXM_ENFC_YN_2.Location = new System.Drawing.Point(55, 3);
             this.rbHG_EXM_ENFC_YN_2.Name = "rbHG_EXM_ENFC_YN_2";
             this.rbHG_EXM_ENFC_YN_2.Size = new System.Drawing.Size(39, 16);
             this.rbHG_EXM_ENFC_YN_2.TabIndex = 13;
@@ -1174,7 +1038,7 @@
             // 
             this.rbHG_EXM_ENFC_YN_1.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.rbHG_EXM_ENFC_YN_1.AutoSize = true;
-            this.rbHG_EXM_ENFC_YN_1.Location = new System.Drawing.Point(4, 3);
+            this.rbHG_EXM_ENFC_YN_1.Location = new System.Drawing.Point(4, 2);
             this.rbHG_EXM_ENFC_YN_1.Name = "rbHG_EXM_ENFC_YN_1";
             this.rbHG_EXM_ENFC_YN_1.Size = new System.Drawing.Size(45, 16);
             this.rbHG_EXM_ENFC_YN_1.TabIndex = 12;
@@ -1184,18 +1048,17 @@
             // 
             // label16
             // 
-            this.label16.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(4, 4);
+            this.label16.Location = new System.Drawing.Point(735, 344);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(113, 24);
+            this.label16.Size = new System.Drawing.Size(149, 12);
             this.label16.TabIndex = 11;
             this.label16.Text = "Hemoglobin(Hb) 시행여부";
             // 
             // label17
             // 
             this.label17.BackColor = System.Drawing.SystemColors.ScrollBar;
-            this.label17.Location = new System.Drawing.Point(726, 333);
+            this.label17.Location = new System.Drawing.Point(724, 315);
             this.label17.Name = "label17";
             this.label17.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
             this.label17.Size = new System.Drawing.Size(476, 21);
@@ -1205,7 +1068,9 @@
             // 
             // grdBLTS
             // 
-            this.grdBLTS.Location = new System.Drawing.Point(16, 546);
+            this.grdBLTS.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)));
+            this.grdBLTS.Location = new System.Drawing.Point(16, 536);
             this.grdBLTS.MainView = this.grdBLTSView;
             this.grdBLTS.Name = "grdBLTS";
             this.grdBLTS.Size = new System.Drawing.Size(1184, 94);
@@ -1351,28 +1216,12 @@
             this.gridColumn39.VisibleIndex = 12;
             this.gridColumn39.Width = 115;
             // 
-            // tableLayoutPanel7
-            // 
-            this.tableLayoutPanel7.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
-            this.tableLayoutPanel7.ColumnCount = 2;
-            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel7.Controls.Add(this.panel7, 0, 0);
-            this.tableLayoutPanel7.Controls.Add(this.label18, 0, 0);
-            this.tableLayoutPanel7.Location = new System.Drawing.Point(16, 515);
-            this.tableLayoutPanel7.Name = "tableLayoutPanel7";
-            this.tableLayoutPanel7.RowCount = 1;
-            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 31F));
-            this.tableLayoutPanel7.Size = new System.Drawing.Size(243, 32);
-            this.tableLayoutPanel7.TabIndex = 202;
-            // 
             // panel7
             // 
+            this.panel7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel7.Controls.Add(this.rbBLTS_YN_2);
             this.panel7.Controls.Add(this.rbBLTS_YN_1);
-            this.panel7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel7.Location = new System.Drawing.Point(125, 4);
+            this.panel7.Location = new System.Drawing.Point(103, 503);
             this.panel7.Name = "panel7";
             this.panel7.Size = new System.Drawing.Size(114, 24);
             this.panel7.TabIndex = 15;
@@ -1381,7 +1230,7 @@
             // 
             this.rbBLTS_YN_2.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.rbBLTS_YN_2.AutoSize = true;
-            this.rbBLTS_YN_2.Location = new System.Drawing.Point(55, 4);
+            this.rbBLTS_YN_2.Location = new System.Drawing.Point(55, 3);
             this.rbBLTS_YN_2.Name = "rbBLTS_YN_2";
             this.rbBLTS_YN_2.Size = new System.Drawing.Size(39, 16);
             this.rbBLTS_YN_2.TabIndex = 13;
@@ -1393,7 +1242,7 @@
             // 
             this.rbBLTS_YN_1.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.rbBLTS_YN_1.AutoSize = true;
-            this.rbBLTS_YN_1.Location = new System.Drawing.Point(4, 3);
+            this.rbBLTS_YN_1.Location = new System.Drawing.Point(4, 2);
             this.rbBLTS_YN_1.Name = "rbBLTS_YN_1";
             this.rbBLTS_YN_1.Size = new System.Drawing.Size(45, 16);
             this.rbBLTS_YN_1.TabIndex = 12;
@@ -1403,9 +1252,8 @@
             // 
             // label18
             // 
-            this.label18.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(4, 10);
+            this.label18.Location = new System.Drawing.Point(20, 511);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(77, 12);
             this.label18.TabIndex = 11;
@@ -1414,7 +1262,7 @@
             // label19
             // 
             this.label19.BackColor = System.Drawing.SystemColors.ScrollBar;
-            this.label19.Location = new System.Drawing.Point(16, 491);
+            this.label19.Location = new System.Drawing.Point(14, 479);
             this.label19.Name = "label19";
             this.label19.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
             this.label19.Size = new System.Drawing.Size(1186, 21);
@@ -1424,7 +1272,7 @@
             // 
             // btnDelRowSOPR
             // 
-            this.btnDelRowSOPR.Location = new System.Drawing.Point(692, 110);
+            this.btnDelRowSOPR.Location = new System.Drawing.Point(692, 126);
             this.btnDelRowSOPR.Name = "btnDelRowSOPR";
             this.btnDelRowSOPR.Size = new System.Drawing.Size(23, 23);
             this.btnDelRowSOPR.TabIndex = 206;
@@ -1434,7 +1282,7 @@
             // 
             // btnInsRowSOPR
             // 
-            this.btnInsRowSOPR.Location = new System.Drawing.Point(670, 110);
+            this.btnInsRowSOPR.Location = new System.Drawing.Point(670, 126);
             this.btnInsRowSOPR.Name = "btnInsRowSOPR";
             this.btnInsRowSOPR.Size = new System.Drawing.Size(23, 23);
             this.btnInsRowSOPR.TabIndex = 205;
@@ -1444,7 +1292,7 @@
             // 
             // btnDelRowPRSC
             // 
-            this.btnDelRowPRSC.Location = new System.Drawing.Point(692, 333);
+            this.btnDelRowPRSC.Location = new System.Drawing.Point(692, 343);
             this.btnDelRowPRSC.Name = "btnDelRowPRSC";
             this.btnDelRowPRSC.Size = new System.Drawing.Size(23, 23);
             this.btnDelRowPRSC.TabIndex = 208;
@@ -1454,7 +1302,7 @@
             // 
             // btnInsRowPRSC
             // 
-            this.btnInsRowPRSC.Location = new System.Drawing.Point(670, 333);
+            this.btnInsRowPRSC.Location = new System.Drawing.Point(670, 343);
             this.btnInsRowPRSC.Name = "btnInsRowPRSC";
             this.btnInsRowPRSC.Size = new System.Drawing.Size(23, 23);
             this.btnInsRowPRSC.TabIndex = 207;
@@ -1464,7 +1312,7 @@
             // 
             // btnDelRowANM_DIAG
             // 
-            this.btnDelRowANM_DIAG.Location = new System.Drawing.Point(1167, 46);
+            this.btnDelRowANM_DIAG.Location = new System.Drawing.Point(1177, 71);
             this.btnDelRowANM_DIAG.Name = "btnDelRowANM_DIAG";
             this.btnDelRowANM_DIAG.Size = new System.Drawing.Size(23, 23);
             this.btnDelRowANM_DIAG.TabIndex = 210;
@@ -1474,7 +1322,7 @@
             // 
             // btnInsRowANM_DIAG
             // 
-            this.btnInsRowANM_DIAG.Location = new System.Drawing.Point(1145, 46);
+            this.btnInsRowANM_DIAG.Location = new System.Drawing.Point(1155, 71);
             this.btnInsRowANM_DIAG.Name = "btnInsRowANM_DIAG";
             this.btnInsRowANM_DIAG.Size = new System.Drawing.Size(23, 23);
             this.btnInsRowANM_DIAG.TabIndex = 209;
@@ -1484,7 +1332,7 @@
             // 
             // btnDelRowANN_REFM
             // 
-            this.btnDelRowANN_REFM.Location = new System.Drawing.Point(1167, 186);
+            this.btnDelRowANN_REFM.Location = new System.Drawing.Point(1176, 187);
             this.btnDelRowANN_REFM.Name = "btnDelRowANN_REFM";
             this.btnDelRowANN_REFM.Size = new System.Drawing.Size(23, 23);
             this.btnDelRowANN_REFM.TabIndex = 212;
@@ -1494,7 +1342,7 @@
             // 
             // btnInsRowANN_REFM
             // 
-            this.btnInsRowANN_REFM.Location = new System.Drawing.Point(1145, 186);
+            this.btnInsRowANN_REFM.Location = new System.Drawing.Point(1154, 187);
             this.btnInsRowANN_REFM.Name = "btnInsRowANN_REFM";
             this.btnInsRowANN_REFM.Size = new System.Drawing.Size(23, 23);
             this.btnInsRowANN_REFM.TabIndex = 211;
@@ -1504,7 +1352,7 @@
             // 
             // btnDelRowEXM
             // 
-            this.btnDelRowEXM.Location = new System.Drawing.Point(1167, 331);
+            this.btnDelRowEXM.Location = new System.Drawing.Point(1167, 341);
             this.btnDelRowEXM.Name = "btnDelRowEXM";
             this.btnDelRowEXM.Size = new System.Drawing.Size(23, 23);
             this.btnDelRowEXM.TabIndex = 214;
@@ -1514,7 +1362,7 @@
             // 
             // btnInsRowEXM
             // 
-            this.btnInsRowEXM.Location = new System.Drawing.Point(1145, 331);
+            this.btnInsRowEXM.Location = new System.Drawing.Point(1145, 341);
             this.btnInsRowEXM.Name = "btnInsRowEXM";
             this.btnInsRowEXM.Size = new System.Drawing.Size(23, 23);
             this.btnInsRowEXM.TabIndex = 213;
@@ -1524,7 +1372,7 @@
             // 
             // btnDelRowBLTS
             // 
-            this.btnDelRowBLTS.Location = new System.Drawing.Point(1167, 491);
+            this.btnDelRowBLTS.Location = new System.Drawing.Point(1167, 507);
             this.btnDelRowBLTS.Name = "btnDelRowBLTS";
             this.btnDelRowBLTS.Size = new System.Drawing.Size(23, 23);
             this.btnDelRowBLTS.TabIndex = 216;
@@ -1533,7 +1381,7 @@
             // 
             // btnInsRowBLTS
             // 
-            this.btnInsRowBLTS.Location = new System.Drawing.Point(1145, 491);
+            this.btnInsRowBLTS.Location = new System.Drawing.Point(1145, 507);
             this.btnInsRowBLTS.Name = "btnInsRowBLTS";
             this.btnInsRowBLTS.Size = new System.Drawing.Size(23, 23);
             this.btnInsRowBLTS.TabIndex = 215;
@@ -1541,39 +1389,12 @@
             this.btnInsRowBLTS.UseVisualStyleBackColor = true;
             this.btnInsRowBLTS.Click += new System.EventHandler(this.btnInsRowBLTS_Click);
             // 
-            // label20
-            // 
-            this.label20.BackColor = System.Drawing.SystemColors.ScrollBar;
-            this.label20.Location = new System.Drawing.Point(724, 187);
-            this.label20.Name = "label20";
-            this.label20.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
-            this.label20.Size = new System.Drawing.Size(476, 21);
-            this.label20.TabIndex = 217;
-            this.label20.Text = "투약정보 - 빈혈교정";
-            this.label20.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // tableLayoutPanel8
-            // 
-            this.tableLayoutPanel8.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
-            this.tableLayoutPanel8.ColumnCount = 2;
-            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel8.Controls.Add(this.panel8, 0, 0);
-            this.tableLayoutPanel8.Controls.Add(this.label21, 0, 0);
-            this.tableLayoutPanel8.Location = new System.Drawing.Point(16, 134);
-            this.tableLayoutPanel8.Name = "tableLayoutPanel8";
-            this.tableLayoutPanel8.RowCount = 1;
-            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 31F));
-            this.tableLayoutPanel8.Size = new System.Drawing.Size(243, 32);
-            this.tableLayoutPanel8.TabIndex = 218;
-            // 
             // panel8
             // 
+            this.panel8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel8.Controls.Add(this.rbSOPR_YN_2);
             this.panel8.Controls.Add(this.rbSOPR_YN_1);
-            this.panel8.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel8.Location = new System.Drawing.Point(125, 4);
+            this.panel8.Location = new System.Drawing.Point(78, 125);
             this.panel8.Name = "panel8";
             this.panel8.Size = new System.Drawing.Size(114, 24);
             this.panel8.TabIndex = 15;
@@ -1582,7 +1403,7 @@
             // 
             this.rbSOPR_YN_2.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.rbSOPR_YN_2.AutoSize = true;
-            this.rbSOPR_YN_2.Location = new System.Drawing.Point(55, 4);
+            this.rbSOPR_YN_2.Location = new System.Drawing.Point(55, 3);
             this.rbSOPR_YN_2.Name = "rbSOPR_YN_2";
             this.rbSOPR_YN_2.Size = new System.Drawing.Size(39, 16);
             this.rbSOPR_YN_2.TabIndex = 13;
@@ -1594,7 +1415,7 @@
             // 
             this.rbSOPR_YN_1.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.rbSOPR_YN_1.AutoSize = true;
-            this.rbSOPR_YN_1.Location = new System.Drawing.Point(4, 3);
+            this.rbSOPR_YN_1.Location = new System.Drawing.Point(4, 2);
             this.rbSOPR_YN_1.Name = "rbSOPR_YN_1";
             this.rbSOPR_YN_1.Size = new System.Drawing.Size(45, 16);
             this.rbSOPR_YN_1.TabIndex = 12;
@@ -1604,9 +1425,8 @@
             // 
             // label21
             // 
-            this.label21.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(4, 10);
+            this.label21.Location = new System.Drawing.Point(20, 130);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(57, 12);
             this.label21.TabIndex = 11;
@@ -1656,15 +1476,37 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1219, 652);
+            this.ClientSize = new System.Drawing.Size(1219, 643);
+            this.Controls.Add(this.panel7);
+            this.Controls.Add(this.panel6);
+            this.Controls.Add(this.label18);
+            this.Controls.Add(this.panel5);
+            this.Controls.Add(this.label16);
+            this.Controls.Add(this.panel4);
+            this.Controls.Add(this.label15);
+            this.Controls.Add(this.panel3);
+            this.Controls.Add(this.label13);
+            this.Controls.Add(this.panel9);
+            this.Controls.Add(this.label12);
+            this.Controls.Add(this.panel10);
+            this.Controls.Add(this.label10);
+            this.Controls.Add(this.panel2);
+            this.Controls.Add(this.panel8);
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.txtDSCG_DD);
+            this.Controls.Add(this.label21);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.txtIPAT_DD);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.btnReQuery);
             this.Controls.Add(this.btnSendTmp);
             this.Controls.Add(this.btnExcept);
             this.Controls.Add(this.btnSend);
-            this.Controls.Add(this.tableLayoutPanel8);
             this.Controls.Add(this.btnDelRowANN_REFM);
             this.Controls.Add(this.btnInsRowANN_REFM);
-            this.Controls.Add(this.label20);
             this.Controls.Add(this.btnDelRowBLTS);
             this.Controls.Add(this.btnInsRowBLTS);
             this.Controls.Add(this.btnDelRowEXM);
@@ -1676,23 +1518,16 @@
             this.Controls.Add(this.btnDelRowSOPR);
             this.Controls.Add(this.btnInsRowSOPR);
             this.Controls.Add(this.grdBLTS);
-            this.Controls.Add(this.tableLayoutPanel7);
             this.Controls.Add(this.label19);
             this.Controls.Add(this.grdEXM);
-            this.Controls.Add(this.tableLayoutPanel6);
             this.Controls.Add(this.label17);
             this.Controls.Add(this.grdANM_REFM);
-            this.Controls.Add(this.tableLayoutPanel5);
             this.Controls.Add(this.grdANM_DIAG);
-            this.Controls.Add(this.tableLayoutPanel4);
             this.Controls.Add(this.label14);
             this.Controls.Add(this.grdPRSC);
-            this.Controls.Add(this.tableLayoutPanel3);
             this.Controls.Add(this.label11);
-            this.Controls.Add(this.tableLayoutPanel2);
             this.Controls.Add(this.grdSOPR);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.label30);
             this.Controls.Add(this.btnNext);
             this.Controls.Add(this.btnPrev);
@@ -1706,12 +1541,8 @@
             this.Name = "ADD7007_ASM037_003";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "수혈(ASM037_003)";
-            this.tableLayoutPanel1.ResumeLayout(false);
-            this.tableLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdSOPR)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.grdSOPRView)).EndInit();
-            this.tableLayoutPanel2.ResumeLayout(false);
-            this.tableLayoutPanel2.PerformLayout();
             this.panel10.ResumeLayout(false);
             this.panel10.PerformLayout();
             this.panel9.ResumeLayout(false);
@@ -1720,38 +1551,26 @@
             this.panel2.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            this.tableLayoutPanel3.ResumeLayout(false);
-            this.tableLayoutPanel3.PerformLayout();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdPRSC)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.grdPRSCView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.grdANM_DIAG)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.grdANM_DIAGView)).EndInit();
-            this.tableLayoutPanel4.ResumeLayout(false);
-            this.tableLayoutPanel4.PerformLayout();
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdANM_REFM)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.grdANM_REFMView)).EndInit();
-            this.tableLayoutPanel5.ResumeLayout(false);
-            this.tableLayoutPanel5.PerformLayout();
             this.panel5.ResumeLayout(false);
             this.panel5.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdEXM)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.grdEXMView)).EndInit();
-            this.tableLayoutPanel6.ResumeLayout(false);
-            this.tableLayoutPanel6.PerformLayout();
             this.panel6.ResumeLayout(false);
             this.panel6.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdBLTS)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.grdBLTSView)).EndInit();
-            this.tableLayoutPanel7.ResumeLayout(false);
-            this.tableLayoutPanel7.PerformLayout();
             this.panel7.ResumeLayout(false);
             this.panel7.PerformLayout();
-            this.tableLayoutPanel8.ResumeLayout(false);
-            this.tableLayoutPanel8.PerformLayout();
             this.panel8.ResumeLayout(false);
             this.panel8.PerformLayout();
             this.ResumeLayout(false);
@@ -1771,7 +1590,6 @@
         private System.Windows.Forms.TextBox txtPid;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label30;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox txtDSCG_DD;
         private System.Windows.Forms.Label label4;
@@ -1787,7 +1605,6 @@
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn6;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn10;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn9;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Panel panel1;
@@ -1799,7 +1616,6 @@
         private System.Windows.Forms.RadioButton rbKNJN_RPMT_YN_1;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.RadioButton rbASM_PRSC_YN_2;
         private System.Windows.Forms.RadioButton rbASM_PRSC_YN_1;
@@ -1819,7 +1635,6 @@
         private DevExpress.XtraGrid.Views.Grid.GridView grdANM_DIAGView;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn15;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn19;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.RadioButton rbANM_DIAG_YN_2;
         private System.Windows.Forms.RadioButton rbANM_DIAG_YN_1;
@@ -1829,7 +1644,6 @@
         private DevExpress.XtraGrid.Views.Grid.GridView grdANM_REFMView;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn20;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn21;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.RadioButton rbANM_REFM_YN_2;
         private System.Windows.Forms.RadioButton rbANM_REFM_YN_1;
@@ -1840,7 +1654,6 @@
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn24;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn25;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn26;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel6;
         private System.Windows.Forms.Panel panel6;
         private System.Windows.Forms.RadioButton rbHG_EXM_ENFC_YN_2;
         private System.Windows.Forms.RadioButton rbHG_EXM_ENFC_YN_1;
@@ -1861,7 +1674,6 @@
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn37;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn38;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn39;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel7;
         private System.Windows.Forms.Panel panel7;
         private System.Windows.Forms.RadioButton rbBLTS_YN_2;
         private System.Windows.Forms.RadioButton rbBLTS_YN_1;
@@ -1880,8 +1692,6 @@
         private System.Windows.Forms.Button btnInsRowEXM;
         private System.Windows.Forms.Button btnDelRowBLTS;
         private System.Windows.Forms.Button btnInsRowBLTS;
-        private System.Windows.Forms.Label label20;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel8;
         private System.Windows.Forms.Panel panel8;
         private System.Windows.Forms.RadioButton rbSOPR_YN_2;
         private System.Windows.Forms.RadioButton rbSOPR_YN_1;

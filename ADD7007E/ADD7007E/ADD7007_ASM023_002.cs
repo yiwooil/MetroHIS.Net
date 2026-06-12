@@ -12,6 +12,8 @@ namespace ADD7007E
 {
     public partial class ADD7007_ASM023_002 : Form
     {
+        public event EventHandler<RemakeRequestedEventArgs<CDataASM023_002>> RemakeRequested;
+
         // 산소포화도
         public class OXY
         {
@@ -739,31 +741,21 @@ namespace ADD7007E
 
         private void ReQuery()
         {
-            string strConn = MetroLib.DBHelper.GetConnectionString();
-            using (OleDbConnection conn = new OleDbConnection(strConn))
+            var args = new RemakeRequestedEventArgs<CDataASM023_002>(m_data);
+
+            if (RemakeRequested != null)
             {
-                OleDbTransaction tran = null;
+                RemakeRequested(this, args);
 
-                try
+                if (args.Success)
                 {
-                    conn.Open();
-
-                    string sysdt = MetroLib.Util.GetSysDate(conn);
-                    string systm = MetroLib.Util.GetSysTime(conn);
-
-                    CMakeASM023 make = new CMakeASM023();
-                    tran = conn.BeginTransaction();
-                    make.MakeASM023(m_data, sysdt, systm, m_User, conn, tran, true);
-                    tran.Commit();
+                    ShowData();
+                    RefreshGrid();
                 }
-                catch (Exception ex)
+                else
                 {
-                    if (tran != null) tran.Rollback();
-                    MessageBox.Show(ex.Message);
+                    MessageBox.Show(args.FailureMessage);
                 }
-
-                ShowData();
-                RefreshGrid();
             }
         }
 

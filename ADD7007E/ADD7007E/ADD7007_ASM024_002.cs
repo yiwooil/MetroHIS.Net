@@ -12,6 +12,8 @@ namespace ADD7007E
 {
     public partial class ADD7007_ASM024_002 : Form
     {
+        public event EventHandler<RemakeRequestedEventArgs<CDataASM024_002>> RemakeRequested;
+
         class IPAT
         {
             public string SPRM_IPAT_DT_DATE { get; set; } // 입실일자
@@ -419,31 +421,21 @@ namespace ADD7007E
 
         private void ReQuery()
         {
-            string strConn = MetroLib.DBHelper.GetConnectionString();
-            using (OleDbConnection conn = new OleDbConnection(strConn))
+            var args = new RemakeRequestedEventArgs<CDataASM024_002>(m_data);
+
+            if (RemakeRequested != null)
             {
-                OleDbTransaction tran = null;
+                RemakeRequested(this, args);
 
-                try
+                if (args.Success)
                 {
-                    conn.Open();
-
-                    string sysdt = MetroLib.Util.GetSysDate(conn);
-                    string systm = MetroLib.Util.GetSysTime(conn);
-
-                    CMakeASM024 make = new CMakeASM024();
-                    tran = conn.BeginTransaction();
-                    make.MakeASM024(m_data, sysdt, systm, m_User, conn, tran, true);
-                    tran.Commit();
+                    ShowData();
+                    RefreshGrid();
                 }
-                catch (Exception ex)
+                else
                 {
-                    if (tran != null) tran.Rollback();
-                    MessageBox.Show(ex.Message);
+                    MessageBox.Show(args.FailureMessage);
                 }
-
-                ShowData();
-                RefreshGrid();
             }
         }
 

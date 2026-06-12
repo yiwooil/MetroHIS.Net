@@ -26,6 +26,51 @@ namespace ADD7007E
         private bool IsFirst;
         private string m_pgm_step = ""; // 어느 단계에서 오류가 발생하는지 확인하기 위한 용도
 
+        private readonly string[] m_commonGridColumns = new string[]
+        {
+            "SEL",
+            "STATUS_NM",
+            "NO",
+            "IOFGNM",
+            "PID",
+            "PNM",
+            "RESID_DISP",
+            "BDEDT",
+            "QFYCD",
+            "GONSGB",
+            "DACD",
+            "DEMNO",
+            "EPRTNO",
+            "CNECNO",
+            "CNECTDD",
+            "BILLSNO"
+        };
+
+        private readonly Dictionary<string, string[]> m_typeGridColumns = new Dictionary<string, string[]>()
+        {
+            {
+                "수술의예방적항생제사용",
+                new string[]
+                {
+                    "MDFEE_CD",
+                    "ASM_SOPR_STA_DT",
+                    "ASM_SOPR_END_DT",
+                    "ASM_IPAT_DT",
+                    "ASM_DSCG_DT",
+                    "INJC_STA_DT_DTM",
+                    "INJC_END_DT_DTM"
+                }
+            },
+            {
+                "마취",
+                new string[]
+                {
+                    "NCT_STA_DT",
+                    "NCT_END_DT"
+                }
+            }
+        };
+
         public ADD7007E()
         {
             InitializeComponent();
@@ -143,8 +188,7 @@ namespace ADD7007E
         {
             IsFirst = true;
 
-            grdASM010.Dock = DockStyle.Fill; // 예방학적 항생제
-            grdASM035.Dock = DockStyle.Fill; // 마취
+            grdASM010.Dock = DockStyle.Fill;
         }
 
         private void ADD7007E_Activated(object sender, EventArgs e)
@@ -226,19 +270,13 @@ namespace ADD7007E
             {
                 Cursor.Current = Cursors.WaitCursor;
                 this.ShowProgressForm("", (sender as Button).Text.ToString() + " 중입니다.");
+                ApplyMainGridColumns(typeName);
                 this.Query();
                 this.CloseProgressForm("", (sender as Button).Text.ToString() + " 중입니다.");
                 Cursor.Current = Cursors.Default;
 
                 // 조회된 자료가 있는지 알아보자.
-                if (typeName == "수술의예방적항생제사용")
-                {
-                    if (grdASM010View.DataRowCount < 1) MessageBox.Show("대상자가 없습니다. [대상자 올리기]를 먼저 수행하세요.");
-                }
-                else if (typeName == "마취")
-                {
-                    if (grdASM035View.DataRowCount < 1) MessageBox.Show("대상자가 없습니다. [대상자 올리기]를 먼저 수행하세요.");
-                }
+                if (grdASM010View.DataRowCount < 1) MessageBox.Show("대상자가 없습니다. [대상자 올리기]를 먼저 수행하세요.");
             }
             catch (Exception ex)
             {
@@ -260,97 +298,58 @@ namespace ADD7007E
             string strConn = MetroLib.DBHelper.GetConnectionString();
             using (OleDbConnection conn = new OleDbConnection(strConn))
             {
-                OleDbTransaction tran = null;
+                //OleDbTransaction tran = null;
                 try
                 {
                     conn.Open();
 
-                    string sysdt = MetroLib.Util.GetSysDate(conn);
-                    string systm = MetroLib.Util.GetSysTime(conn);
-
                     switch (typeName)
                     {
                         case "관상동맥우회술":
-                            Query_ASM002(conn);
-                            tran = conn.BeginTransaction();
-                            Make_ASM002(conn, tran, sysdt, systm);
-                            tran.Commit();
+                            Query_ASM_Saved<CDataASM002_002>(conn, "ASM002");
                             break;
                         case "급성기뇌졸중":
-                            Query_ASM003(conn);
-                            tran = conn.BeginTransaction();
-                            Make_ASM003(conn, tran, sysdt, systm);
-                            tran.Commit();
+                            Query_ASM_Saved<CDataASM003_002>(conn, "ASM003");
                             break;
 
                         case "마취":
-                            Query_ASM035(conn);
-                            //tran = conn.BeginTransaction();
-                            //Make_ASM035(conn, tran, sysdt, systm);
-                            //tran.Commit();
+                            Query_ASM_Saved<CDataASM035_003>(conn, "ASM035");
                             break;
 
                         case "수술의예방적항생제사용":
                             Query_ASM010(conn);
-                            //tran = conn.BeginTransaction();
-                            //Make_ASM010(conn, tran, sysdt, systm);
-                            //tran.Commit();
                             break;
 
                         case "수혈":
-                            Query_ASM037(conn);
-                            tran = conn.BeginTransaction();
-                            Make_ASM037(conn, tran, sysdt, systm);
-                            tran.Commit();
+                            Query_ASM_Saved<CDataASM037_003>(conn, "ASM037");
                             break;
 
                         case "신생아중환자실":
-                            Query_ASM033(conn);
-                            tran = conn.BeginTransaction();
-                            Make_ASM033(conn, tran, sysdt, systm);
-                            tran.Commit();
+                            Query_ASM_Saved<CDataASM033_003>(conn, "ASM033");
                             break;
 
                         case "영상검사":
-                            Query_ASM049(conn);
-                            tran = conn.BeginTransaction();
-                            Make_ASM049(conn, tran, sysdt, systm);
-                            tran.Commit();
+                            Query_ASM_Saved<CDataASM049_001>(conn, "ASM049");
                             break;
 
                         case "의료급여정신과":
-                            Query_ASM014(conn);
-                            tran = conn.BeginTransaction();
-                            Make_ASM014(conn, tran, sysdt, systm);
-                            tran.Commit();
+                            Query_ASM_Saved<CDataASM014_001>(conn, "ASM014");
                             break;
 
                         case "정신건강입원영역":
-                            Query_ASM036(conn);
-                            tran = conn.BeginTransaction();
-                            Make_ASM036(conn, tran, sysdt, systm);
-                            tran.Commit();
+                            Query_ASM_Saved<CDataASM036_002>(conn, "ASM036");
                             break;
 
                         case "중환자실":
-                            Query_ASM024(conn);
-                            tran = conn.BeginTransaction();
-                            Make_ASM024(conn, tran, sysdt, systm);
-                            tran.Commit();
+                            Query_ASM_Saved<CDataASM024_002>(conn, "ASM024");
                             break;
 
                         case "폐렴":
-                            Query_ASM023(conn);
-                            tran = conn.BeginTransaction();
-                            Make_ASM023(conn, tran, sysdt, systm);
-                            tran.Commit();
+                            Query_ASM_Saved<CDataASM023_002>(conn, "ASM023");
                             break;
 
                         case "혈액투석":
-                            Query_ASM008(conn);
-                            tran = conn.BeginTransaction();
-                            Make_ASM008(conn, tran, sysdt, systm);
-                            tran.Commit();
+                            Query_ASM_Saved<CDataASM008_002>(conn, "ASM008");
                             break;
 
                         default:
@@ -359,7 +358,7 @@ namespace ADD7007E
                 }
                 catch (Exception ex)
                 {
-                    if (tran != null) tran.Rollback();
+                    //if (tran != null) tran.Rollback();
                     //throw ex;
                     MessageBox.Show(ex.Message);
                 }
@@ -371,155 +370,142 @@ namespace ADD7007E
 
         private void Query_ASM002(OleDbConnection conn)
         {
-            m_pgm_step = "Query_ASM002";
-
-            CQuery_ASM002 query = new CQuery_ASM002();
-            List<CDataASM002_002> list = query.Query_ASM002(conn, txtFrdt.Text.ToString(), txtTodt.Text.ToString());
-            grdASM010.DataSource = null;
-            grdASM010.DataSource = list;
-            RefreshGrid();
+            Query_ASM_Saved<CDataASM002_002>(conn, "ASM002");
+            //m_pgm_step = "Query_ASM002";
+            //
+            //CQuery_ASM002 query = new CQuery_ASM002();
+            //List<CDataASM002_002> list = query.Query_ASM002(conn, txtFrdt.Text.ToString(), txtTodt.Text.ToString());
+            //grdASM010.DataSource = null;
+            //grdASM010.DataSource = list;
+            //RefreshGrid();
         }
 
         private void Query_ASM003(OleDbConnection conn)
         {
-            m_pgm_step = "Query_ASM003";
-
-            CQuery_ASM003 query = new CQuery_ASM003();
-            List<CDataASM003_002> list = query.Query_ASM003(conn, txtFrdt.Text.ToString(), txtTodt.Text.ToString());
-            grdASM010.DataSource = null;
-            grdASM010.DataSource = list;
-            RefreshGrid();
+            Query_ASM_Saved<CDataASM003_002>(conn, "ASM003");
+            //m_pgm_step = "Query_ASM003";
+            //
+            //CQuery_ASM003 query = new CQuery_ASM003();
+            //List<CDataASM003_002> list = query.Query_ASM003(conn, txtFrdt.Text.ToString(), txtTodt.Text.ToString());
+            //grdASM010.DataSource = null;
+            //grdASM010.DataSource = list;
+            //RefreshGrid();
         }
 
         private void Query_ASM008(OleDbConnection conn)
         {
-            m_pgm_step = "Query_ASM008";
-
-            CQuery_ASM008 query = new CQuery_ASM008();
-            List<CDataASM008_002> list = query.Query_ASM008(conn, txtFrdt.Text.ToString(), txtTodt.Text.ToString());
-            grdASM010.DataSource = null;
-            grdASM010.DataSource = list;
-            RefreshGrid();
+            Query_ASM_Saved<CDataASM008_002>(conn, "ASM008");
+            //m_pgm_step = "Query_ASM008";
+            //
+            //CQuery_ASM008 query = new CQuery_ASM008();
+            //List<CDataASM008_002> list = query.Query_ASM008(conn, txtFrdt.Text.ToString(), txtTodt.Text.ToString());
+            //grdASM010.DataSource = null;
+            //grdASM010.DataSource = list;
+            //RefreshGrid();
         }
 
         private void Query_ASM010(OleDbConnection conn)
         {
-            ShowProgressForm("", "대상자를 조회하고 있습니다.");
-
-            m_pgm_step = "Query_ASM010";
-            
-            List<CDataASM010_002> list = new List<CDataASM010_002>();
-            grdASM010.DataSource = null;
-            grdASM010.DataSource = list;
-
-            System.Windows.Forms.Application.DoEvents();
-
-            string form = "ASM010";
-            string keystr = txtFrdt.Text.ToString().Trim() + "," + txtTodt.Text.ToString().Trim();
-
-            // 
-            string sql = "";
-            sql += Environment.NewLine + "SELECT *";
-            sql += Environment.NewLine + " FROM TI84_ASM000";
-            sql += Environment.NewLine + " WHERE FORM = '" + form + "'";
-            sql += Environment.NewLine + " AND KEYSTR = '" + keystr + "'";
-
-            MetroLib.SqlHelper.GetDataRow(sql, conn, delegate(DataRow row)
-            {
-                ShowProgressForm("", "대상자를 조회하고 있습니다." + row["PNM"].ToString());
-
-                System.Windows.Forms.Application.DoEvents();
-
-                CDataASM010_002 data = new CDataASM010_002();
-                data.Clear();
-                list.Add(data);
-
-                data.SetValuesFromDataRow(row);
-
-                data.PNM_TI2A = GetPNM_TI2A(conn, data.IOFG, data.BDODT, data.QFYCD,data.JRBY, data.PID, data.UNISQ, data.SIMCS);
-
-                data.ReadDataFromSaved(conn, null);
-
-                return MetroLib.SqlHelper.CONTINUE;
-            });
-
-
-            RefreshGrid();
-
-            CloseProgressForm("", "");
-
-            /*
-            CQuery_ASM010 query = new CQuery_ASM010();
-            query.QueryEvent += new EventHandler<QueryEventArgs>(query_QueryEvent);
-            List<CDataASM010_002> list = query.Query_ASM010(conn, txtFrdt.Text.ToString(), txtTodt.Text.ToString());
-            grdMain.DataSource = null;
-            grdMain.DataSource = list;
-            RefreshGrid();
-            */
-            
+            Query_ASM_Saved<CDataASM010_002>(conn, "ASM010");
         }
 
         private void Query_ASM014(OleDbConnection conn)
         {
-            m_pgm_step = "Query_ASM014";
-
-            CQuery_ASM014 query = new CQuery_ASM014();
-            List<CDataASM014_001> list = query.Query_ASM014(conn, txtFrdt.Text.ToString(), txtTodt.Text.ToString());
-            grdASM010.DataSource = null;
-            grdASM010.DataSource = list;
-            RefreshGrid();
+            Query_ASM_Saved<CDataASM014_001>(conn, "ASM014");
+            //m_pgm_step = "Query_ASM014";
+            //
+            //CQuery_ASM014 query = new CQuery_ASM014();
+            //List<CDataASM014_001> list = query.Query_ASM014(conn, txtFrdt.Text.ToString(), txtTodt.Text.ToString());
+            //grdASM010.DataSource = null;
+            //grdASM010.DataSource = list;
+            //RefreshGrid();
         }
 
         private void Query_ASM023(OleDbConnection conn)
         {
-            m_pgm_step = "Query_ASM023";
-
-            CQuery_ASM023 query = new CQuery_ASM023();
-            List<CDataASM023_002> list = query.Query_ASM023(conn, txtFrdt.Text.ToString(), txtTodt.Text.ToString());
-            grdASM010.DataSource = null;
-            grdASM010.DataSource = list;
-            RefreshGrid();
+            Query_ASM_Saved<CDataASM023_002>(conn, "ASM023");
+            //m_pgm_step = "Query_ASM023";
+            //
+            //CQuery_ASM023 query = new CQuery_ASM023();
+            //List<CDataASM023_002> list = query.Query_ASM023(conn, txtFrdt.Text.ToString(), txtTodt.Text.ToString());
+            //grdASM010.DataSource = null;
+            //grdASM010.DataSource = list;
+            //RefreshGrid();
         }
 
         private void Query_ASM024(OleDbConnection conn)
         {
-            m_pgm_step = "Query_ASM024";
-
-            CQuery_ASM024 query = new CQuery_ASM024();
-            List<CDataASM024_002> list = query.Query_ASM024(conn, txtFrdt.Text.ToString(), txtTodt.Text.ToString());
-            grdASM010.DataSource = null;
-            grdASM010.DataSource = list;
-            RefreshGrid();
+            Query_ASM_Saved<CDataASM024_002>(conn, "ASM024");
+            //m_pgm_step = "Query_ASM024";
+            //
+            //CQuery_ASM024 query = new CQuery_ASM024();
+            //List<CDataASM024_002> list = query.Query_ASM024(conn, txtFrdt.Text.ToString(), txtTodt.Text.ToString());
+            //grdASM010.DataSource = null;
+            //grdASM010.DataSource = list;
+            //RefreshGrid();
         }
 
         private void Query_ASM033(OleDbConnection conn)
         {
-            m_pgm_step = "Query_ASM033";
-
-            CQuery_ASM033 query = new CQuery_ASM033();
-            List<CDataASM033_003> list = query.Query_ASM033(conn, txtFrdt.Text.ToString(), txtTodt.Text.ToString());
-            grdASM010.DataSource = null;
-            grdASM010.DataSource = list;
-            RefreshGrid();
+            Query_ASM_Saved<CDataASM033_003>(conn, "ASM033");
+            //m_pgm_step = "Query_ASM033";
+            //
+            //CQuery_ASM033 query = new CQuery_ASM033();
+            //List<CDataASM033_003> list = query.Query_ASM033(conn, txtFrdt.Text.ToString(), txtTodt.Text.ToString());
+            //grdASM010.DataSource = null;
+            //grdASM010.DataSource = list;
+            //RefreshGrid();
         }
 
         private void Query_ASM035(OleDbConnection conn)
         {
-            // 마취
-            m_pgm_step = "Query_ASM035";
+            Query_ASM_Saved<CDataASM035_003>(conn, "ASM035");
+        }
 
+        private void Query_ASM036(OleDbConnection conn)
+        {
+            Query_ASM_Saved<CDataASM036_002>(conn, "ASM036");
+            //m_pgm_step = "Query_ASM036";
+            //
+            //CQuery_ASM036 query = new CQuery_ASM036();
+            //List<CDataASM036_002> list = query.Query_ASM036(conn, txtFrdt.Text.ToString(), txtTodt.Text.ToString());
+            //grdASM010.DataSource = null;
+            //grdASM010.DataSource = list;
+            //RefreshGrid();
+        }
+
+        private void Query_ASM037(OleDbConnection conn)
+        {
+            Query_ASM_Saved<CDataASM037_003>(conn, "ASM037");
+        }
+
+        private void Query_ASM049(OleDbConnection conn)
+        {
+            Query_ASM_Saved<CDataASM049_001>(conn, "ASM049");
+            //m_pgm_step = "Query_ASM049";
+            //
+            //CQuery_ASM049 query = new CQuery_ASM049();
+            //List<CDataASM049_001> list = query.Query_ASM049(conn, txtFrdt.Text.ToString(), txtTodt.Text.ToString());
+            //grdASM010.DataSource = null;
+            //grdASM010.DataSource = list;
+            //RefreshGrid();
+        }
+
+        private void Query_ASM_Saved<T>(OleDbConnection conn, string form)
+            where T : CData, IData, new()
+        {
             ShowProgressForm("", "대상자를 조회하고 있습니다.");
 
-            List<CDataASM035_003> list = new List<CDataASM035_003>();
-            grdASM035.DataSource = null;
-            grdASM035.DataSource = list;
+            m_pgm_step = "Query_" + form;
+
+            List<T> list = new List<T>();
+            grdASM010.DataSource = null;
+            grdASM010.DataSource = list;
 
             System.Windows.Forms.Application.DoEvents();
 
-            string form = "ASM035";
             string keystr = txtFrdt.Text.ToString().Trim() + "," + txtTodt.Text.ToString().Trim();
 
-            // 
             string sql = "";
             sql += Environment.NewLine + "SELECT *";
             sql += Environment.NewLine + " FROM TI84_ASM000";
@@ -532,7 +518,7 @@ namespace ADD7007E
 
                 System.Windows.Forms.Application.DoEvents();
 
-                CDataASM035_003 data = new CDataASM035_003();
+                T data = new T();
                 data.Clear();
                 list.Add(data);
 
@@ -545,49 +531,9 @@ namespace ADD7007E
                 return MetroLib.SqlHelper.CONTINUE;
             });
 
-
             RefreshGrid();
 
             CloseProgressForm("", "");
-
-            //CQuery_ASM035 query = new CQuery_ASM035();
-            //List<CDataASM035_003> list = query.Query_ASM035(conn, txtFrdt.Text.ToString(), txtTodt.Text.ToString());
-            //grdASM010.DataSource = null;
-            //grdASM010.DataSource = list;
-            //RefreshGrid();
-        }
-
-        private void Query_ASM036(OleDbConnection conn)
-        {
-            m_pgm_step = "Query_ASM036";
-
-            CQuery_ASM036 query = new CQuery_ASM036();
-            List<CDataASM036_002> list = query.Query_ASM036(conn, txtFrdt.Text.ToString(), txtTodt.Text.ToString());
-            grdASM010.DataSource = null;
-            grdASM010.DataSource = list;
-            RefreshGrid();
-        }
-
-        private void Query_ASM037(OleDbConnection conn)
-        {
-            m_pgm_step = "Query_ASM037";
-
-            CQuery_ASM037 query = new CQuery_ASM037();
-            List<CDataASM037_003> list = query.Query_ASM037(conn, txtFrdt.Text.ToString(), txtTodt.Text.ToString());
-            grdASM010.DataSource = null;
-            grdASM010.DataSource = list;
-            RefreshGrid();
-        }
-
-        private void Query_ASM049(OleDbConnection conn)
-        {
-            m_pgm_step = "Query_ASM049";
-
-            CQuery_ASM049 query = new CQuery_ASM049();
-            List<CDataASM049_001> list = query.Query_ASM049(conn, txtFrdt.Text.ToString(), txtTodt.Text.ToString());
-            grdASM010.DataSource = null;
-            grdASM010.DataSource = list;
-            RefreshGrid();
         }
 
         private string GetPNM_TI2A(OleDbConnection conn, string iofg, string bdodt, string qfycd, string jrby, string pid, string unisq, string simcs)
@@ -632,47 +578,47 @@ namespace ADD7007E
 
         //***********************************************************************************************************
 
-        private void Make_ASM002(OleDbConnection conn, OleDbTransaction tran, string sysdt, string systm)
-        {
-            m_pgm_step = "Make_ASM002";
+        //private void Make_ASM002(OleDbConnection conn, OleDbTransaction tran, string sysdt, string systm)
+        //{
+        //    m_pgm_step = "Make_ASM002";
+        //
+        //    CMakeASM002 make = new CMakeASM002();
+        //    List<CDataASM002_002> list = (List<CDataASM002_002>)grdASM010.DataSource;
+        //    foreach (CDataASM002_002 data in list)
+        //    {
+        //        this.ShowProgressForm("", data.PNM + "(" + data.PID + ") 환자 자료 조회 중입니다.");
+        //        m_pgm_step = data.PNM + "(" + data.PID + ") " + data.STEDT;
+        //        make.MakeASM002(data, sysdt, systm, m_User, conn, tran, false);
+        //    }
+        //}
 
-            CMakeASM002 make = new CMakeASM002();
-            List<CDataASM002_002> list = (List<CDataASM002_002>)grdASM010.DataSource;
-            foreach (CDataASM002_002 data in list)
-            {
-                this.ShowProgressForm("", data.PNM + "(" + data.PID + ") 환자 자료 조회 중입니다.");
-                m_pgm_step = data.PNM + "(" + data.PID + ") " + data.STEDT;
-                make.MakeASM002(data, sysdt, systm, m_User, conn, tran, false);
-            }
-        }
+        //private void Make_ASM003(OleDbConnection conn, OleDbTransaction tran, string sysdt, string systm)
+        //{
+        //    m_pgm_step = "Make_ASM003";
+        //
+        //    CMakeASM003 make = new CMakeASM003();
+        //    List<CDataASM003_002> list = (List<CDataASM003_002>)grdASM010.DataSource;
+        //    foreach (CDataASM003_002 data in list)
+        //    {
+        //        this.ShowProgressForm("", data.PNM + "(" + data.PID + ") 환자 자료 조회 중입니다.");
+        //        m_pgm_step = data.PNM + "(" + data.PID + ") " + data.STEDT;
+        //        make.MakeASM003(data, sysdt, systm, m_User, conn, tran, false);
+        //    }
+        //}
 
-        private void Make_ASM003(OleDbConnection conn, OleDbTransaction tran, string sysdt, string systm)
-        {
-            m_pgm_step = "Make_ASM003";
-
-            CMakeASM003 make = new CMakeASM003();
-            List<CDataASM003_002> list = (List<CDataASM003_002>)grdASM010.DataSource;
-            foreach (CDataASM003_002 data in list)
-            {
-                this.ShowProgressForm("", data.PNM + "(" + data.PID + ") 환자 자료 조회 중입니다.");
-                m_pgm_step = data.PNM + "(" + data.PID + ") " + data.STEDT;
-                make.MakeASM003(data, sysdt, systm, m_User, conn, tran, false);
-            }
-        }
-
-        private void Make_ASM008(OleDbConnection conn, OleDbTransaction tran, string sysdt, string systm)
-        {
-            m_pgm_step = "Make_ASM008";
-
-            CMakeASM008 make = new CMakeASM008();
-            List<CDataASM008_002> list = (List<CDataASM008_002>)grdASM010.DataSource;
-            foreach (CDataASM008_002 data in list)
-            {
-                this.ShowProgressForm("", data.PNM + "(" + data.PID + ") 환자 자료 조회 중입니다.");
-                m_pgm_step = data.PNM + "(" + data.PID + ") " + data.STEDT;
-                make.MakeASM008(data, sysdt, systm, m_User, conn, tran, false);
-            }
-        }
+        //private void Make_ASM008(OleDbConnection conn, OleDbTransaction tran, string sysdt, string systm)
+        //{
+        //    m_pgm_step = "Make_ASM008";
+        //
+        //    CMakeASM008 make = new CMakeASM008();
+        //    List<CDataASM008_002> list = (List<CDataASM008_002>)grdASM010.DataSource;
+        //    foreach (CDataASM008_002 data in list)
+        //    {
+        //        this.ShowProgressForm("", data.PNM + "(" + data.PID + ") 환자 자료 조회 중입니다.");
+        //        m_pgm_step = data.PNM + "(" + data.PID + ") " + data.STEDT;
+        //        make.MakeASM008(data, sysdt, systm, m_User, conn, tran, false);
+        //    }
+        //}
 
         //private void Make_ASM010(OleDbConnection conn, OleDbTransaction tran, string sysdt, string systm)
         //{
@@ -688,61 +634,61 @@ namespace ADD7007E
         //    }
         //}
 
-        private void Make_ASM014(OleDbConnection conn, OleDbTransaction tran, string sysdt, string systm)
-        {
-            m_pgm_step = "Make_ASM014";
+        //private void Make_ASM014(OleDbConnection conn, OleDbTransaction tran, string sysdt, string systm)
+        //{
+        //    m_pgm_step = "Make_ASM014";
+        //
+        //    CMakeASM014 make = new CMakeASM014();
+        //    List<CDataASM014_001> list = (List<CDataASM014_001>)grdASM010.DataSource;
+        //    foreach (CDataASM014_001 data in list)
+        //    {
+        //        this.ShowProgressForm("", data.PNM + "(" + data.PID + ") 환자 자료 조회 중입니다.");
+        //        m_pgm_step = data.PNM + "(" + data.PID + ") " + data.STEDT;
+        //        make.MakeASM014(data, sysdt, systm, m_User, conn, tran, false);
+        //    }
+        //}
 
-            CMakeASM014 make = new CMakeASM014();
-            List<CDataASM014_001> list = (List<CDataASM014_001>)grdASM010.DataSource;
-            foreach (CDataASM014_001 data in list)
-            {
-                this.ShowProgressForm("", data.PNM + "(" + data.PID + ") 환자 자료 조회 중입니다.");
-                m_pgm_step = data.PNM + "(" + data.PID + ") " + data.STEDT;
-                make.MakeASM014(data, sysdt, systm, m_User, conn, tran, false);
-            }
-        }
+        //private void Make_ASM023(OleDbConnection conn, OleDbTransaction tran, string sysdt, string systm)
+        //{
+        //    m_pgm_step = "Make_ASM023";
+        //
+        //    CMakeASM023 make = new CMakeASM023();
+        //    List<CDataASM023_002> list = (List<CDataASM023_002>)grdASM010.DataSource;
+        //    foreach (CDataASM023_002 data in list)
+        //    {
+        //        this.ShowProgressForm("", data.PNM + "(" + data.PID + ") 환자 자료 조회 중입니다.");
+        //        m_pgm_step = data.PNM + "(" + data.PID + ") " + data.STEDT;
+        //        make.MakeASM023(data, sysdt, systm, m_User, conn, tran, false);
+        //    }
+        //}
 
-        private void Make_ASM023(OleDbConnection conn, OleDbTransaction tran, string sysdt, string systm)
-        {
-            m_pgm_step = "Make_ASM023";
+        //private void Make_ASM024(OleDbConnection conn, OleDbTransaction tran, string sysdt, string systm)
+        //{
+        //    m_pgm_step = "Make_ASM024";
+        //
+        //    CMakeASM024 make = new CMakeASM024();
+        //    List<CDataASM024_002> list = (List<CDataASM024_002>)grdASM010.DataSource;
+        //    foreach (CDataASM024_002 data in list)
+        //    {
+        //        this.ShowProgressForm("", data.PNM + "(" + data.PID + ") 환자 자료 조회 중입니다.");
+        //        m_pgm_step = data.PNM + "(" + data.PID + ") " + data.STEDT;
+        //        make.MakeASM024(data, sysdt, systm, m_User, conn, tran, false);
+        //    }
+        //}
 
-            CMakeASM023 make = new CMakeASM023();
-            List<CDataASM023_002> list = (List<CDataASM023_002>)grdASM010.DataSource;
-            foreach (CDataASM023_002 data in list)
-            {
-                this.ShowProgressForm("", data.PNM + "(" + data.PID + ") 환자 자료 조회 중입니다.");
-                m_pgm_step = data.PNM + "(" + data.PID + ") " + data.STEDT;
-                make.MakeASM023(data, sysdt, systm, m_User, conn, tran, false);
-            }
-        }
-
-        private void Make_ASM024(OleDbConnection conn, OleDbTransaction tran, string sysdt, string systm)
-        {
-            m_pgm_step = "Make_ASM024";
-
-            CMakeASM024 make = new CMakeASM024();
-            List<CDataASM024_002> list = (List<CDataASM024_002>)grdASM010.DataSource;
-            foreach (CDataASM024_002 data in list)
-            {
-                this.ShowProgressForm("", data.PNM + "(" + data.PID + ") 환자 자료 조회 중입니다.");
-                m_pgm_step = data.PNM + "(" + data.PID + ") " + data.STEDT;
-                make.MakeASM024(data, sysdt, systm, m_User, conn, tran, false);
-            }
-        }
-
-        private void Make_ASM033(OleDbConnection conn, OleDbTransaction tran, string sysdt, string systm)
-        {
-            m_pgm_step = "Make_ASM033";
-
-            CMakeASM033 make = new CMakeASM033();
-            List<CDataASM033_003> list = (List<CDataASM033_003>)grdASM010.DataSource;
-            foreach (CDataASM033_003 data in list)
-            {
-                this.ShowProgressForm("", data.PNM + "(" + data.PID + ") 환자 자료 조회 중입니다.");
-                m_pgm_step = data.PNM + "(" + data.PID + ") " + data.STEDT;
-                make.MakeASM033(data, sysdt, systm, m_User, conn, tran, false);
-            }
-        }
+        //private void Make_ASM033(OleDbConnection conn, OleDbTransaction tran, string sysdt, string systm)
+        //{
+        //    m_pgm_step = "Make_ASM033";
+        //
+        //    CMakeASM033 make = new CMakeASM033();
+        //    List<CDataASM033_003> list = (List<CDataASM033_003>)grdASM010.DataSource;
+        //    foreach (CDataASM033_003 data in list)
+        //    {
+        //        this.ShowProgressForm("", data.PNM + "(" + data.PID + ") 환자 자료 조회 중입니다.");
+        //        m_pgm_step = data.PNM + "(" + data.PID + ") " + data.STEDT;
+        //        make.MakeASM033(data, sysdt, systm, m_User, conn, tran, false);
+        //    }
+        //}
 
         //private void Make_ASM035(OleDbConnection conn, OleDbTransaction tran, string sysdt, string systm)
         //{
@@ -758,47 +704,47 @@ namespace ADD7007E
         //    }
         //}
 
-        private void Make_ASM036(OleDbConnection conn, OleDbTransaction tran, string sysdt, string systm)
-        {
-            m_pgm_step = "Make_ASM036";
+        //private void Make_ASM036(OleDbConnection conn, OleDbTransaction tran, string sysdt, string systm)
+        //{
+        //    m_pgm_step = "Make_ASM036";
+        //
+        //    CMakeASM036 make = new CMakeASM036();
+        //    List<CDataASM036_002> list = (List<CDataASM036_002>)grdASM010.DataSource;
+        //    foreach (CDataASM036_002 data in list)
+        //    {
+        //        this.ShowProgressForm("", data.PNM + "(" + data.PID + ") 환자 자료 조회 중입니다.");
+        //        m_pgm_step = data.PNM + "(" + data.PID + ") " + data.STEDT;
+        //        make.MakeASM036(data, sysdt, systm, m_User, conn, tran, false);
+        //    }
+        //}
 
-            CMakeASM036 make = new CMakeASM036();
-            List<CDataASM036_002> list = (List<CDataASM036_002>)grdASM010.DataSource;
-            foreach (CDataASM036_002 data in list)
-            {
-                this.ShowProgressForm("", data.PNM + "(" + data.PID + ") 환자 자료 조회 중입니다.");
-                m_pgm_step = data.PNM + "(" + data.PID + ") " + data.STEDT;
-                make.MakeASM036(data, sysdt, systm, m_User, conn, tran, false);
-            }
-        }
+        //private void Make_ASM037(OleDbConnection conn, OleDbTransaction tran, string sysdt, string systm)
+        //{
+        //    m_pgm_step = "Make_ASM037";
+        //
+        //    CMakeASM037 make = new CMakeASM037();
+        //    List<CDataASM037_003> list = (List<CDataASM037_003>)grdASM010.DataSource;
+        //    foreach (CDataASM037_003 data in list)
+        //    {
+        //        this.ShowProgressForm("", data.PNM + "(" + data.PID + ") 환자 자료 조회 중입니다.");
+        //        m_pgm_step = data.PNM + "(" + data.PID + ") " + data.STEDT;
+        //        make.MakeASM037(data, sysdt, systm, m_User, conn, tran, false);
+        //    }
+        //}
 
-        private void Make_ASM037(OleDbConnection conn, OleDbTransaction tran, string sysdt, string systm)
-        {
-            m_pgm_step = "Make_ASM037";
-
-            CMakeASM037 make = new CMakeASM037();
-            List<CDataASM037_003> list = (List<CDataASM037_003>)grdASM010.DataSource;
-            foreach (CDataASM037_003 data in list)
-            {
-                this.ShowProgressForm("", data.PNM + "(" + data.PID + ") 환자 자료 조회 중입니다.");
-                m_pgm_step = data.PNM + "(" + data.PID + ") " + data.STEDT;
-                make.MakeASM037(data, sysdt, systm, m_User, conn, tran, false);
-            }
-        }
-
-        private void Make_ASM049(OleDbConnection conn, OleDbTransaction tran, string sysdt, string systm)
-        {
-            m_pgm_step = "Make_ASM049";
-
-            CMakeASM049 make = new CMakeASM049();
-            List<CDataASM049_001> list = (List<CDataASM049_001>)grdASM010.DataSource;
-            foreach (CDataASM049_001 data in list)
-            {
-                this.ShowProgressForm("", data.PNM + "(" + data.PID + ") 환자 자료 조회 중입니다.");
-                m_pgm_step = data.PNM + "(" + data.PID + ") " + data.STEDT;
-                make.MakeASM049(data, sysdt, systm, m_User, conn, tran, false);
-            }
-        }
+        //private void Make_ASM049(OleDbConnection conn, OleDbTransaction tran, string sysdt, string systm)
+        //{
+        //    m_pgm_step = "Make_ASM049";
+        //
+        //    CMakeASM049 make = new CMakeASM049();
+        //    List<CDataASM049_001> list = (List<CDataASM049_001>)grdASM010.DataSource;
+        //    foreach (CDataASM049_001 data in list)
+        //    {
+        //        this.ShowProgressForm("", data.PNM + "(" + data.PID + ") 환자 자료 조회 중입니다.");
+        //        m_pgm_step = data.PNM + "(" + data.PID + ") " + data.STEDT;
+        //        make.MakeASM049(data, sysdt, systm, m_User, conn, tran, false);
+        //    }
+        //}
 
         //***********************************************************************************************************
 
@@ -843,19 +789,7 @@ namespace ADD7007E
         {
             string typeName = GetTypename();
             DevExpress.XtraGrid.Views.Grid.GridView view = null;
-            if (typeName == "수술의예방적항생제사용")
-            {
-                view = grdASM010View;
-            }
-            else if (typeName == "마취")
-            {
-                view = grdASM035View;
-            }
-            else
-            {
-                MessageBox.Show("준비 중입니다.");
-                return;
-            }
+            view = grdASM010View;
 
             CHiraEForm hira = new CHiraEForm();
             string strConn = MetroLib.DBHelper.GetConnectionString();
@@ -970,7 +904,7 @@ namespace ADD7007E
                 }
                 else if (typeName == "마취")
                 {
-                    view = grdASM035View;
+                    view = grdASM010View;
                 }
                 else
                 {
@@ -1005,15 +939,19 @@ namespace ADD7007E
             string typeName = GetTypename();
             if (typeName == "관상동맥우회술")
             {
-                f = new ADD7007_ASM002_002(txtHosid.Text.ToString(), m_User, grdASM010View);
+                var frm = new ADD7007_ASM002_002(txtHosid.Text.ToString(), m_User, grdASM010View);
+                frm.RemakeRequested += new EventHandler<RemakeRequestedEventArgs<CDataASM002_002>>(ASM_RemakeRequested);
+                f = frm;
             }
             else if (typeName == "급성기뇌졸증")
             {
-                f = new ADD7007_ASM003_002(txtHosid.Text.ToString(), m_User, grdASM010View);
+                var frm = new ADD7007_ASM003_002(txtHosid.Text.ToString(), m_User, grdASM010View);
+                frm.RemakeRequested += new EventHandler<RemakeRequestedEventArgs<CDataASM003_002>>(ASM_RemakeRequested);
+                f = frm;
             }
             else if (typeName == "마취")
             {
-                var frm = new ADD7007_ASM035_003(txtHosid.Text.ToString(), m_User, grdASM035View);
+                var frm = new ADD7007_ASM035_003(txtHosid.Text.ToString(), m_User, grdASM010View);
                 frm.RemakeRequested += new EventHandler<RemakeRequestedEventArgs<CDataASM035_003>>(ASM_RemakeRequested);
                 f = frm;
             }
@@ -1025,35 +963,51 @@ namespace ADD7007E
             }
             else if (typeName == "수혈")
             {
-                f = new ADD7007_ASM037_003(txtHosid.Text.ToString(), m_User, grdASM010View);
+                var frm = new ADD7007_ASM037_003(txtHosid.Text.ToString(), m_User, grdASM010View);
+                frm.RemakeRequested += new EventHandler<RemakeRequestedEventArgs<CDataASM037_003>>(ASM_RemakeRequested);
+                f = frm;
             }
             else if (typeName == "신생아중환자실")
             {
-                f = new ADD7007_ASM033_003(txtHosid.Text.ToString(), m_User, grdASM010View);
+                var frm = new ADD7007_ASM033_003(txtHosid.Text.ToString(), m_User, grdASM010View);
+                frm.RemakeRequested += new EventHandler<RemakeRequestedEventArgs<CDataASM033_003>>(ASM_RemakeRequested);
+                f = frm;
             }
             else if (typeName == "영상검사")
             {
-                f = new ADD7007_ASM049_001(txtHosid.Text.ToString(), m_User, grdASM010View);
+                var frm = new ADD7007_ASM049_001(txtHosid.Text.ToString(), m_User, grdASM010View);
+                frm.RemakeRequested += new EventHandler<RemakeRequestedEventArgs<CDataASM049_001>>(ASM_RemakeRequested);
+                f = frm;
             }
             else if (typeName == "의료급여정신과")
             {
-                f = new ADD7007_ASM014_001(txtHosid.Text.ToString(), m_User, grdASM010View);
+                var frm = new ADD7007_ASM014_001(txtHosid.Text.ToString(), m_User, grdASM010View);
+                frm.RemakeRequested += new EventHandler<RemakeRequestedEventArgs<CDataASM014_001>>(ASM_RemakeRequested);
+                f = frm;
             }
             else if (typeName == "정신건강입원영역")
             {
-                f = new ADD7007_ASM036_002(txtHosid.Text.ToString(), m_User, grdASM010View);
+                var frm = new ADD7007_ASM036_002(txtHosid.Text.ToString(), m_User, grdASM010View);
+                frm.RemakeRequested += new EventHandler<RemakeRequestedEventArgs<CDataASM036_002>>(ASM_RemakeRequested);
+                f = frm;
             }
             else if (typeName == "중환자실")
             {
-                f = new ADD7007_ASM024_002(txtHosid.Text.ToString(), m_User, grdASM010View);
+                var frm = new ADD7007_ASM024_002(txtHosid.Text.ToString(), m_User, grdASM010View);
+                frm.RemakeRequested += new EventHandler<RemakeRequestedEventArgs<CDataASM024_002>>(ASM_RemakeRequested);
+                f = frm;
             }
             else if (typeName == "폐렴")
             {
-                f = new ADD7007_ASM023_002(txtHosid.Text.ToString(), m_User, grdASM010View);
+                var frm = new ADD7007_ASM023_002(txtHosid.Text.ToString(), m_User, grdASM010View);
+                frm.RemakeRequested += new EventHandler<RemakeRequestedEventArgs<CDataASM023_002>>(ASM_RemakeRequested);
+                f = frm;
             }
             else if (typeName == "혈액투석")
             {
-                f = new ADD7007_ASM008_002(txtHosid.Text.ToString(), m_User, grdASM010View);
+                var frm = new ADD7007_ASM008_002(txtHosid.Text.ToString(), m_User, grdASM010View);
+                frm.RemakeRequested += new EventHandler<RemakeRequestedEventArgs<CDataASM008_002>>(ASM_RemakeRequested);
+                f = frm;
             }
             else
             {
@@ -1105,20 +1059,32 @@ namespace ADD7007E
         private void grdListView_DoubleClick(object sender, EventArgs e)
         {
             txtTypeName.Text = grdListView.GetRowCellValue(grdListView.GetDataSourceRowIndex(grdListView.FocusedRowHandle), "TYPE_NM").ToString();
+            ApplyMainGridColumns(txtTypeName.Text);
+
             if (txtTypeName.Text.ToString().Trim() == "수술의예방적항생제사용")
             {
-                grdASM010.BringToFront();
                 txtFrdt.Text = "20250401";
                 txtTodt.Text = "20250630";
-                grdASM010.DataSource = null;
             }
             else if (txtTypeName.Text.ToString().Trim() == "마취")
             {
-                grdASM035.BringToFront();
                 txtFrdt.Text = "20250701";
                 txtTodt.Text = "20250930";
-                grdASM035.DataSource = null;
             }
+            else if (txtTypeName.Text.ToString().Trim() == "수혈")
+            {
+                txtFrdt.Text = "20250701";
+                txtTodt.Text = "20251231";
+            }
+            else if (txtTypeName.Text.ToString().Trim() == "중환자실")
+            {
+                txtFrdt.Text = "20250701";
+                txtTodt.Text = "20251231";
+            }
+
+            grdASM010.BringToFront();
+            grdASM010.DataSource = null;
+
             RefreshGrid();
         }
 
@@ -1197,8 +1163,8 @@ namespace ADD7007E
                 }
                 else if (typeName == "마취")
                 {
-                    view = grdASM035View;
-                    grid = grdASM035;
+                    view = grdASM010View;
+                    grid = grdASM010;
                 }
                 else
                 {
@@ -1263,13 +1229,17 @@ namespace ADD7007E
         private void f_PtntChanged(object sender, PtntChangedEventArgs e)
         {
             string typeName = GetTypename();
-            if (typeName == "수술의예방학적항생제사용")
+            if (typeName == "수술의예방적항생제사용")
             {
                 f_PtntChanged_ASM010(sender, e);
             }
             else if (typeName == "마취")
             {
                 f_PtntChanged_ASM035(sender, e);
+            }
+            else if (typeName == "수혈")
+            {
+                f_PtntChanged_ASM037(sender, e);
             }
 
             RefreshGrid();
@@ -1426,12 +1396,12 @@ namespace ADD7007E
             if (e.no == 1)
             {
                 list = new List<CDataASM035_003>();
-                grdASM035.DataSource = null;
-                grdASM035.DataSource = list;
+                grdASM010.DataSource = null;
+                grdASM010.DataSource = list;
             }
             else
             {
-                list = grdASM035.DataSource as List<CDataASM035_003>;
+                list = grdASM010.DataSource as List<CDataASM035_003>;
             }
 
             string strConn = MetroLib.DBHelper.GetConnectionString();
@@ -1511,6 +1481,150 @@ namespace ADD7007E
 
             data.DACD = dacd1;
             data.MDFEE_CD = opcode1; // 수술코드
+
+            // 2026.02.20 WOOIL - 청구번호가 있는 경우에만 이하 작업을 한다.
+            if (demno != "")
+            {
+
+                string sql = "";
+                sql = "";
+                sql += Environment.NewLine + "SELECT *";
+                sql += Environment.NewLine + "  FROM TI2A";
+                sql += Environment.NewLine + " WHERE DEMNO='" + req_demno + "'";
+                sql += Environment.NewLine + "   AND EPRTNO='" + eprtno + "'";
+
+                MetroLib.SqlHelper.GetDataRow(sql, conn, delegate(DataRow row)
+                {
+                    data.SEL = true;
+                    data.IOFG = "2";
+                    data.PID = row["PID"].ToString();
+                    data.PNM_TI2A = row["PNM"].ToString();
+                    data.RESID = row["RESID"].ToString();
+                    data.BDEDT = row["BDEDT"].ToString();
+                    data.QFYCD = row["QFYCD"].ToString();
+                    data.GONSGB = row["GONSGB"].ToString();
+
+                    data.BDODT = row["BDODT"].ToString();
+                    data.JRBY = row["JRBY"].ToString();
+                    data.UNISQ = row["UNISQ"].ToString();
+                    data.SIMCS = row["SIMCS"].ToString();
+
+                    data.STEDT = row["STEDT"].ToString();
+
+                    string a04_bedehm = "";
+                    string a04_bedodt = "";
+                    string a04_bedohm = "";
+                    string a04_bedodiv = "";
+
+                    GetA04(data.PID, data.BDEDT, conn, ref a04_bedehm, ref a04_bedodt, ref a04_bedohm, ref a04_bedodiv);
+
+                    data.A04_BEDEHM = a04_bedehm;
+                    data.A04_BEDODT = a04_bedodt;
+                    data.A04_BEDOHM = a04_bedohm;
+                    data.A04_BEDODIV = a04_bedodiv;
+
+
+                    data.FR_DATE = frdt; // 자료 시작일
+                    data.TO_DATE = todt; // 자료 종료일
+
+                    return MetroLib.SqlHelper.BREAK;
+                });
+
+            }
+
+            return data;
+        }
+
+        private void f_PtntChanged_ASM037(object sender, PtntChangedEventArgs e)
+        {
+            List<CDataASM037_003> list = null;
+            if (e.no == 1)
+            {
+                list = new List<CDataASM037_003>();
+                grdASM010.DataSource = null;
+                grdASM010.DataSource = list;
+            }
+            else
+            {
+                list = grdASM010.DataSource as List<CDataASM037_003>;
+            }
+
+            string strConn = MetroLib.DBHelper.GetConnectionString();
+            using (OleDbConnection conn = new OleDbConnection(strConn))
+            {
+                conn.Open();
+
+                string sysdt = MetroLib.Util.GetSysDate(conn);
+                string systm = MetroLib.Util.GetSysTime(conn);
+
+                // 접수번호, 명일련번호, 환자명이 있으므로 청구내역을 찾는다.
+                CDataASM037_003 data = GetASM037_003(conn, e.frdt, e.todt, e.no, e.cnecno, e.cnecdd, e.eprtno, e.pnm, e.dacd1, e.opcode1);
+                if (data.DEMNO != "")
+                {
+                    data.ReadDataFromEMR(conn, null);
+                }
+                list.Add(data);
+
+                OleDbTransaction tran = null;
+                try
+                {
+                    tran = conn.BeginTransaction();
+
+                    if (e.no == 1)
+                    {
+                        // 모든 TI84_ASM000 자료를 삭제함.
+                        data.DelAll_ASM000(conn, tran);
+
+                        // 모든 자료 삭제
+                        data.DelAllData(conn, tran);
+                    }
+
+                    // TI84_ASM000 저장
+                    data.Into_ASM000(sysdt, systm, m_User, conn, tran, false);
+
+                    // 자료저장
+                    data.InsData(sysdt, systm, m_User, conn, tran, false);
+
+                    tran.Commit();
+
+                    e.Success = true;
+                }
+                catch (Exception ex)
+                {
+                    e.Success = false;
+                    e.FailureMessage = ex.Message;
+
+                    if (tran != null) tran.Rollback();
+                }
+            }
+        }
+
+        private CDataASM037_003 GetASM037_003(OleDbConnection conn, string frdt, string todt, int no, string cnecno, string cnecdd, string eprtno, string pnm, string dacd1, string opcode1)
+        {
+            // eprtno가 뒤에 "00"을 없애버려야 함.
+            if (eprtno.EndsWith("00"))
+                eprtno = eprtno.Substring(0, eprtno.Length - 2);
+
+            // 청구번호를 구한다.
+            string cnectdd = "";
+            string billsno = "";
+            string req_demno = "";
+            string demno = GetDemno(cnecno, conn, ref cnectdd, ref billsno, ref req_demno);
+
+            CDataASM037_003 data = new CDataASM037_003();
+            data.Clear();
+
+            data.KEYSTR = frdt + "," + todt;
+            data.SEQ = no;
+            data.NO = no;
+            data.CNECNO = cnecno;
+            data.CNECTDD = cnecdd; // 접수일자
+            data.DEMNO = demno;
+            data.EPRTNO = eprtno;
+            data.PNM = pnm; // 심평원에서 준 이름
+            data.BILLSNO = billsno; // 청구서일련번호(접수번호 부여 전인 경우 0, 원청구에 대한 제출인 경우 1, 보완청구이면 심결에 통보된 번호)
+
+            data.DACD = dacd1;
 
             // 2026.02.20 WOOIL - 청구번호가 있는 경우에만 이하 작업을 한다.
             if (demno != "")
@@ -1689,11 +1803,59 @@ namespace ADD7007E
             DevExpress.XtraSplashScreen.SplashScreenManager.CloseForm(false);
         }
 
+        private void ApplyMainGridColumns(string typeName)
+        {
+            typeName = (typeName ?? "").Trim();
+
+            HashSet<string> visibleColumns = new HashSet<string>();
+            foreach (string fieldName in m_commonGridColumns)
+            {
+                visibleColumns.Add(fieldName);
+            }
+
+            string[] typeColumns = null;
+            if (m_typeGridColumns.TryGetValue(typeName, out typeColumns))
+            {
+                foreach (string fieldName in typeColumns)
+                {
+                    visibleColumns.Add(fieldName);
+                }
+            }
+
+            foreach (DevExpress.XtraGrid.Columns.GridColumn column in grdASM010View.Columns)
+            {
+                column.Visible = visibleColumns.Contains(column.FieldName);
+            }
+
+            int visibleIndex = 0;
+            foreach (string fieldName in m_commonGridColumns)
+            {
+                SetMainGridColumnVisibleIndex(fieldName, ref visibleIndex);
+            }
+
+            if (typeColumns != null)
+            {
+                foreach (string fieldName in typeColumns)
+                {
+                    SetMainGridColumnVisibleIndex(fieldName, ref visibleIndex);
+                }
+            }
+        }
+
+        private void SetMainGridColumnVisibleIndex(string fieldName, ref int visibleIndex)
+        {
+            DevExpress.XtraGrid.Columns.GridColumn column = grdASM010View.Columns[fieldName];
+            if (column == null) return;
+            if (column.Visible == false) return;
+
+            column.VisibleIndex = visibleIndex;
+            visibleIndex++;
+        }
+
         private void RefreshGrid()
         {
             CUtil.RefreshGrid(grdList, grdListView);
             CUtil.RefreshGrid(grdASM010, grdASM010View);
-            CUtil.RefreshGrid(grdASM035, grdASM035View);
         }
 
     }

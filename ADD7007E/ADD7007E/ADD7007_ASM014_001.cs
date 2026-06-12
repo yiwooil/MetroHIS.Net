@@ -12,6 +12,8 @@ namespace ADD7007E
 {
     public partial class ADD7007_ASM014_001 : Form
     {
+        public event EventHandler<RemakeRequestedEventArgs<CDataASM014_001>> RemakeRequested;
+
         public class TRFR
         {
             public string TRFR_DD { get; set; }
@@ -430,31 +432,22 @@ namespace ADD7007E
 
         private void ReQuery()
         {
-            string strConn = MetroLib.DBHelper.GetConnectionString();
-            using (OleDbConnection conn = new OleDbConnection(strConn))
+            var args = new RemakeRequestedEventArgs<CDataASM014_001>(m_data);
+
+            // ADD7007E가 처리하도록 이벤트만 발생
+            if (RemakeRequested != null)
             {
-                OleDbTransaction tran = null;
+                RemakeRequested(this, args);
 
-                try
+                if (args.Success)
                 {
-                    conn.Open();
-
-                    string sysdt = MetroLib.Util.GetSysDate(conn);
-                    string systm = MetroLib.Util.GetSysTime(conn);
-
-                    CMakeASM014 make = new CMakeASM014();
-                    tran = conn.BeginTransaction();
-                    make.MakeASM014(m_data, sysdt, systm, m_User, conn, tran, true);
-                    tran.Commit();
+                    ShowData();
+                    RefreshGrid();
                 }
-                catch (Exception ex)
+                else
                 {
-                    if (tran != null) tran.Rollback();
-                    MessageBox.Show(ex.Message);
+                    MessageBox.Show(args.FailureMessage);
                 }
-
-                ShowData();
-                RefreshGrid();
             }
         }
 
