@@ -167,7 +167,6 @@
             this.txtFilename = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.btnFile = new System.Windows.Forms.Button();
-            this.btnReadExcel = new System.Windows.Forms.Button();
             this.txtInfo = new System.Windows.Forms.TextBox();
             this.btnMake = new System.Windows.Forms.Button();
             this.txtTodt = new System.Windows.Forms.TextBox();
@@ -206,7 +205,7 @@
             this.grdExcel.Location = new System.Drawing.Point(14, 74);
             this.grdExcel.MainView = this.grdExcelView;
             this.grdExcel.Name = "grdExcel";
-            this.grdExcel.Size = new System.Drawing.Size(993, 395);
+            this.grdExcel.Size = new System.Drawing.Size(994, 395);
             this.grdExcel.TabIndex = 29;
             this.grdExcel.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.grdExcelView});
@@ -1546,11 +1545,9 @@
             // 
             // txtFilename
             // 
-            this.txtFilename.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
             this.txtFilename.Location = new System.Drawing.Point(59, 39);
             this.txtFilename.Name = "txtFilename";
-            this.txtFilename.Size = new System.Drawing.Size(771, 21);
+            this.txtFilename.Size = new System.Drawing.Size(772, 21);
             this.txtFilename.TabIndex = 31;
             // 
             // label1
@@ -1565,29 +1562,16 @@
             // btnFile
             // 
             this.btnFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnFile.Location = new System.Drawing.Point(857, 38);
+            this.btnFile.Location = new System.Drawing.Point(855, 11);
             this.btnFile.Name = "btnFile";
-            this.btnFile.Size = new System.Drawing.Size(75, 23);
+            this.btnFile.Size = new System.Drawing.Size(153, 23);
             this.btnFile.TabIndex = 42;
-            this.btnFile.Text = "①파일선택";
+            this.btnFile.Text = "① 파일선택";
             this.btnFile.UseVisualStyleBackColor = true;
             this.btnFile.Click += new System.EventHandler(this.btnFile_Click);
             // 
-            // btnReadExcel
-            // 
-            this.btnReadExcel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnReadExcel.Location = new System.Drawing.Point(933, 38);
-            this.btnReadExcel.Name = "btnReadExcel";
-            this.btnReadExcel.Size = new System.Drawing.Size(75, 23);
-            this.btnReadExcel.TabIndex = 43;
-            this.btnReadExcel.Text = "②파일읽기";
-            this.btnReadExcel.UseVisualStyleBackColor = true;
-            this.btnReadExcel.Click += new System.EventHandler(this.btnReadExcel_Click);
-            // 
             // txtInfo
             // 
-            this.txtInfo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
             this.txtInfo.Location = new System.Drawing.Point(487, 12);
             this.txtInfo.Name = "txtInfo";
             this.txtInfo.ReadOnly = true;
@@ -1597,11 +1581,11 @@
             // btnMake
             // 
             this.btnMake.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnMake.Location = new System.Drawing.Point(857, 12);
+            this.btnMake.Location = new System.Drawing.Point(857, 38);
             this.btnMake.Name = "btnMake";
-            this.btnMake.Size = new System.Drawing.Size(152, 23);
+            this.btnMake.Size = new System.Drawing.Size(151, 27);
             this.btnMake.TabIndex = 46;
-            this.btnMake.Text = "③이 자료로 대상자 생성";
+            this.btnMake.Text = "② 이 자료로 대상자 생성";
             this.btnMake.UseVisualStyleBackColor = true;
             this.btnMake.Click += new System.EventHandler(this.btnMake_Click);
             // 
@@ -1648,7 +1632,7 @@
             this.panel1.Controls.Add(this.label4);
             this.panel1.Location = new System.Drawing.Point(14, 474);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(993, 23);
+            this.panel1.Size = new System.Drawing.Size(994, 23);
             this.panel1.TabIndex = 51;
             // 
             // label4
@@ -1666,7 +1650,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1019, 503);
+            this.ClientSize = new System.Drawing.Size(1020, 503);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.chkNPOI);
             this.Controls.Add(this.txtTodt);
@@ -1674,7 +1658,6 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.btnMake);
             this.Controls.Add(this.txtInfo);
-            this.Controls.Add(this.btnReadExcel);
             this.Controls.Add(this.btnFile);
             this.Controls.Add(this.txtFilename);
             this.Controls.Add(this.label1);
@@ -1730,7 +1713,6 @@
         private System.Windows.Forms.TextBox txtFilename;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnFile;
-        private System.Windows.Forms.Button btnReadExcel;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn110;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn109;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn108;

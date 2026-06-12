@@ -428,7 +428,6 @@
             // 
             // rbLFB_FS_LVL_3
             // 
-            this.rbLFB_FS_LVL_3.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.rbLFB_FS_LVL_3.AutoSize = true;
             this.rbLFB_FS_LVL_3.Location = new System.Drawing.Point(145, 3);
             this.rbLFB_FS_LVL_3.Name = "rbLFB_FS_LVL_3";
@@ -440,7 +439,6 @@
             // 
             // rbLFB_FS_LVL_2
             // 
-            this.rbLFB_FS_LVL_2.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.rbLFB_FS_LVL_2.AutoSize = true;
             this.rbLFB_FS_LVL_2.Location = new System.Drawing.Point(76, 3);
             this.rbLFB_FS_LVL_2.Name = "rbLFB_FS_LVL_2";
@@ -452,7 +450,6 @@
             // 
             // rbLFB_FS_LVL_1
             // 
-            this.rbLFB_FS_LVL_1.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.rbLFB_FS_LVL_1.AutoSize = true;
             this.rbLFB_FS_LVL_1.Location = new System.Drawing.Point(4, 2);
             this.rbLFB_FS_LVL_1.Name = "rbLFB_FS_LVL_1";
@@ -474,7 +471,6 @@
             // 
             // rbKNJN_RPMT_RGN_CD_2
             // 
-            this.rbKNJN_RPMT_RGN_CD_2.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.rbKNJN_RPMT_RGN_CD_2.AutoSize = true;
             this.rbKNJN_RPMT_RGN_CD_2.Location = new System.Drawing.Point(55, 2);
             this.rbKNJN_RPMT_RGN_CD_2.Name = "rbKNJN_RPMT_RGN_CD_2";
@@ -486,7 +482,6 @@
             // 
             // rbKNJN_RPMT_RGN_CD_1
             // 
-            this.rbKNJN_RPMT_RGN_CD_1.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.rbKNJN_RPMT_RGN_CD_1.AutoSize = true;
             this.rbKNJN_RPMT_RGN_CD_1.Location = new System.Drawing.Point(4, 1);
             this.rbKNJN_RPMT_RGN_CD_1.Name = "rbKNJN_RPMT_RGN_CD_1";
@@ -508,7 +503,6 @@
             // 
             // rbKNJN_RPMT_YN_2
             // 
-            this.rbKNJN_RPMT_YN_2.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.rbKNJN_RPMT_YN_2.AutoSize = true;
             this.rbKNJN_RPMT_YN_2.Location = new System.Drawing.Point(55, 2);
             this.rbKNJN_RPMT_YN_2.Name = "rbKNJN_RPMT_YN_2";
@@ -520,15 +514,15 @@
             // 
             // rbKNJN_RPMT_YN_1
             // 
-            this.rbKNJN_RPMT_YN_1.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.rbKNJN_RPMT_YN_1.AutoSize = true;
-            this.rbKNJN_RPMT_YN_1.Location = new System.Drawing.Point(4, 1);
+            this.rbKNJN_RPMT_YN_1.Location = new System.Drawing.Point(4, 2);
             this.rbKNJN_RPMT_YN_1.Name = "rbKNJN_RPMT_YN_1";
             this.rbKNJN_RPMT_YN_1.Size = new System.Drawing.Size(45, 16);
             this.rbKNJN_RPMT_YN_1.TabIndex = 12;
             this.rbKNJN_RPMT_YN_1.TabStop = true;
             this.rbKNJN_RPMT_YN_1.Text = "Yes";
             this.rbKNJN_RPMT_YN_1.UseVisualStyleBackColor = true;
+            this.rbKNJN_RPMT_YN_1.CheckedChanged += new System.EventHandler(this.rbKNJN_RPMT_YN_1_CheckedChanged);
             // 
             // panel1
             // 
@@ -542,7 +536,6 @@
             // 
             // rbLFB_FS_YN_2
             // 
-            this.rbLFB_FS_YN_2.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.rbLFB_FS_YN_2.AutoSize = true;
             this.rbLFB_FS_YN_2.Location = new System.Drawing.Point(55, 2);
             this.rbLFB_FS_YN_2.Name = "rbLFB_FS_YN_2";
@@ -554,7 +547,6 @@
             // 
             // rbLFB_FS_YN_1
             // 
-            this.rbLFB_FS_YN_1.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.rbLFB_FS_YN_1.AutoSize = true;
             this.rbLFB_FS_YN_1.Location = new System.Drawing.Point(4, 1);
             this.rbLFB_FS_YN_1.Name = "rbLFB_FS_YN_1";
@@ -563,6 +555,7 @@
             this.rbLFB_FS_YN_1.TabStop = true;
             this.rbLFB_FS_YN_1.Text = "Yes";
             this.rbLFB_FS_YN_1.UseVisualStyleBackColor = true;
+            this.rbLFB_FS_YN_1.CheckedChanged += new System.EventHandler(this.rbLFB_FS_YN_1_CheckedChanged);
             // 
             // label7
             // 
@@ -623,7 +616,6 @@
             // 
             // rbASM_PRSC_YN_2
             // 
-            this.rbASM_PRSC_YN_2.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.rbASM_PRSC_YN_2.AutoSize = true;
             this.rbASM_PRSC_YN_2.Location = new System.Drawing.Point(55, 3);
             this.rbASM_PRSC_YN_2.Name = "rbASM_PRSC_YN_2";
@@ -635,20 +627,20 @@
             // 
             // rbASM_PRSC_YN_1
             // 
-            this.rbASM_PRSC_YN_1.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.rbASM_PRSC_YN_1.AutoSize = true;
-            this.rbASM_PRSC_YN_1.Location = new System.Drawing.Point(4, 2);
+            this.rbASM_PRSC_YN_1.Location = new System.Drawing.Point(4, 3);
             this.rbASM_PRSC_YN_1.Name = "rbASM_PRSC_YN_1";
             this.rbASM_PRSC_YN_1.Size = new System.Drawing.Size(45, 16);
             this.rbASM_PRSC_YN_1.TabIndex = 12;
             this.rbASM_PRSC_YN_1.TabStop = true;
             this.rbASM_PRSC_YN_1.Text = "Yes";
             this.rbASM_PRSC_YN_1.UseVisualStyleBackColor = true;
+            this.rbASM_PRSC_YN_1.CheckedChanged += new System.EventHandler(this.rbASM_PRSC_YN_1_CheckedChanged);
             // 
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(23, 344);
+            this.label12.Location = new System.Drawing.Point(23, 346);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(77, 12);
             this.label12.TabIndex = 11;
@@ -817,7 +809,6 @@
             // 
             // rbANM_DIAG_YN_2
             // 
-            this.rbANM_DIAG_YN_2.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.rbANM_DIAG_YN_2.AutoSize = true;
             this.rbANM_DIAG_YN_2.Location = new System.Drawing.Point(55, 3);
             this.rbANM_DIAG_YN_2.Name = "rbANM_DIAG_YN_2";
@@ -829,15 +820,15 @@
             // 
             // rbANM_DIAG_YN_1
             // 
-            this.rbANM_DIAG_YN_1.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.rbANM_DIAG_YN_1.AutoSize = true;
-            this.rbANM_DIAG_YN_1.Location = new System.Drawing.Point(4, 2);
+            this.rbANM_DIAG_YN_1.Location = new System.Drawing.Point(4, 3);
             this.rbANM_DIAG_YN_1.Name = "rbANM_DIAG_YN_1";
             this.rbANM_DIAG_YN_1.Size = new System.Drawing.Size(45, 16);
             this.rbANM_DIAG_YN_1.TabIndex = 12;
             this.rbANM_DIAG_YN_1.TabStop = true;
             this.rbANM_DIAG_YN_1.Text = "Yes";
             this.rbANM_DIAG_YN_1.UseVisualStyleBackColor = true;
+            this.rbANM_DIAG_YN_1.CheckedChanged += new System.EventHandler(this.rbANM_DIAG_YN_1_CheckedChanged);
             // 
             // label13
             // 
@@ -856,7 +847,7 @@
             this.label14.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
             this.label14.Size = new System.Drawing.Size(476, 21);
             this.label14.TabIndex = 193;
-            this.label14.Text = "투약정보 - 빈혈진단";
+            this.label14.Text = "투약정보";
             this.label14.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // grdANM_REFM
@@ -911,7 +902,6 @@
             // 
             // rbANM_REFM_YN_2
             // 
-            this.rbANM_REFM_YN_2.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.rbANM_REFM_YN_2.AutoSize = true;
             this.rbANM_REFM_YN_2.Location = new System.Drawing.Point(55, 3);
             this.rbANM_REFM_YN_2.Name = "rbANM_REFM_YN_2";
@@ -923,7 +913,6 @@
             // 
             // rbANM_REFM_YN_1
             // 
-            this.rbANM_REFM_YN_1.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.rbANM_REFM_YN_1.AutoSize = true;
             this.rbANM_REFM_YN_1.Location = new System.Drawing.Point(4, 2);
             this.rbANM_REFM_YN_1.Name = "rbANM_REFM_YN_1";
@@ -932,6 +921,7 @@
             this.rbANM_REFM_YN_1.TabStop = true;
             this.rbANM_REFM_YN_1.Text = "Yes";
             this.rbANM_REFM_YN_1.UseVisualStyleBackColor = true;
+            this.rbANM_REFM_YN_1.CheckedChanged += new System.EventHandler(this.rbANM_REFM_YN_1_CheckedChanged);
             // 
             // label15
             // 
@@ -1024,7 +1014,6 @@
             // 
             // rbHG_EXM_ENFC_YN_2
             // 
-            this.rbHG_EXM_ENFC_YN_2.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.rbHG_EXM_ENFC_YN_2.AutoSize = true;
             this.rbHG_EXM_ENFC_YN_2.Location = new System.Drawing.Point(55, 3);
             this.rbHG_EXM_ENFC_YN_2.Name = "rbHG_EXM_ENFC_YN_2";
@@ -1036,7 +1025,6 @@
             // 
             // rbHG_EXM_ENFC_YN_1
             // 
-            this.rbHG_EXM_ENFC_YN_1.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.rbHG_EXM_ENFC_YN_1.AutoSize = true;
             this.rbHG_EXM_ENFC_YN_1.Location = new System.Drawing.Point(4, 2);
             this.rbHG_EXM_ENFC_YN_1.Name = "rbHG_EXM_ENFC_YN_1";
@@ -1045,6 +1033,7 @@
             this.rbHG_EXM_ENFC_YN_1.TabStop = true;
             this.rbHG_EXM_ENFC_YN_1.Text = "Yes";
             this.rbHG_EXM_ENFC_YN_1.UseVisualStyleBackColor = true;
+            this.rbHG_EXM_ENFC_YN_1.CheckedChanged += new System.EventHandler(this.rbHG_EXM_ENFC_YN_1_CheckedChanged);
             // 
             // label16
             // 
@@ -1228,7 +1217,6 @@
             // 
             // rbBLTS_YN_2
             // 
-            this.rbBLTS_YN_2.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.rbBLTS_YN_2.AutoSize = true;
             this.rbBLTS_YN_2.Location = new System.Drawing.Point(55, 3);
             this.rbBLTS_YN_2.Name = "rbBLTS_YN_2";
@@ -1240,7 +1228,6 @@
             // 
             // rbBLTS_YN_1
             // 
-            this.rbBLTS_YN_1.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.rbBLTS_YN_1.AutoSize = true;
             this.rbBLTS_YN_1.Location = new System.Drawing.Point(4, 2);
             this.rbBLTS_YN_1.Name = "rbBLTS_YN_1";
@@ -1249,6 +1236,7 @@
             this.rbBLTS_YN_1.TabStop = true;
             this.rbBLTS_YN_1.Text = "Yes";
             this.rbBLTS_YN_1.UseVisualStyleBackColor = true;
+            this.rbBLTS_YN_1.CheckedChanged += new System.EventHandler(this.rbBLTS_YN_1_CheckedChanged);
             // 
             // label18
             // 
@@ -1394,14 +1382,13 @@
             this.panel8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel8.Controls.Add(this.rbSOPR_YN_2);
             this.panel8.Controls.Add(this.rbSOPR_YN_1);
-            this.panel8.Location = new System.Drawing.Point(78, 125);
+            this.panel8.Location = new System.Drawing.Point(83, 125);
             this.panel8.Name = "panel8";
             this.panel8.Size = new System.Drawing.Size(114, 24);
             this.panel8.TabIndex = 15;
             // 
             // rbSOPR_YN_2
             // 
-            this.rbSOPR_YN_2.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.rbSOPR_YN_2.AutoSize = true;
             this.rbSOPR_YN_2.Location = new System.Drawing.Point(55, 3);
             this.rbSOPR_YN_2.Name = "rbSOPR_YN_2";
@@ -1413,20 +1400,20 @@
             // 
             // rbSOPR_YN_1
             // 
-            this.rbSOPR_YN_1.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.rbSOPR_YN_1.AutoSize = true;
-            this.rbSOPR_YN_1.Location = new System.Drawing.Point(4, 2);
+            this.rbSOPR_YN_1.Location = new System.Drawing.Point(4, 3);
             this.rbSOPR_YN_1.Name = "rbSOPR_YN_1";
             this.rbSOPR_YN_1.Size = new System.Drawing.Size(45, 16);
             this.rbSOPR_YN_1.TabIndex = 12;
             this.rbSOPR_YN_1.TabStop = true;
             this.rbSOPR_YN_1.Text = "Yes";
             this.rbSOPR_YN_1.UseVisualStyleBackColor = true;
+            this.rbSOPR_YN_1.CheckedChanged += new System.EventHandler(this.rbSOPR_YN_1_CheckedChanged);
             // 
             // label21
             // 
             this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(20, 130);
+            this.label21.Location = new System.Drawing.Point(19, 131);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(57, 12);
             this.label21.TabIndex = 11;

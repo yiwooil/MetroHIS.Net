@@ -58,6 +58,9 @@ namespace ADD7007E
                 if (filename == "") return;
 
                 txtFilename.Text = filename;
+                Application.DoEvents();
+
+                ReadSelectedExcelFile();
 
             }
             catch (Exception ex)
@@ -66,7 +69,7 @@ namespace ADD7007E
             }
         }
 
-        private void btnReadExcel_Click(object sender, EventArgs e)
+        private void ReadSelectedExcelFile()
         {
 
             txtInfo.Text = "";
@@ -81,6 +84,8 @@ namespace ADD7007E
                 COL_OPCODE1 = -1; // 수술코드 컬럼
 
                 string filename = txtFilename.Text.ToString().Trim();
+                if (filename == "") return;
+
                 Cursor.Current = Cursors.WaitCursor;
                 this.ShowProgressForm("", "엑셀 파일을 읽는 중입니다.");
                 if (chkNPOI.Checked == true)
@@ -473,14 +478,26 @@ namespace ADD7007E
                 return;
             }
 
+            string filename = txtFilename.Text.ToString().Trim();
+            if (filename == "")
+            {
+                MessageBox.Show("먼저 엑셀파일을 선택하세요.");
+                return;
+            }
+
+            List<CDataExcel> list = grdExcel.DataSource as List<CDataExcel>;
+            if (list == null || list.Count <= 1)
+            {
+                MessageBox.Show("처리할 자료가 없습니다.");
+                return;
+            }
+
             ShowProgressForm("", "처리 준비 중입니다.");
             bool isOk = true;
             try
             {
                 string frdt = txtFrdt.Text.ToString().Trim();
                 string todt = txtTodt.Text.ToString().Trim();
-
-                List<CDataExcel> list = grdExcel.DataSource as List<CDataExcel>;
 
                 // row=0은 컬럼 제목임
                 for (int row = 1; row < grdExcelView.DataRowCount; row++)

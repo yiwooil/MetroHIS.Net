@@ -233,6 +233,34 @@ namespace ADD7007E
             CUtil.RefreshGrid(grdIPAT, grdIPATView);
         }
 
+        private void ApplyDeathControlsEnabled()
+        {
+            // 사망여부가 Yes일 때만 사망일시와 연명의료 작성 여부를 입력할 수 있다.
+            bool deathEnabled = rbASM_DEATH_YN_1.Checked;
+
+            // 연명의료 작성 여부가 Yes일 때만 이행일자와 이행내용을 입력할 수 있다.
+            bool wlstEnabled = deathEnabled && rbWLST_RCD_YN_1.Checked;
+
+            txtDEATH_DT_DATE.Enabled = deathEnabled;
+            txtDEATH_DT_TIME.Enabled = deathEnabled;
+
+            rbWLST_RCD_YN_1.Enabled = deathEnabled;
+            rbWLST_RCD_YN_2.Enabled = deathEnabled;
+
+            txtWLST_RCD_DT.Enabled = wlstEnabled;
+
+            chkWLST_RCD_CD_1.Enabled = wlstEnabled;
+            chkWLST_RCD_CD_2.Enabled = wlstEnabled;
+            chkWLST_RCD_CD_3.Enabled = wlstEnabled;
+            chkWLST_RCD_CD_4.Enabled = wlstEnabled;
+            chkWLST_RCD_CD_5.Enabled = wlstEnabled;
+            chkWLST_RCD_CD_6.Enabled = wlstEnabled;
+            chkWLST_RCD_CD_7.Enabled = wlstEnabled;
+            chkWLST_RCD_CD_9.Enabled = wlstEnabled;
+
+            txtWLST_RCD_ETC_TXT.Enabled = wlstEnabled;
+        }
+
         private void btnSave_Click(object sender, EventArgs e)
         {
             // A.기본 정보
@@ -471,6 +499,16 @@ namespace ADD7007E
                 m_data.Except_ASM000(sysdt, systm, m_User, conn);
             }
             RefreshGrid();
+        }
+
+        private void rbASM_DEATH_YN_1_CheckedChanged(object sender, EventArgs e)
+        {
+            ApplyDeathControlsEnabled();
+        }
+
+        private void rbWLST_RCD_YN_1_CheckedChanged(object sender, EventArgs e)
+        {
+            ApplyDeathControlsEnabled();
         }
 
     }

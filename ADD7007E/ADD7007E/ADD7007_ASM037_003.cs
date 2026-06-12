@@ -349,6 +349,7 @@ namespace ADD7007E
             }
 
             RefreshGrid();
+            ApplySoprControlsEnabled();
 
         }
 
@@ -360,6 +361,49 @@ namespace ADD7007E
             CUtil.RefreshGrid(grdANM_REFM, grdANM_REFMView);
             CUtil.RefreshGrid(grdEXM, grdEXMView);
             CUtil.RefreshGrid(grdBLTS, grdBLTSView);
+        }
+
+        private void ApplySoprControlsEnabled()
+        {
+            bool soprEnabled = rbSOPR_YN_1.Checked;
+            bool lfbFsLevelEnabled = rbLFB_FS_YN_1.Checked;
+            bool knjnRpmtRgnEnabled = rbKNJN_RPMT_YN_1.Checked;
+            bool prscEnabled = rbASM_PRSC_YN_1.Checked;
+            bool anmDiagEnabled = rbANM_DIAG_YN_1.Checked;
+            bool anmRefmEnabled = rbANM_REFM_YN_1.Checked;
+            bool exmEnabled = rbHG_EXM_ENFC_YN_1.Checked;
+            bool bltsEnabled = rbBLTS_YN_1.Checked;
+
+            grdSOPR.Enabled = soprEnabled;
+            btnInsRowSOPR.Enabled = soprEnabled;
+            btnDelRowSOPR.Enabled = soprEnabled;
+
+            rbLFB_FS_LVL_1.Enabled = lfbFsLevelEnabled;
+            rbLFB_FS_LVL_2.Enabled = lfbFsLevelEnabled;
+            rbLFB_FS_LVL_3.Enabled = lfbFsLevelEnabled;
+
+            rbKNJN_RPMT_RGN_CD_1.Enabled = knjnRpmtRgnEnabled;
+            rbKNJN_RPMT_RGN_CD_2.Enabled = knjnRpmtRgnEnabled;
+
+            grdPRSC.Enabled = prscEnabled;
+            btnInsRowPRSC.Enabled = prscEnabled;
+            btnDelRowPRSC.Enabled = prscEnabled;
+
+            grdANM_DIAG.Enabled = anmDiagEnabled;
+            btnInsRowANM_DIAG.Enabled = anmDiagEnabled;
+            btnDelRowANM_DIAG.Enabled = anmDiagEnabled;
+
+            grdANM_REFM.Enabled = anmRefmEnabled;
+            btnInsRowANN_REFM.Enabled = anmRefmEnabled;
+            btnDelRowANN_REFM.Enabled = anmRefmEnabled;
+
+            grdEXM.Enabled = exmEnabled;
+            btnInsRowEXM.Enabled = exmEnabled;
+            btnDelRowEXM.Enabled = exmEnabled;
+
+            grdBLTS.Enabled = bltsEnabled;
+            btnInsRowBLTS.Enabled = bltsEnabled;
+            btnDelRowBLTS.Enabled = bltsEnabled;
         }
 
         private string GetASM_BLTS_CHKLST_USE_YN_NM(string p_value)
@@ -815,6 +859,46 @@ namespace ADD7007E
                 m_data.Except_ASM000(sysdt, systm, m_User, conn);
             }
             RefreshGrid();
+        }
+
+        private void rbSOPR_YN_1_CheckedChanged(object sender, EventArgs e)
+        {
+            ApplySoprControlsEnabled();
+        }
+
+        private void rbLFB_FS_YN_1_CheckedChanged(object sender, EventArgs e)
+        {
+            ApplySoprControlsEnabled();
+        }
+
+        private void rbKNJN_RPMT_YN_1_CheckedChanged(object sender, EventArgs e)
+        {
+            ApplySoprControlsEnabled();
+        }
+
+        private void rbASM_PRSC_YN_1_CheckedChanged(object sender, EventArgs e)
+        {
+            ApplySoprControlsEnabled();
+        }
+
+        private void rbANM_DIAG_YN_1_CheckedChanged(object sender, EventArgs e)
+        {
+            ApplySoprControlsEnabled();
+        }
+
+        private void rbANM_REFM_YN_1_CheckedChanged(object sender, EventArgs e)
+        {
+            ApplySoprControlsEnabled();
+        }
+
+        private void rbHG_EXM_ENFC_YN_1_CheckedChanged(object sender, EventArgs e)
+        {
+            ApplySoprControlsEnabled();
+        }
+
+        private void rbBLTS_YN_1_CheckedChanged(object sender, EventArgs e)
+        {
+            ApplySoprControlsEnabled();
         }
     }
 }

@@ -298,197 +298,63 @@ namespace ADD7007E
             string strConn = MetroLib.DBHelper.GetConnectionString();
             using (OleDbConnection conn = new OleDbConnection(strConn))
             {
-                //OleDbTransaction tran = null;
-                try
+                conn.Open();
+
+                switch (typeName)
                 {
-                    conn.Open();
+                    case "관상동맥우회술":
+                        Query_ASM_Saved<CDataASM002_002>(conn, "ASM002");
+                        break;
+                    case "급성기뇌졸중":
+                        Query_ASM_Saved<CDataASM003_002>(conn, "ASM003");
+                        break;
 
-                    switch (typeName)
-                    {
-                        case "관상동맥우회술":
-                            Query_ASM_Saved<CDataASM002_002>(conn, "ASM002");
-                            break;
-                        case "급성기뇌졸중":
-                            Query_ASM_Saved<CDataASM003_002>(conn, "ASM003");
-                            break;
+                    case "마취":
+                        Query_ASM_Saved<CDataASM035_003>(conn, "ASM035");
+                        break;
 
-                        case "마취":
-                            Query_ASM_Saved<CDataASM035_003>(conn, "ASM035");
-                            break;
+                    case "수술의예방적항생제사용":
+                        Query_ASM_Saved<CDataASM010_002>(conn, "ASM010");
+                        break;
 
-                        case "수술의예방적항생제사용":
-                            Query_ASM010(conn);
-                            break;
+                    case "수혈":
+                        Query_ASM_Saved<CDataASM037_003>(conn, "ASM037");
+                        break;
 
-                        case "수혈":
-                            Query_ASM_Saved<CDataASM037_003>(conn, "ASM037");
-                            break;
+                    case "신생아중환자실":
+                        Query_ASM_Saved<CDataASM033_003>(conn, "ASM033");
+                        break;
 
-                        case "신생아중환자실":
-                            Query_ASM_Saved<CDataASM033_003>(conn, "ASM033");
-                            break;
+                    case "영상검사":
+                        Query_ASM_Saved<CDataASM049_001>(conn, "ASM049");
+                        break;
 
-                        case "영상검사":
-                            Query_ASM_Saved<CDataASM049_001>(conn, "ASM049");
-                            break;
+                    case "의료급여정신과":
+                        Query_ASM_Saved<CDataASM014_001>(conn, "ASM014");
+                        break;
 
-                        case "의료급여정신과":
-                            Query_ASM_Saved<CDataASM014_001>(conn, "ASM014");
-                            break;
+                    case "정신건강입원영역":
+                        Query_ASM_Saved<CDataASM036_002>(conn, "ASM036");
+                        break;
 
-                        case "정신건강입원영역":
-                            Query_ASM_Saved<CDataASM036_002>(conn, "ASM036");
-                            break;
+                    case "중환자실":
+                        Query_ASM_Saved<CDataASM024_002>(conn, "ASM024");
+                        break;
 
-                        case "중환자실":
-                            Query_ASM_Saved<CDataASM024_002>(conn, "ASM024");
-                            break;
+                    case "폐렴":
+                        Query_ASM_Saved<CDataASM023_002>(conn, "ASM023");
+                        break;
 
-                        case "폐렴":
-                            Query_ASM_Saved<CDataASM023_002>(conn, "ASM023");
-                            break;
+                    case "혈액투석":
+                        Query_ASM_Saved<CDataASM008_002>(conn, "ASM008");
+                        break;
 
-                        case "혈액투석":
-                            Query_ASM_Saved<CDataASM008_002>(conn, "ASM008");
-                            break;
-
-                        default:
-                            break;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    //if (tran != null) tran.Rollback();
-                    //throw ex;
-                    MessageBox.Show(ex.Message);
+                    default:
+                        break;
                 }
             }
+
             RefreshGrid();
-        }
-
-        //***********************************************************************************************************
-
-        private void Query_ASM002(OleDbConnection conn)
-        {
-            Query_ASM_Saved<CDataASM002_002>(conn, "ASM002");
-            //m_pgm_step = "Query_ASM002";
-            //
-            //CQuery_ASM002 query = new CQuery_ASM002();
-            //List<CDataASM002_002> list = query.Query_ASM002(conn, txtFrdt.Text.ToString(), txtTodt.Text.ToString());
-            //grdASM010.DataSource = null;
-            //grdASM010.DataSource = list;
-            //RefreshGrid();
-        }
-
-        private void Query_ASM003(OleDbConnection conn)
-        {
-            Query_ASM_Saved<CDataASM003_002>(conn, "ASM003");
-            //m_pgm_step = "Query_ASM003";
-            //
-            //CQuery_ASM003 query = new CQuery_ASM003();
-            //List<CDataASM003_002> list = query.Query_ASM003(conn, txtFrdt.Text.ToString(), txtTodt.Text.ToString());
-            //grdASM010.DataSource = null;
-            //grdASM010.DataSource = list;
-            //RefreshGrid();
-        }
-
-        private void Query_ASM008(OleDbConnection conn)
-        {
-            Query_ASM_Saved<CDataASM008_002>(conn, "ASM008");
-            //m_pgm_step = "Query_ASM008";
-            //
-            //CQuery_ASM008 query = new CQuery_ASM008();
-            //List<CDataASM008_002> list = query.Query_ASM008(conn, txtFrdt.Text.ToString(), txtTodt.Text.ToString());
-            //grdASM010.DataSource = null;
-            //grdASM010.DataSource = list;
-            //RefreshGrid();
-        }
-
-        private void Query_ASM010(OleDbConnection conn)
-        {
-            Query_ASM_Saved<CDataASM010_002>(conn, "ASM010");
-        }
-
-        private void Query_ASM014(OleDbConnection conn)
-        {
-            Query_ASM_Saved<CDataASM014_001>(conn, "ASM014");
-            //m_pgm_step = "Query_ASM014";
-            //
-            //CQuery_ASM014 query = new CQuery_ASM014();
-            //List<CDataASM014_001> list = query.Query_ASM014(conn, txtFrdt.Text.ToString(), txtTodt.Text.ToString());
-            //grdASM010.DataSource = null;
-            //grdASM010.DataSource = list;
-            //RefreshGrid();
-        }
-
-        private void Query_ASM023(OleDbConnection conn)
-        {
-            Query_ASM_Saved<CDataASM023_002>(conn, "ASM023");
-            //m_pgm_step = "Query_ASM023";
-            //
-            //CQuery_ASM023 query = new CQuery_ASM023();
-            //List<CDataASM023_002> list = query.Query_ASM023(conn, txtFrdt.Text.ToString(), txtTodt.Text.ToString());
-            //grdASM010.DataSource = null;
-            //grdASM010.DataSource = list;
-            //RefreshGrid();
-        }
-
-        private void Query_ASM024(OleDbConnection conn)
-        {
-            Query_ASM_Saved<CDataASM024_002>(conn, "ASM024");
-            //m_pgm_step = "Query_ASM024";
-            //
-            //CQuery_ASM024 query = new CQuery_ASM024();
-            //List<CDataASM024_002> list = query.Query_ASM024(conn, txtFrdt.Text.ToString(), txtTodt.Text.ToString());
-            //grdASM010.DataSource = null;
-            //grdASM010.DataSource = list;
-            //RefreshGrid();
-        }
-
-        private void Query_ASM033(OleDbConnection conn)
-        {
-            Query_ASM_Saved<CDataASM033_003>(conn, "ASM033");
-            //m_pgm_step = "Query_ASM033";
-            //
-            //CQuery_ASM033 query = new CQuery_ASM033();
-            //List<CDataASM033_003> list = query.Query_ASM033(conn, txtFrdt.Text.ToString(), txtTodt.Text.ToString());
-            //grdASM010.DataSource = null;
-            //grdASM010.DataSource = list;
-            //RefreshGrid();
-        }
-
-        private void Query_ASM035(OleDbConnection conn)
-        {
-            Query_ASM_Saved<CDataASM035_003>(conn, "ASM035");
-        }
-
-        private void Query_ASM036(OleDbConnection conn)
-        {
-            Query_ASM_Saved<CDataASM036_002>(conn, "ASM036");
-            //m_pgm_step = "Query_ASM036";
-            //
-            //CQuery_ASM036 query = new CQuery_ASM036();
-            //List<CDataASM036_002> list = query.Query_ASM036(conn, txtFrdt.Text.ToString(), txtTodt.Text.ToString());
-            //grdASM010.DataSource = null;
-            //grdASM010.DataSource = list;
-            //RefreshGrid();
-        }
-
-        private void Query_ASM037(OleDbConnection conn)
-        {
-            Query_ASM_Saved<CDataASM037_003>(conn, "ASM037");
-        }
-
-        private void Query_ASM049(OleDbConnection conn)
-        {
-            Query_ASM_Saved<CDataASM049_001>(conn, "ASM049");
-            //m_pgm_step = "Query_ASM049";
-            //
-            //CQuery_ASM049 query = new CQuery_ASM049();
-            //List<CDataASM049_001> list = query.Query_ASM049(conn, txtFrdt.Text.ToString(), txtTodt.Text.ToString());
-            //grdASM010.DataSource = null;
-            //grdASM010.DataSource = list;
-            //RefreshGrid();
         }
 
         private void Query_ASM_Saved<T>(OleDbConnection conn, string form)
@@ -1156,21 +1022,9 @@ namespace ADD7007E
                 string typeName = GetTypename();
                 DevExpress.XtraGrid.Views.Grid.GridView view = null;
                 DevExpress.XtraGrid.GridControl grid = null;
-                if (typeName == "수술의예방적항생제사용")
-                {
-                    view = grdASM010View;
-                    grid = grdASM010;
-                }
-                else if (typeName == "마취")
-                {
-                    view = grdASM010View;
-                    grid = grdASM010;
-                }
-                else
-                {
-                    MessageBox.Show("준비 중입니다.");
-                    return;
-                }
+
+                view = grdASM010View;
+                grid = grdASM010;
 
                 if (view.RowCount < 1) return; // 자료가 없으면 종료.
 
