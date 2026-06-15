@@ -1523,20 +1523,57 @@ namespace ADD7007E
                 dynReq.Tables["TBL_IPAT_DSCG"].AddRow();
                 dynReq.Tables["TBL_IPAT_DSCG"].Rows[i]["SPRM_IPAT_DT"].Value = data.SPRM_DSCG_DT[i]; // 입실일시
                 dynReq.Tables["TBL_IPAT_DSCG"].Rows[i]["SPRM_IPAT_RS_CD"].Value = data.SPRM_IPAT_RS_CD[i]; // 입실사유
-                dynReq.Tables["TBL_IPAT_DSCG"].Rows[i]["RE_IPAT_RS_TXT"].Value = data.RE_IPAT_RS_TXT[i]; // 입실사유 재입실 상세
-                dynReq.Tables["TBL_IPAT_DSCG"].Rows[i]["IPAT_RS_ETC_TXT"].Value = data.IPAT_RS_ETC_TXT[i]; // 입실사유 기타 상세
+                if (data.SPRM_IPAT_RS_CD[i] == "4")
+                {
+                    dynReq.Tables["TBL_IPAT_DSCG"].Rows[i]["RE_IPAT_RS_TXT"].Value = data.RE_IPAT_RS_TXT[i]; // 입실사유 재입실 상세
+                }
+                else
+                {
+                    dynReq.Tables["TBL_IPAT_DSCG"].Rows[i]["RE_IPAT_RS_TXT"].Value = "";
+                }
+                if (data.SPRM_IPAT_RS_CD[i] == "9")
+                {
+                    dynReq.Tables["TBL_IPAT_DSCG"].Rows[i]["IPAT_RS_ETC_TXT"].Value = data.IPAT_RS_ETC_TXT[i]; // 입실사유 기타 상세
+                }
+                else
+                {
+                    dynReq.Tables["TBL_IPAT_DSCG"].Rows[i]["IPAT_RS_ETC_TXT"].Value = "";
+                }
                 dynReq.Tables["TBL_IPAT_DSCG"].Rows[i]["ASM_SPRM_DSCG_RST_CD"].Value = data.ASM_SPRM_DSCG_RST_CD[i]; // 퇴실현황
-                dynReq.Tables["TBL_IPAT_DSCG"].Rows[i]["SPRM_DSCG_DT"].Value = data.SPRM_DSCG_DT[i]; // 퇴실일시
-                dynReq.Tables["TBL_IPAT_DSCG"].Rows[i]["SPRM_RE_IPAT_PLAN_YN"].Value = data.SPRM_RE_IPAT_PLAN_YN[i]; // 재입실계획여부
+                if (data.ASM_SPRM_DSCG_RST_CD[i] != "5")
+                {
+                    dynReq.Tables["TBL_IPAT_DSCG"].Rows[i]["SPRM_DSCG_DT"].Value = data.SPRM_DSCG_DT[i]; // 퇴실일시
+                }
+                else
+                {
+                    dynReq.Tables["TBL_IPAT_DSCG"].Rows[i]["SPRM_DSCG_DT"].Value = "";
+                }
+                if (data.ASM_SPRM_DSCG_RST_CD[i] == "1")
+                {
+                    dynReq.Tables["TBL_IPAT_DSCG"].Rows[i]["SPRM_RE_IPAT_PLAN_YN"].Value = data.SPRM_RE_IPAT_PLAN_YN[i]; // 재입실계획여부
+                }
+                else
+                {
+                    dynReq.Tables["TBL_IPAT_DSCG"].Rows[i]["SPRM_RE_IPAT_PLAN_YN"].Value = "";
+                }
             }
 
             // C. 사망 현황
             dynReq.Elements["ASM_DEATH_YN"].Value = data.ASM_DEATH_YN; // 사망여부
-            dynReq.Elements["DEATH_DT"].Value = data.DEATH_DT; // 사망일시
-            dynReq.Elements["WLST_RCD_YN"].Value = data.WLST_RCD_YN; // 연명의료중단등결정이행서작성여부
-            dynReq.Elements["WLST_RCD_DT"].Value = data.WLST_RCD_DT; // 작성일자
-            dynReq.Elements["WLST_RCD_CD"].Value = data.WLST_RCD_CD; // 이행내용
-            dynReq.Elements["WLST_RCD_ETC_TXT"].Value = data.WLST_RCD_ETC_TXT; // 그 밖의 연명의료 상세
+            if (data.ASM_DEATH_YN == "1")
+            {
+                dynReq.Elements["DEATH_DT"].Value = data.DEATH_DT; // 사망일시
+                dynReq.Elements["WLST_RCD_YN"].Value = data.WLST_RCD_YN; // 연명의료중단등결정이행서작성여부
+                if (data.WLST_RCD_YN == "1")
+                {
+                    dynReq.Elements["WLST_RCD_DT"].Value = data.WLST_RCD_DT; // 작성일자
+                    dynReq.Elements["WLST_RCD_CD"].Value = data.WLST_RCD_CD; // 이행내용
+                    if (data.WLST_RCD_CD == "9")
+                    {
+                        dynReq.Elements["WLST_RCD_ETC_TXT"].Value = data.WLST_RCD_ETC_TXT; // 그 밖의 연명의료 상세
+                    }
+                }
+            }
 
 
             // requestData - createDoc    최종 제출
@@ -2098,124 +2135,151 @@ namespace ADD7007E
 
             // B. 수술 정보
 
-            // 1. 수술
-            dynReq.Tables["TBL_SOPR"].Columns.Add("ASM_OPRM_IPAT_DT"); // 수술실 입실일시
-            dynReq.Tables["TBL_SOPR"].Columns.Add("ASM_OPRM_DSCG_DT"); // 수술실 퇴실일시
-            dynReq.Tables["TBL_SOPR"].Columns.Add("ASM_RCRM_DSCG_DT"); // 회복실 퇴실일시
-            dynReq.Tables["TBL_SOPR"].Columns.Add("SOPR_NM"); // 수술명
-            dynReq.Tables["TBL_SOPR"].Columns.Add("MDFEE_CD"); // 수가코드
+            // 1. 수술여부
+            dynReq.Elements["SOPR_YN"].Value = data.SOPR_YN;
 
-            for (int i = 0; i < data.ASM_OPRM_IPAT_DT.Count; i++)
+            // 2. 시행 내용
+            if (data.SOPR_YN == "1")
             {
-                dynReq.Tables["TBL_SOPR"].AddRow();
-                dynReq.Tables["TBL_SOPR"].Rows[i]["ASM_OPRM_IPAT_DT"].Value = data.ASM_OPRM_IPAT_DT[i];
-                dynReq.Tables["TBL_SOPR"].Rows[i]["ASM_OPRM_DSCG_DT"].Value = data.ASM_OPRM_DSCG_DT[i];
-                dynReq.Tables["TBL_SOPR"].Rows[i]["ASM_RCRM_DSCG_DT"].Value = data.ASM_RCRM_DSCG_DT[i];
-                dynReq.Tables["TBL_SOPR"].Rows[i]["SOPR_NM"].Value = data.SOPR_NM[i];
-                dynReq.Tables["TBL_SOPR"].Rows[i]["MDFEE_CD"].Value = data.SOPR_MDFEE_CD[i];
+                dynReq.Tables["TBL_SOPR"].Columns.Add("ASM_OPRM_IPAT_DT"); // 수술실 입실일시
+                dynReq.Tables["TBL_SOPR"].Columns.Add("ASM_OPRM_DSCG_DT"); // 수술실 퇴실일시
+                dynReq.Tables["TBL_SOPR"].Columns.Add("ASM_RCRM_DSCG_DT"); // 회복실 퇴실일시
+                dynReq.Tables["TBL_SOPR"].Columns.Add("SOPR_NM"); // 수술명
+                dynReq.Tables["TBL_SOPR"].Columns.Add("MDFEE_CD"); // 수가코드
+
+                for (int i = 0; i < data.ASM_OPRM_IPAT_DT.Count; i++)
+                {
+                    dynReq.Tables["TBL_SOPR"].AddRow();
+                    dynReq.Tables["TBL_SOPR"].Rows[i]["ASM_OPRM_IPAT_DT"].Value = data.ASM_OPRM_IPAT_DT[i];
+                    dynReq.Tables["TBL_SOPR"].Rows[i]["ASM_OPRM_DSCG_DT"].Value = data.ASM_OPRM_DSCG_DT[i];
+                    dynReq.Tables["TBL_SOPR"].Rows[i]["ASM_RCRM_DSCG_DT"].Value = data.ASM_RCRM_DSCG_DT[i];
+                    dynReq.Tables["TBL_SOPR"].Rows[i]["SOPR_NM"].Value = data.SOPR_NM[i];
+                    dynReq.Tables["TBL_SOPR"].Rows[i]["MDFEE_CD"].Value = data.SOPR_MDFEE_CD[i];
+                }
             }
 
             dynReq.Elements["LFB_FS_YN"].Value = data.LFB_FS_YN; // 척추후방고정술 실시여부
-            dynReq.Elements["LFB_FS_LVL"].Value = data.LFB_FS_LVL; // 척추후방고정술 Level
+            if (data.LFB_FS_YN == "1")
+            {
+                dynReq.Elements["LFB_FS_LVL"].Value = data.LFB_FS_LVL; // 척추후방고정술 Level
+            }
             dynReq.Elements["KNJN_RPMT_YN"].Value = data.KNJN_RPMT_YN; // 슬관절치환술 실시여부
-            dynReq.Elements["KNJN_RPMT_RGN_CD"].Value = data.KNJN_RPMT_RGN_CD; // 슬관절치환술 부위
+            if (data.KNJN_RPMT_YN == "1")
+            {
+                dynReq.Elements["KNJN_RPMT_RGN_CD"].Value = data.KNJN_RPMT_RGN_CD; // 슬관절치환술 부위
+            }
 
             // C. 수혈 체크리스트 사용 현황
             dynReq.Elements["ASM_PRSC_YN"].Value = data.ASM_PRSC_YN; // 처방여부
-            
-            dynReq.Tables["TBL_PRSC_TXT"].Columns.Add("ASM_PRSC_DT"); // 처방일시
-            dynReq.Tables["TBL_PRSC_TXT"].Columns.Add("ASM_PRSC_UNIT_CNT"); // 처방량
-            dynReq.Tables["TBL_PRSC_TXT"].Columns.Add("ASM_BLTS_CHKLST_USE_YN"); // 체크리스트 사용여부
-            dynReq.Tables["TBL_PRSC_TXT"].Columns.Add("ASM_BLTS_STA_DT"); // 수혈시작일시
-            dynReq.Tables["TBL_PRSC_TXT"].Columns.Add("BLTS_DGM_NM"); // 수혈제제명
-            dynReq.Tables["TBL_PRSC_TXT"].Columns.Add("MDFEE_CD"); // 수가코드
-            dynReq.Tables["TBL_PRSC_TXT"].Columns.Add("BLTS_UNIT_CNT"); // 수혈량
 
-            for (int i = 0; i < data.ASM_PRSC_DT.Count; i++)
+            if (data.ASM_PRSC_YN == "1")
             {
-                dynReq.Tables["TBL_PRSC_TXT"].AddRow();
-                dynReq.Tables["TBL_PRSC_TXT"].Rows[i]["ASM_PRSC_DT"].Value = data.ASM_PRSC_DT[i];
-                dynReq.Tables["TBL_PRSC_TXT"].Rows[i]["ASM_PRSC_UNIT_CNT"].Value = data.ASM_PRSC_UNIT_CNT[i];
-                dynReq.Tables["TBL_PRSC_TXT"].Rows[i]["ASM_BLTS_CHKLST_USE_YN"].Value = data.ASM_BLTS_CHKLST_USE_YN[i];
-                dynReq.Tables["TBL_PRSC_TXT"].Rows[i]["ASM_BLTS_STA_DT"].Value = data.ASM_BLTS_STA_DT[i];
-                dynReq.Tables["TBL_PRSC_TXT"].Rows[i]["BLTS_DGM_NM"].Value = data.ASM_PRSC_BLTS_DGM_NM[i];
-                dynReq.Tables["TBL_PRSC_TXT"].Rows[i]["MDFEE_CD"].Value = data.ASM_PRSC_MDFEE_CD[i];
-                dynReq.Tables["TBL_PRSC_TXT"].Rows[i]["BLTS_UNIT_CNT"].Value = data.ASM_BLTS_UNIT_CNT[i];
+                dynReq.Tables["TBL_PRSC_TXT"].Columns.Add("ASM_PRSC_DT"); // 처방일시
+                dynReq.Tables["TBL_PRSC_TXT"].Columns.Add("ASM_PRSC_UNIT_CNT"); // 처방량
+                dynReq.Tables["TBL_PRSC_TXT"].Columns.Add("ASM_BLTS_CHKLST_USE_YN"); // 체크리스트 사용여부
+                dynReq.Tables["TBL_PRSC_TXT"].Columns.Add("ASM_BLTS_STA_DT"); // 수혈시작일시
+                dynReq.Tables["TBL_PRSC_TXT"].Columns.Add("BLTS_DGM_NM"); // 수혈제제명
+                dynReq.Tables["TBL_PRSC_TXT"].Columns.Add("MDFEE_CD"); // 수가코드
+                dynReq.Tables["TBL_PRSC_TXT"].Columns.Add("BLTS_UNIT_CNT"); // 수혈량
+
+                for (int i = 0; i < data.ASM_PRSC_DT.Count; i++)
+                {
+                    dynReq.Tables["TBL_PRSC_TXT"].AddRow();
+                    dynReq.Tables["TBL_PRSC_TXT"].Rows[i]["ASM_PRSC_DT"].Value = data.ASM_PRSC_DT[i];
+                    dynReq.Tables["TBL_PRSC_TXT"].Rows[i]["ASM_PRSC_UNIT_CNT"].Value = data.ASM_PRSC_UNIT_CNT[i];
+                    dynReq.Tables["TBL_PRSC_TXT"].Rows[i]["ASM_BLTS_CHKLST_USE_YN"].Value = data.ASM_BLTS_CHKLST_USE_YN[i];
+                    dynReq.Tables["TBL_PRSC_TXT"].Rows[i]["ASM_BLTS_STA_DT"].Value = data.ASM_BLTS_STA_DT[i];
+                    dynReq.Tables["TBL_PRSC_TXT"].Rows[i]["BLTS_DGM_NM"].Value = data.ASM_PRSC_BLTS_DGM_NM[i];
+                    dynReq.Tables["TBL_PRSC_TXT"].Rows[i]["MDFEE_CD"].Value = data.ASM_PRSC_MDFEE_CD[i];
+                    dynReq.Tables["TBL_PRSC_TXT"].Rows[i]["BLTS_UNIT_CNT"].Value = data.ASM_BLTS_UNIT_CNT[i];
+                }
             }
 
 
             // D. 투약 정보
             dynReq.Elements["ANM_DIAG_YN"].Value = data.ANM_DIAG_YN; // 빈혈 진단
-            
-            dynReq.Tables["TBL_ANM_DIAG"].Columns.Add("SICK_SYM"); // 상병분류기호
-            dynReq.Tables["TBL_ANM_DIAG"].Columns.Add("DIAG_NM"); // 진단명
-            for (int i = 0; i < data.SICK_SYM.Count; i++)
+
+            if (data.ANM_DIAG_YN == "1")
             {
-                dynReq.Tables["TBL_ANM_DIAG"].AddRow();
-                dynReq.Tables["TBL_ANM_DIAG"].Rows[i]["SICK_SYM"].Value = data.SICK_SYM[i];
-                dynReq.Tables["TBL_ANM_DIAG"].Rows[i]["DIAG_NM"].Value = data.DIAG_NM[i];
+                dynReq.Tables["TBL_ANM_DIAG"].Columns.Add("SICK_SYM"); // 상병분류기호
+                dynReq.Tables["TBL_ANM_DIAG"].Columns.Add("DIAG_NM"); // 진단명
+                for (int i = 0; i < data.SICK_SYM.Count; i++)
+                {
+                    dynReq.Tables["TBL_ANM_DIAG"].AddRow();
+                    dynReq.Tables["TBL_ANM_DIAG"].Rows[i]["SICK_SYM"].Value = data.SICK_SYM[i];
+                    dynReq.Tables["TBL_ANM_DIAG"].Rows[i]["DIAG_NM"].Value = data.DIAG_NM[i];
+                }
             }
 
             dynReq.Elements["ANM_REFM_YN"].Value = data.ANM_REFM_YN; // 빈혈교정 유무
 
-            dynReq.Tables["TBL_ANM_REFM_MDS"].Columns.Add("MDS_NM"); // 약품명
-            dynReq.Tables["TBL_ANM_REFM_MDS"].Columns.Add("MDS_CD"); // 약품코드
-
-            for (int i = 0; i < data.SICK_SYM.Count; i++)
+            if (data.ANM_REFM_YN == "1")
             {
-                dynReq.Tables["TBL_ANM_REFM_MDS"].AddRow();
-                dynReq.Tables["TBL_ANM_REFM_MDS"].Rows[i]["MDS_NM"].Value = data.MDS_NM[i];
-                dynReq.Tables["TBL_ANM_REFM_MDS"].Rows[i]["MDS_CD"].Value = data.MDS_CD[i];
+                dynReq.Tables["TBL_ANM_REFM_MDS"].Columns.Add("MDS_NM"); // 약품명
+                dynReq.Tables["TBL_ANM_REFM_MDS"].Columns.Add("MDS_CD"); // 약품코드
+
+                for (int i = 0; i < data.SICK_SYM.Count; i++)
+                {
+                    dynReq.Tables["TBL_ANM_REFM_MDS"].AddRow();
+                    dynReq.Tables["TBL_ANM_REFM_MDS"].Rows[i]["MDS_NM"].Value = data.MDS_NM[i];
+                    dynReq.Tables["TBL_ANM_REFM_MDS"].Rows[i]["MDS_CD"].Value = data.MDS_CD[i];
+                }
             }
 
             // E. 검사 정보
             dynReq.Elements["HG_EXM_ENFC_YN"].Value = data.HG_EXM_ENFC_YN; // Hb검사 시행여부
-            
-            dynReq.Tables["TBL_HG_EXM"].Columns.Add("ASM_EXM_RST_DT"); // 검사결과일시
-            dynReq.Tables["TBL_HG_EXM"].Columns.Add("MDFEE_CD"); // 수가코드
-            dynReq.Tables["TBL_HG_EXM"].Columns.Add("EXM_NM"); // 검사명
-            dynReq.Tables["TBL_HG_EXM"].Columns.Add("HG_NUV"); // 검사결과
 
-            for (int i = 0; i < data.ASM_EXM_RST_DT.Count; i++)
+            if (data.HG_EXM_ENFC_YN == "1")
             {
-                dynReq.Tables["TBL_HG_EXM"].AddRow();
-                dynReq.Tables["TBL_HG_EXM"].Rows[i]["ASM_EXM_RST_DT"].Value = data.ASM_EXM_RST_DT[i];
-                dynReq.Tables["TBL_HG_EXM"].Rows[i]["MDFEE_CD"].Value = data.EXM_MDFEE_CD[i];
-                dynReq.Tables["TBL_HG_EXM"].Rows[i]["EXM_NM"].Value = data.EXM_NM[i];
-                dynReq.Tables["TBL_HG_EXM"].Rows[i]["HG_NUV"].Value = data.HG_NUV[i];
+                dynReq.Tables["TBL_HG_EXM"].Columns.Add("ASM_EXM_RST_DT"); // 검사결과일시
+                dynReq.Tables["TBL_HG_EXM"].Columns.Add("MDFEE_CD"); // 수가코드
+                dynReq.Tables["TBL_HG_EXM"].Columns.Add("EXM_NM"); // 검사명
+                dynReq.Tables["TBL_HG_EXM"].Columns.Add("HG_NUV"); // 검사결과
+
+                for (int i = 0; i < data.ASM_EXM_RST_DT.Count; i++)
+                {
+                    dynReq.Tables["TBL_HG_EXM"].AddRow();
+                    dynReq.Tables["TBL_HG_EXM"].Rows[i]["ASM_EXM_RST_DT"].Value = data.ASM_EXM_RST_DT[i];
+                    dynReq.Tables["TBL_HG_EXM"].Rows[i]["MDFEE_CD"].Value = data.EXM_MDFEE_CD[i];
+                    dynReq.Tables["TBL_HG_EXM"].Rows[i]["EXM_NM"].Value = data.EXM_NM[i];
+                    dynReq.Tables["TBL_HG_EXM"].Rows[i]["HG_NUV"].Value = data.HG_NUV[i];
+                }
             }
 
 
 
             // F. 수혈 정보
             dynReq.Elements["BLTS_YN"].Value = data.BLTS_YN; // 수혈 시행여부
-            
-            dynReq.Tables["TBL_BLTS_ENFC_TXT"].Columns.Add("ASM_BLTS_STA_DT"); // 수혈시작일시
-            dynReq.Tables["TBL_BLTS_ENFC_TXT"].Columns.Add("ASM_BLTS_END_DT"); // 수혈종료일시
-            dynReq.Tables["TBL_BLTS_ENFC_TXT"].Columns.Add("BLTS_DGM_NM"); // 수혈제제명
-            dynReq.Tables["TBL_BLTS_ENFC_TXT"].Columns.Add("MDFEE_CD"); // 수가코드
-            dynReq.Tables["TBL_BLTS_ENFC_TXT"].Columns.Add("BLTS_UNIT_CNT"); // 수혈량
-            dynReq.Tables["TBL_BLTS_ENFC_TXT"].Columns.Add("HG_DCR_YN"); // Hb저하 발생 여부
-            dynReq.Tables["TBL_BLTS_ENFC_TXT"].Columns.Add("OPRM_HMRHG_OCUR_YN_CD"); // 수술 관련 실혈 발생 여부
-            dynReq.Tables["TBL_BLTS_ENFC_TXT"].Columns.Add("OPRM_MIDD_HMRHG_QTY"); // 수술 중 실혈량
-            dynReq.Tables["TBL_BLTS_ENFC_TXT"].Columns.Add("OPRM_AF_DRN_QTY"); // 수술 후 배액량
-            dynReq.Tables["TBL_BLTS_ENFC_TXT"].Columns.Add("BLTS_RS_ETC_YN"); // 그 외 수혈사유 여부
-            dynReq.Tables["TBL_BLTS_ENFC_TXT"].Columns.Add("BLTS_RS_ETC_TXT"); // 수혈사유 기타 상세
 
-            for (int i = 0; i < data.BLTS_STA_DT.Count; i++)
+            if (data.BLTS_YN == "1")
             {
-                dynReq.Tables["TBL_BLTS_ENFC_TXT"].AddRow();
-                dynReq.Tables["TBL_BLTS_ENFC_TXT"].Rows[i]["ASM_BLTS_STA_DT"].Value = data.BLTS_STA_DT[i];
-                dynReq.Tables["TBL_BLTS_ENFC_TXT"].Rows[i]["ASM_BLTS_END_DT"].Value = data.BLTS_END_DT[i];
-                dynReq.Tables["TBL_BLTS_ENFC_TXT"].Rows[i]["BLTS_DGM_NM"].Value = data.BLTS_DGM_NM[i];
-                dynReq.Tables["TBL_BLTS_ENFC_TXT"].Rows[i]["MDFEE_CD"].Value = data.BLTS_MDFEE_CD[i];
-                dynReq.Tables["TBL_BLTS_ENFC_TXT"].Rows[i]["BLTS_UNIT_CNT"].Value = data.BLTS_UNIT_CNT[i];
-                dynReq.Tables["TBL_BLTS_ENFC_TXT"].Rows[i]["HG_DCR_YN"].Value = data.HG_DCR_YN[i];
-                dynReq.Tables["TBL_BLTS_ENFC_TXT"].Rows[i]["OPRM_HMRHG_OCUR_YN_CD"].Value = data.OPRM_HMRHG_OCUR_YN_CD[i];
-                dynReq.Tables["TBL_BLTS_ENFC_TXT"].Rows[i]["OPRM_MIDD_HMRHG_QTY"].Value = data.OPRM_MIDD_HMRHG_QTY[i];
-                dynReq.Tables["TBL_BLTS_ENFC_TXT"].Rows[i]["OPRM_AF_DRN_QTY"].Value = data.OPRM_AF_DRN_QTY[i];
-                dynReq.Tables["TBL_BLTS_ENFC_TXT"].Rows[i]["BLTS_RS_ETC_YN"].Value = data.BLTS_RS_ETC_YN[i];
-                dynReq.Tables["TBL_BLTS_ENFC_TXT"].Rows[i]["BLTS_RS_ETC_TXT"].Value = data.BLTS_RS_ETC_TXT[i];
+                dynReq.Tables["TBL_BLTS_ENFC_TXT"].Columns.Add("ASM_BLTS_STA_DT"); // 수혈시작일시
+                dynReq.Tables["TBL_BLTS_ENFC_TXT"].Columns.Add("ASM_BLTS_END_DT"); // 수혈종료일시
+                dynReq.Tables["TBL_BLTS_ENFC_TXT"].Columns.Add("BLTS_DGM_NM"); // 수혈제제명
+                dynReq.Tables["TBL_BLTS_ENFC_TXT"].Columns.Add("MDFEE_CD"); // 수가코드
+                dynReq.Tables["TBL_BLTS_ENFC_TXT"].Columns.Add("BLTS_UNIT_CNT"); // 수혈량
+                dynReq.Tables["TBL_BLTS_ENFC_TXT"].Columns.Add("HG_DCR_YN"); // Hb저하 발생 여부
+                dynReq.Tables["TBL_BLTS_ENFC_TXT"].Columns.Add("OPRM_HMRHG_OCUR_YN_CD"); // 수술 관련 실혈 발생 여부
+                dynReq.Tables["TBL_BLTS_ENFC_TXT"].Columns.Add("OPRM_MIDD_HMRHG_QTY"); // 수술 중 실혈량
+                dynReq.Tables["TBL_BLTS_ENFC_TXT"].Columns.Add("OPRM_AF_DRN_QTY"); // 수술 후 배액량
+                dynReq.Tables["TBL_BLTS_ENFC_TXT"].Columns.Add("BLTS_RS_ETC_YN"); // 그 외 수혈사유 여부
+                dynReq.Tables["TBL_BLTS_ENFC_TXT"].Columns.Add("BLTS_RS_ETC_TXT"); // 수혈사유 기타 상세
+
+                for (int i = 0; i < data.BLTS_STA_DT.Count; i++)
+                {
+                    dynReq.Tables["TBL_BLTS_ENFC_TXT"].AddRow();
+                    dynReq.Tables["TBL_BLTS_ENFC_TXT"].Rows[i]["ASM_BLTS_STA_DT"].Value = data.BLTS_STA_DT[i];
+                    dynReq.Tables["TBL_BLTS_ENFC_TXT"].Rows[i]["ASM_BLTS_END_DT"].Value = data.BLTS_END_DT[i];
+                    dynReq.Tables["TBL_BLTS_ENFC_TXT"].Rows[i]["BLTS_DGM_NM"].Value = data.BLTS_DGM_NM[i];
+                    dynReq.Tables["TBL_BLTS_ENFC_TXT"].Rows[i]["MDFEE_CD"].Value = data.BLTS_MDFEE_CD[i];
+                    dynReq.Tables["TBL_BLTS_ENFC_TXT"].Rows[i]["BLTS_UNIT_CNT"].Value = data.BLTS_UNIT_CNT[i];
+                    dynReq.Tables["TBL_BLTS_ENFC_TXT"].Rows[i]["HG_DCR_YN"].Value = data.HG_DCR_YN[i];
+                    dynReq.Tables["TBL_BLTS_ENFC_TXT"].Rows[i]["OPRM_HMRHG_OCUR_YN_CD"].Value = data.OPRM_HMRHG_OCUR_YN_CD[i];
+                    dynReq.Tables["TBL_BLTS_ENFC_TXT"].Rows[i]["OPRM_MIDD_HMRHG_QTY"].Value = data.OPRM_MIDD_HMRHG_QTY[i];
+                    dynReq.Tables["TBL_BLTS_ENFC_TXT"].Rows[i]["OPRM_AF_DRN_QTY"].Value = data.OPRM_AF_DRN_QTY[i];
+                    dynReq.Tables["TBL_BLTS_ENFC_TXT"].Rows[i]["BLTS_RS_ETC_YN"].Value = data.BLTS_RS_ETC_YN[i];
+                    dynReq.Tables["TBL_BLTS_ENFC_TXT"].Rows[i]["BLTS_RS_ETC_TXT"].Value = data.BLTS_RS_ETC_TXT[i];
+                }
             }
 
             // requestData - createDoc    최종 제출
