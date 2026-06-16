@@ -224,6 +224,7 @@
     <Compile Include="CUtil.cs" />
     <Compile Include="CUtil_ASM010.cs" />
     <Compile Include="CUtil_ASM035.cs" />
+    <Compile Include="CUtil_ASM037.cs" />
     <Compile Include="IData.cs" />
     <Compile Include="IDataRemake.cs" />
     <Compile Include="Program.cs" />

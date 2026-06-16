@@ -888,6 +888,7 @@ namespace ADD7007E
         private void ASM_RemakeRequested<T>(object sender, RemakeRequestedEventArgs<T> e)
             where T : class, IDataRemake
         {
+            m_pgm_step = "";
             OleDbTransaction tran = null;
             try
             {
@@ -896,17 +897,24 @@ namespace ADD7007E
                 {
                     conn.Open();
 
+                    m_pgm_step = "1";
                     string sysdt = MetroLib.Util.GetSysDate(conn);
                     string systm = MetroLib.Util.GetSysTime(conn);
 
+                    m_pgm_step = "2";
                     e.data.ReadDataFromEMR(conn, null);
 
+                    m_pgm_step = "3";
                     tran = conn.BeginTransaction();
 
+                    m_pgm_step = "4";
                     e.data.UpdData(sysdt, systm, m_User, conn, tran);
 
+                    m_pgm_step = "5";
                     tran.Commit();
+                    tran = null;
 
+                    m_pgm_step = "6";
                     e.Success = true;
                 }
 
@@ -916,9 +924,17 @@ namespace ADD7007E
             catch (Exception ex)
             {
                 e.Success = false;
-                e.FailureMessage = ex.Message;
+                e.FailureMessage = ex.Message + "(" + m_pgm_step + ")";
 
-                if (tran != null) tran.Rollback();
+                try
+                {
+                    if (tran != null) tran.Rollback();
+                }
+                catch (Exception rollbackEx)
+                {
+                    e.FailureMessage += Environment.NewLine
+                        + "[Rollback 오류] " + rollbackEx.Message;
+                }
             }
         }
 

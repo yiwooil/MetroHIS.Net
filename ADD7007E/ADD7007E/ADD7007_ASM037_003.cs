@@ -14,6 +14,8 @@ namespace ADD7007E
     {
         public event EventHandler<RemakeRequestedEventArgs<CDataASM037_003>> RemakeRequested;
 
+        private string m_pgm_pos = "";
+
         // B. 수술정보
         class SOPR
         {
@@ -808,12 +810,18 @@ namespace ADD7007E
 
         private void ReQuery()
         {
+            m_pgm_pos = "";
+
             var args = new RemakeRequestedEventArgs<CDataASM037_003>(m_data);
 
             // ADD7007E가 처리하도록 이벤트만 발생
             if (RemakeRequested != null)
             {
+                m_pgm_pos = "1";
+
                 RemakeRequested(this, args);
+
+                m_pgm_pos = "2";
 
                 if (args.Success)
                 {
@@ -822,7 +830,7 @@ namespace ADD7007E
                 }
                 else
                 {
-                    MessageBox.Show(args.FailureMessage);
+                    MessageBox.Show(args.FailureMessage + "(" + m_pgm_pos + ")");
                 }
             }
         }
