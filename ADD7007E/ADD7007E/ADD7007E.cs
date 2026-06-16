@@ -888,6 +888,8 @@ namespace ADD7007E
         private void ASM_RemakeRequested<T>(object sender, RemakeRequestedEventArgs<T> e)
             where T : class, IDataRemake
         {
+            ShowProgressForm("", "재성성 중입니다.");
+
             m_pgm_step = "";
             OleDbTransaction tran = null;
             try
@@ -920,9 +922,13 @@ namespace ADD7007E
 
                 // 메인 그리드도 필요 시 갱신
                 RefreshGrid();
+
+                CloseProgressForm("", "");
             }
             catch (Exception ex)
             {
+                CloseProgressForm("", "");
+
                 e.Success = false;
                 e.FailureMessage = ex.Message + "(" + m_pgm_step + ")";
 

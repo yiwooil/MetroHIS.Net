@@ -660,11 +660,24 @@ namespace ADD7007E
                 });
             }
 
-            // D. 투약정보
-            ANM_DIAG_YN = ""; // 빈혈 진단(1.Yes 2.No)
-            SICK_SYM.Clear(); // 상병분류기호
-            DIAG_NM.Clear(); // 진단명
+            // 빈혈 진단여부를 설정하기 위한 사전작업
+            string minAsmPrscDt = "";
+            for (int i = 0; i < ASM_PRSC_DT.Count; i++)
+            {
+                string asmPrscDt = ASM_PRSC_DT[i];
+                if (asmPrscDt.Length >= 8)
+                {
+                    asmPrscDt = asmPrscDt.Substring(0, 8);
 
+                    if (minAsmPrscDt == "" || minAsmPrscDt.CompareTo(asmPrscDt) > 0)
+                    {
+                        minAsmPrscDt = asmPrscDt;
+                    }
+                }
+            }
+
+            // D. 투약정보
+            ANM_DIAG_YN = "2"; // 빈혈 진단(1.Yes 2.No)
             ANM_REFM_YN = "2"; // 빈혈교정 유무(1.Yes 2.No)
 
             sql = "";
@@ -693,7 +706,7 @@ namespace ADD7007E
                 System.Windows.Forms.Application.DoEvents();
 
                 string ispcd = row["ISPCD"].ToString();
-                if (CUtil_ASM037.IsANMREFMCode(ispcd))
+                if (CUtil_ASM037.IsANMREFMCode(ispcd) && MDS_CD.Contains(ispcd) == false)
                 {
                     ANM_REFM_YN = "1"; // 빈혈교정 유무(1.Yes 2.No)
                     MDS_NM.Add(row["PRKNM"].ToString()); // 빈혈교정 처방약품명
@@ -755,15 +768,16 @@ namespace ADD7007E
                         if (ispcd.StartsWith("D000205") || ispcd.StartsWith("D0003") || ispcd.StartsWith("D0005"))
                         {
                             string rstval = row2["RSTVAL"].ToString();
+                            string vfyDt = row2["VFYDT"].ToString();
 
                             HG_EXM_ENFC_YN = "1"; // Hb검사 시행여부(1.Yes 2.No)
-                            ASM_EXM_RST_DT.Add(row2["VFYDT"].ToString() + row2["VFYTM"].ToString()); // 검사결과일시(YYYYMMDDHHMM)
+                            ASM_EXM_RST_DT.Add(vfyDt + row2["VFYTM"].ToString()); // 검사결과일시(YYYYMMDDHHMM)
                             EXM_MDFEE_CD.Add(ispcd); // 수가코드(MDFEE_CD)
                             EXM_NM.Add(row2["PRKNM"].ToString()); // 검사명
                             HG_NUV.Add(rstval); // 검사결과(g/dL)
 
                             double hgNuv = 0;
-                            if (double.TryParse(rstval, out hgNuv) && hgNuv <= 10)
+                            if (double.TryParse(rstval, out hgNuv) && hgNuv <= 10 && minAsmPrscDt != "" && vfyDt.CompareTo(minAsmPrscDt) < 0)
                             {
                                 ANM_DIAG_YN = "1"; // 빈혈 진단(1.Yes 2.No)
                             }
