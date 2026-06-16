@@ -126,6 +126,70 @@ namespace ADD7007E
             System.Windows.Forms.Application.DoEvents();
 
             ClearMe();
+
+            IPAT_DD = BDEDT; // 입원일자(YYYYMMDD)
+
+            // B.중환자실 입퇴실 정보
+
+            string sql = "";
+            sql += Environment.NewLine + "SELECT PID, BDEDT, CRDHM, WDID2";
+            sql += Environment.NewLine + "  FROM TT04 (NOLOCK)";
+            sql += Environment.NewLine + " WHERE PID='" + PID + "'";
+            sql += Environment.NewLine + "   AND BDEDT='" + A04_BEDEDT + "'";
+            sql += Environment.NewLine + " ORDER BY CRDHM";
+
+            bool icuIn = false;
+            int icuIndex = -1;
+
+            MetroLib.SqlHelper.GetDataRow(sql, conn, p_tran, delegate(DataRow row)
+            {
+                System.Windows.Forms.Application.DoEvents();
+
+                string crdhm = row["CRDHM"].ToString();
+                string wdid2 = row["WDID2"].ToString();
+
+                if (wdid2 == "ICU")
+                {
+                    if (icuIn == false)
+                    {
+                        icuIn = true;
+                        icuIndex = SPRM_IPAT_DT.Count;
+
+                        SPRM_IPAT_DT.Add(crdhm); // 입실일시
+                        SPRM_IPAT_RS_CD.Add(""); // 입실사유
+                        RE_IPAT_RS_TXT.Add(""); // 재입실상세
+                        IPAT_RS_ETC_TXT.Add(""); // 입실사유기타
+                        ASM_SPRM_DSCG_RST_CD.Add(""); // 퇴실현황
+                        SPRM_DSCG_DT.Add(""); // 퇴실일시
+                        SPRM_RE_IPAT_PLAN_YN.Add(""); // 재입실 계획여부
+                    }
+                }
+                else
+                {
+                    if (icuIn == true && icuIndex >= 0)
+                    {
+                        DateTime dscgDt;
+                        if (DateTime.TryParseExact(crdhm, "yyyyMMddHHmm", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out dscgDt))
+                        {
+                            SPRM_DSCG_DT[icuIndex] = dscgDt.AddMinutes(-1).ToString("yyyyMMddHHmm");
+                        }
+
+                        icuIn = false;
+                        icuIndex = -1;
+                    }
+                }
+
+                return MetroLib.SqlHelper.CONTINUE;
+            });
+
+            // C.사망현황
+            ASM_DEATH_YN = ""; // 사망여무
+            DEATH_DT = ""; // 사망일시
+            WLST_RCD_YN = ""; // 연명의료중단등결정이행서작성여부
+            WLST_RCD_DT = ""; // 작성일자
+            WLST_RCD_CD = ""; // 이행내용
+            WLST_RCD_ETC_TXT = ""; // 그 밖의 연명의료 상세
+
         }
 
         public void InsData(string p_sysdt, string p_systm, string p_user, OleDbConnection p_conn, OleDbTransaction p_tran, bool del_fg)
