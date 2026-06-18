@@ -1163,22 +1163,22 @@ namespace ADD7007E
             sql += "DELETE FROM TI84_ASM037 WHERE FORM='" + form + "' AND KEYSTR='" + KEYSTR + "'";
             MetroLib.SqlHelper.ExecuteSql(sql, p_conn, p_tran);
             sql = "";
-            sql += "DELETE FROM TI84_ASM037_SOPR WHERE FORM = '" + form + "' AND KEYSTR = '" + KEYSTR + "' AND SEQ = '" + SEQ + "'";
+            sql += "DELETE FROM TI84_ASM037_SOPR WHERE FORM = '" + form + "' AND KEYSTR = '" + KEYSTR + "'";
             MetroLib.SqlHelper.ExecuteSql(sql, p_conn, p_tran);
             sql = "";
-            sql += "DELETE FROM TI84_ASM037_PRSC WHERE FORM = '" + form + "' AND KEYSTR = '" + KEYSTR + "' AND SEQ = '" + SEQ + "'";
+            sql += "DELETE FROM TI84_ASM037_PRSC WHERE FORM = '" + form + "' AND KEYSTR = '" + KEYSTR + "'";
             MetroLib.SqlHelper.ExecuteSql(sql, p_conn, p_tran);
             sql = "";
-            sql += "DELETE FROM TI84_ASM037_ANM_DIAG WHERE FORM = '" + form + "' AND KEYSTR = '" + KEYSTR + "' AND SEQ = '" + SEQ + "'";
+            sql += "DELETE FROM TI84_ASM037_ANM_DIAG WHERE FORM = '" + form + "' AND KEYSTR = '" + KEYSTR + "'";
             MetroLib.SqlHelper.ExecuteSql(sql, p_conn, p_tran);
             sql = "";
-            sql += "DELETE FROM TI84_ASM037_ANM_REFM WHERE FORM = '" + form + "' AND KEYSTR = '" + KEYSTR + "' AND SEQ = '" + SEQ + "'";
+            sql += "DELETE FROM TI84_ASM037_ANM_REFM WHERE FORM = '" + form + "' AND KEYSTR = '" + KEYSTR + "'";
             MetroLib.SqlHelper.ExecuteSql(sql, p_conn, p_tran);
             sql = "";
-            sql += "DELETE FROM TI84_ASM037_EXM WHERE FORM = '" + form + "' AND KEYSTR = '" + KEYSTR + "' AND SEQ = '" + SEQ + "'";
+            sql += "DELETE FROM TI84_ASM037_EXM WHERE FORM = '" + form + "' AND KEYSTR = '" + KEYSTR + "'";
             MetroLib.SqlHelper.ExecuteSql(sql, p_conn, p_tran);
             sql = "";
-            sql += "DELETE FROM TI84_ASM037_BLTS WHERE FORM = '" + form + "' AND KEYSTR = '" + KEYSTR + "' AND SEQ = '" + SEQ + "'";
+            sql += "DELETE FROM TI84_ASM037_BLTS WHERE FORM = '" + form + "' AND KEYSTR = '" + KEYSTR + "'";
             MetroLib.SqlHelper.ExecuteSql(sql, p_conn, p_tran);
         }
     }
