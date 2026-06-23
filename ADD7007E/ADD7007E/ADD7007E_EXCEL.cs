@@ -471,8 +471,14 @@ namespace ADD7007E
 
         private void btnMake_Click(object sender, EventArgs e)
         {
+            bool bOk = false;
             string typeName = txtTypeName.Text.ToString().Trim();
-            if (typeName != "수술의예방적항생제사용" && typeName != "마취" && typeName != "수혈")
+            if (typeName == "수술의예방적항생제사용") bOk = true;
+            if (typeName == "마취") bOk = true;
+            if (typeName == "수혈") bOk = true;
+            if (typeName == "중환자실") bOk = true;
+
+            if (bOk == false)
             {
                 MessageBox.Show("준비중입니다.");
                 return;
