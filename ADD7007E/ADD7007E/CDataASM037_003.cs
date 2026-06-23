@@ -348,22 +348,8 @@ namespace ADD7007E
                     opomn = "";
                 }
 
-                string sql2 = "";
-                sql2 = "";
-                sql2 += System.Environment.NewLine + "SELECT A02.ISPCD, A02.PRKNM";
-                sql2 += System.Environment.NewLine + "  FROM TU02 U02 (NOLOCK) INNER JOIN TA18 A18 (NOLOCK) ON A18.OCD=U02.OCD AND A18.CREDT=(SELECT MAX(X.CREDT) FROM TA18 X (NOLOCK) WHERE X.OCD=U02.OCD AND X.CREDT<=U02.OPDT)";
-                sql2 += System.Environment.NewLine + "                         INNER JOIN TA02 A02 (NOLOCK) ON A02.PRICD=A18.PRICD AND A02.CREDT=(SELECT MAX(X.CREDT) FROM TA02 X (NOLOCK) WHERE X.PRICD=A18.PRICD AND X.CREDT<=U02.OPDT)";
-                sql2 += System.Environment.NewLine + " WHERE U02.PID='" + PID + "'";
-                sql2 += System.Environment.NewLine + "   AND U02.OPDT='" + opdt + "'";
-                sql2 += System.Environment.NewLine + "   AND U02.DPTCD='" + row["DPTCD"].ToString() + "'";
-                sql2 += System.Environment.NewLine + "   AND U02.OPSEQ='" + row["OPSEQ"].ToString() + "'";
-                sql2 += System.Environment.NewLine + "   AND ISNULL(U02.CHGDT,'')=''";
-                sql2 += System.Environment.NewLine + " ORDER BY U02.OCD,U02.SEQ";
-
-                MetroLib.SqlHelper.GetDataRow(sql2, p_conn, p_tran, delegate(DataRow row2)
+                Action<DataRow> addSoprRow = delegate(DataRow row2)
                 {
-                    System.Windows.Forms.Application.DoEvents();
-
                     string ispcd = row2["ISPCD"].ToString();
 
                     ASM_OPRM_IPAT_DT.Add(opsdt + orinhr + orinmn); // 수술실 입실일시(YYYYMMDDHHMM)
@@ -390,9 +376,56 @@ namespace ADD7007E
                             KNJN_RPMT_RGN_CD = "2"; // 두 개 이상이면 양측
                         }
                     }
+                };
+
+                string sql2 = "";
+                sql2 = "";
+                sql2 += System.Environment.NewLine + "SELECT A02.ISPCD, A02.PRKNM";
+                sql2 += System.Environment.NewLine + "  FROM TU02 U02 (NOLOCK) INNER JOIN TA18 A18 (NOLOCK) ON A18.OCD=U02.OCD AND A18.CREDT=(SELECT MAX(X.CREDT) FROM TA18 X (NOLOCK) WHERE X.OCD=U02.OCD AND X.CREDT<=U02.OPDT)";
+                sql2 += System.Environment.NewLine + "                         INNER JOIN TA02 A02 (NOLOCK) ON A02.PRICD=A18.PRICD AND A02.CREDT=(SELECT MAX(X.CREDT) FROM TA02 X (NOLOCK) WHERE X.PRICD=A18.PRICD AND X.CREDT<=U02.OPDT)";
+                sql2 += System.Environment.NewLine + " WHERE U02.PID='" + PID + "'";
+                sql2 += System.Environment.NewLine + "   AND U02.OPDT='" + opdt + "'";
+                sql2 += System.Environment.NewLine + "   AND U02.DPTCD='" + row["DPTCD"].ToString() + "'";
+                sql2 += System.Environment.NewLine + "   AND U02.OPSEQ='" + row["OPSEQ"].ToString() + "'";
+                sql2 += System.Environment.NewLine + "   AND ISNULL(U02.CHGDT,'')=''";
+                sql2 += System.Environment.NewLine + " ORDER BY U02.OCD,U02.SEQ";
+
+                bool find = false;
+                MetroLib.SqlHelper.GetDataRow(sql2, p_conn, p_tran, delegate(DataRow row2)
+                {
+                    System.Windows.Forms.Application.DoEvents();
+
+                    find = true;
+                    addSoprRow(row2);
 
                     return MetroLib.SqlHelper.CONTINUE;
                 });
+
+                // 2026.02.06 WOOIL - 수술비코드를 수술재료에 같이 등록하는 병원이 있음.(서울바른척도)
+                if (find == false)
+                {
+                    sql2 = "";
+                    sql2 += System.Environment.NewLine + "SELECT U05.*, A02.ISPCD, A02.PRKNM";
+                    sql2 += System.Environment.NewLine + "  FROM TU05 U05 (NOLOCK) INNER JOIN TA18 A18 (NOLOCK) ON A18.OCD=U05.OCD AND A18.CREDT=(SELECT MAX(X.CREDT) FROM TA18 X (NOLOCK) WHERE X.OCD=U05.OCD AND X.CREDT<=U05.OPDT)";
+                    sql2 += System.Environment.NewLine + "                         INNER JOIN TA02 A02 (NOLOCK) ON A02.PRICD=A18.PRICD AND A02.CREDT=(SELECT MAX(X.CREDT) FROM TA02 X (NOLOCK) WHERE X.PRICD=A18.PRICD AND X.CREDT<=U05.OPDT)";
+                    sql2 += System.Environment.NewLine + " WHERE U05.PID='" + PID + "'";
+                    sql2 += System.Environment.NewLine + "   AND U05.BEDEDT='" + BDEDT + "'";
+                    sql2 += System.Environment.NewLine + "   AND U05.OPDT='" + opdt + "'";
+                    sql2 += System.Environment.NewLine + "   AND U05.DPTCD='" + row["DPTCD"].ToString() + "'";
+                    sql2 += System.Environment.NewLine + "   AND U05.OPSEQ='" + row["OPSEQ"].ToString() + "'";
+                    sql2 += System.Environment.NewLine + "   AND ISNULL(U05.CHGDT,'')=''";
+                    sql2 += System.Environment.NewLine + "   AND ISNULL(A02.GUBUN,'')='1'"; // 수가만(재료 제외)
+                    sql2 += System.Environment.NewLine + " ORDER BY U05.OCD,U05.SEQ";
+
+                    MetroLib.SqlHelper.GetDataRow(sql2, p_conn, p_tran, delegate(DataRow row2)
+                    {
+                        System.Windows.Forms.Application.DoEvents();
+
+                        addSoprRow(row2);
+
+                        return MetroLib.SqlHelper.CONTINUE;
+                    });
+                }
 
                 return MetroLib.SqlHelper.CONTINUE;
             });

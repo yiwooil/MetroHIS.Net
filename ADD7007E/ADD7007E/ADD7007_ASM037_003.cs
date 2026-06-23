@@ -151,6 +151,7 @@ namespace ADD7007E
         private string m_User;
         private DevExpress.XtraGrid.Views.Grid.GridView m_view;
         private CDataASM037_003 m_data;
+        private bool m_prscDateEditByUser = false;
 
         public ADD7007_ASM037_003()
         {
@@ -365,6 +366,56 @@ namespace ADD7007E
             CUtil.RefreshGrid(grdBLTS, grdBLTSView);
         }
 
+
+        private void SortPRSCByPrscDate()
+        {
+            List<PRSC> list = grdPRSC.DataSource as List<PRSC>;
+            if (list == null) return;
+
+            list.Sort(delegate(PRSC x, PRSC y)
+            {
+                string xDate = (x.ASM_PRSC_DT_DATE ?? "").Trim();
+                string yDate = (y.ASM_PRSC_DT_DATE ?? "").Trim();
+
+                bool xHasDate = xDate.Length == 8;
+                bool yHasDate = yDate.Length == 8;
+
+                if (xHasDate && yHasDate)
+                    return string.Compare(xDate, yDate);
+
+                if (xHasDate) return -1;
+                if (yHasDate) return 1;
+
+                return 0;
+            });
+
+            CUtil.RefreshGrid(grdPRSC, grdPRSCView);
+        }
+
+        private void grdPRSCView_ShownEditor(object sender, EventArgs e)
+        {
+            m_prscDateEditByUser = false;
+            if (grdPRSCView.FocusedColumn == null) return;
+
+            if (grdPRSCView.FocusedColumn.FieldName == "ASM_PRSC_DT_DATE")
+                m_prscDateEditByUser = true;
+        }
+
+        private void grdPRSCView_CellValueChanged(object sender, DevExpress.XtraGrid.Views.Base.CellValueChangedEventArgs e)
+        {
+            if (e.Column.FieldName != "ASM_PRSC_DT_DATE") return;
+            if (m_prscDateEditByUser == false) return;
+
+            m_prscDateEditByUser = false;
+
+            string prscDate = "";
+            if (e.Value != null)
+                prscDate = e.Value.ToString().Trim();
+
+            if (prscDate.Length != 8) return;
+
+            SortPRSCByPrscDate();
+        }
         private void ApplySoprControlsEnabled()
         {
             bool soprEnabled = rbSOPR_YN_1.Checked;

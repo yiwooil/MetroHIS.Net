@@ -675,6 +675,8 @@
             this.grdPRSCView.OptionsView.ColumnAutoWidth = false;
             this.grdPRSCView.OptionsView.ShowGroupPanel = false;
             this.grdPRSCView.VertScrollVisibility = DevExpress.XtraGrid.Views.Base.ScrollVisibility.Always;
+            this.grdPRSCView.ShownEditor += new System.EventHandler(this.grdPRSCView_ShownEditor);
+            this.grdPRSCView.CellValueChanged += new DevExpress.XtraGrid.Views.Base.CellValueChangedEventHandler(this.grdPRSCView_CellValueChanged);
             // 
             // gridColumn7
             // 
