@@ -1107,36 +1107,43 @@ namespace ADD7007E
             string typeName = GetTypename();
             if (typeName == "수술의예방적항생제사용")
             {
-                f_PtntChanged_ASM010(sender, e);
+                f_PtntChanged_ASM<CDataASM010_002>(e, delegate(CDataASM010_002 data)
+                {
+                    data.MDFEE_CD = e.opcode1; // 수술코드
+                });
             }
             else if (typeName == "마취")
             {
-                f_PtntChanged_ASM035(sender, e);
+                f_PtntChanged_ASM<CDataASM035_003>(e, delegate(CDataASM035_003 data)
+                {
+                    data.MDFEE_CD = e.opcode1; // 수술코드
+                });
             }
             else if (typeName == "수혈")
             {
-                f_PtntChanged_ASM037(sender, e);
+                f_PtntChanged_ASM<CDataASM037_003>(e, null);
             }
             else if (typeName == "중환자실")
             {
-                f_PtntChanged_ASM024(sender, e);
+                f_PtntChanged_ASM<CDataASM024_002>(e, null);
             }
 
             RefreshGrid();
         }
 
-        private void f_PtntChanged_ASM010(object sender, PtntChangedEventArgs e)
+        private void f_PtntChanged_ASM<T>(PtntChangedEventArgs e, Action<T> setData)
+            where T : CData, IData, IDataRemake, new()
         {
-            List<CDataASM010_002> list = null;
+            List<T> list = null;
             if (e.no == 1)
             {
-                list = new List<CDataASM010_002>();
+                list = new List<T>();
                 grdASM010.DataSource = null;
                 grdASM010.DataSource = list;
             }
             else
             {
-                list = grdASM010.DataSource as List<CDataASM010_002>;
+                list = grdASM010.DataSource as List<T>;
             }
 
             string strConn = MetroLib.DBHelper.GetConnectionString();
@@ -1148,7 +1155,11 @@ namespace ADD7007E
                 string systm = MetroLib.Util.GetSysTime(conn);
 
                 // 접수번호, 명일련번호, 환자명이 있으므로 청구내역을 찾는다.
-                CDataASM010_002 data = GetASM010_002(conn, e.frdt, e.todt, e.no, e.cnecno, e.cnecdd, e.eprtno, e.pnm, e.dacd1, e.opcode1);
+                T data = GetASMData<T>(conn, e.frdt, e.todt, e.no, e.cnecno, e.cnecdd, e.eprtno, e.pnm, e.dacd1);
+
+                if (setData != null)
+                    setData(data);
+
                 if (data.DEMNO != "")
                 {
                     data.ReadDataFromEMR(conn, null);
@@ -1188,8 +1199,8 @@ namespace ADD7007E
                 }
             }
         }
-
-        private CDataASM010_002 GetASM010_002(OleDbConnection conn, string frdt, string todt, int no, string cnecno, string cnecdd, string eprtno, string pnm, string dacd1, string opcode1)
+        private T GetASMData<T>(OleDbConnection conn, string frdt, string todt, int no, string cnecno, string cnecdd, string eprtno, string pnm, string dacd1)
+            where T : CData, IData, new()
         {
             // eprtno가 뒤에 "00"을 없애버려야 함.
             if (eprtno.EndsWith("00"))
@@ -1201,297 +1212,7 @@ namespace ADD7007E
             string req_demno = "";
             string demno = GetDemno(cnecno, conn, ref cnectdd, ref billsno, ref req_demno);
 
-            CDataASM010_002 data = new CDataASM010_002();
-            data.Clear();
-
-            data.KEYSTR = frdt + "," + todt;
-            data.SEQ = no;
-            data.NO = no;
-            data.CNECNO = cnecno;
-            data.CNECTDD = cnecdd; // 접수일자
-            data.DEMNO = demno;
-            data.EPRTNO = eprtno;
-            data.PNM = pnm; // 심평원에서 준 이름
-            data.BILLSNO = billsno; // 청구서일련번호(접수번호 부여 전인 경우 0, 원청구에 대한 제출인 경우 1, 보완청구이면 심결에 통보된 번호)
-
-            data.DACD = dacd1;
-            data.MDFEE_CD = opcode1; // 수술코드
-
-            // 2026.02.20 WOOIL - 청구번호가 있는 경우에만 이하 작업을 한다.
-            if (demno != "")
-            {
-
-                string sql = "";
-                sql = "";
-                sql += Environment.NewLine + "SELECT *";
-                sql += Environment.NewLine + "  FROM TI2A";
-                sql += Environment.NewLine + " WHERE DEMNO='" + req_demno + "'";
-                sql += Environment.NewLine + "   AND EPRTNO='" + eprtno + "'";
-
-                MetroLib.SqlHelper.GetDataRow(sql, conn, delegate(DataRow row)
-                {
-                    data.SEL = true;
-                    data.IOFG = "2";
-                    data.PID = row["PID"].ToString();
-                    data.PNM_TI2A = row["PNM"].ToString();
-                    data.RESID = row["RESID"].ToString();
-                    data.BDEDT = row["BDEDT"].ToString();
-                    data.QFYCD = row["QFYCD"].ToString();
-                    data.GONSGB = row["GONSGB"].ToString();
-
-                    data.BDODT = row["BDODT"].ToString();
-                    data.JRBY = row["JRBY"].ToString();
-                    data.UNISQ = row["UNISQ"].ToString();
-                    data.SIMCS = row["SIMCS"].ToString();
-
-                    data.STEDT = row["STEDT"].ToString();
-
-                    string a04_bedehm = "";
-                    string a04_bedodt = "";
-                    string a04_bedohm = "";
-                    string a04_bedodiv = "";
-
-                    GetA04(data.PID, data.BDEDT, conn, ref a04_bedehm, ref a04_bedodt, ref a04_bedohm, ref a04_bedodiv);
-
-                    data.A04_BEDEHM = a04_bedehm;
-                    data.A04_BEDODT = a04_bedodt;
-                    data.A04_BEDOHM = a04_bedohm;
-                    data.A04_BEDODIV = a04_bedodiv;
-
-
-                    data.FR_DATE = frdt; // 자료 시작일
-                    data.TO_DATE = todt; // 자료 종료일
-
-                    return MetroLib.SqlHelper.BREAK;
-                });
-
-            }
-
-            return data;
-        }
-
-        private void f_PtntChanged_ASM035(object sender, PtntChangedEventArgs e)
-        {
-            List<CDataASM035_003> list = null;
-            if (e.no == 1)
-            {
-                list = new List<CDataASM035_003>();
-                grdASM010.DataSource = null;
-                grdASM010.DataSource = list;
-            }
-            else
-            {
-                list = grdASM010.DataSource as List<CDataASM035_003>;
-            }
-
-            string strConn = MetroLib.DBHelper.GetConnectionString();
-            using (OleDbConnection conn = new OleDbConnection(strConn))
-            {
-                conn.Open();
-
-                string sysdt = MetroLib.Util.GetSysDate(conn);
-                string systm = MetroLib.Util.GetSysTime(conn);
-
-                // 접수번호, 명일련번호, 환자명이 있으므로 청구내역을 찾는다.
-                CDataASM035_003 data = GetASM035_003(conn, e.frdt, e.todt, e.no, e.cnecno, e.cnecdd, e.eprtno, e.pnm, e.dacd1, e.opcode1);
-                if (data.DEMNO != "")
-                {
-                    data.ReadDataFromEMR(conn, null);
-                }
-                list.Add(data);
-
-                OleDbTransaction tran = null;
-                try
-                {
-                    tran = conn.BeginTransaction();
-
-                    if (e.no == 1)
-                    {
-                        // 모든 TI84_ASM000 자료를 삭제함.
-                        data.DelAll_ASM000(conn, tran);
-
-                        // 모든 자료 삭제
-                        data.DelAllData(conn, tran);
-                    }
-
-                    // TI84_ASM000 저장
-                    data.Into_ASM000(sysdt, systm, m_User, conn, tran, false);
-
-                    // 자료저장
-                    data.InsData(sysdt, systm, m_User, conn, tran, false);
-
-                    tran.Commit();
-
-                    e.Success = true;
-                }
-                catch (Exception ex)
-                {
-                    e.Success = false;
-                    e.FailureMessage = ex.Message;
-
-                    if (tran != null) tran.Rollback();
-                }
-            }
-        }
-
-        private CDataASM035_003 GetASM035_003(OleDbConnection conn, string frdt, string todt, int no, string cnecno, string cnecdd, string eprtno, string pnm, string dacd1, string opcode1)
-        {
-            // eprtno가 뒤에 "00"을 없애버려야 함.
-            if (eprtno.EndsWith("00"))
-                eprtno = eprtno.Substring(0, eprtno.Length - 2);
-
-            // 청구번호를 구한다.
-            string cnectdd = "";
-            string billsno = "";
-            string req_demno = "";
-            string demno = GetDemno(cnecno, conn, ref cnectdd, ref billsno, ref req_demno);
-
-            CDataASM035_003 data = new CDataASM035_003();
-            data.Clear();
-
-            data.KEYSTR = frdt + "," + todt;
-            data.SEQ = no;
-            data.NO = no;
-            data.CNECNO = cnecno;
-            data.CNECTDD = cnecdd; // 접수일자
-            data.DEMNO = demno;
-            data.EPRTNO = eprtno;
-            data.PNM = pnm; // 심평원에서 준 이름
-            data.BILLSNO = billsno; // 청구서일련번호(접수번호 부여 전인 경우 0, 원청구에 대한 제출인 경우 1, 보완청구이면 심결에 통보된 번호)
-
-            data.DACD = dacd1;
-            data.MDFEE_CD = opcode1; // 수술코드
-
-            // 2026.02.20 WOOIL - 청구번호가 있는 경우에만 이하 작업을 한다.
-            if (demno != "")
-            {
-
-                string sql = "";
-                sql = "";
-                sql += Environment.NewLine + "SELECT *";
-                sql += Environment.NewLine + "  FROM TI2A";
-                sql += Environment.NewLine + " WHERE DEMNO='" + req_demno + "'";
-                sql += Environment.NewLine + "   AND EPRTNO='" + eprtno + "'";
-
-                MetroLib.SqlHelper.GetDataRow(sql, conn, delegate(DataRow row)
-                {
-                    data.SEL = true;
-                    data.IOFG = "2";
-                    data.PID = row["PID"].ToString();
-                    data.PNM_TI2A = row["PNM"].ToString();
-                    data.RESID = row["RESID"].ToString();
-                    data.BDEDT = row["BDEDT"].ToString();
-                    data.QFYCD = row["QFYCD"].ToString();
-                    data.GONSGB = row["GONSGB"].ToString();
-
-                    data.BDODT = row["BDODT"].ToString();
-                    data.JRBY = row["JRBY"].ToString();
-                    data.UNISQ = row["UNISQ"].ToString();
-                    data.SIMCS = row["SIMCS"].ToString();
-
-                    data.STEDT = row["STEDT"].ToString();
-
-                    string a04_bedehm = "";
-                    string a04_bedodt = "";
-                    string a04_bedohm = "";
-                    string a04_bedodiv = "";
-
-                    GetA04(data.PID, data.BDEDT, conn, ref a04_bedehm, ref a04_bedodt, ref a04_bedohm, ref a04_bedodiv);
-
-                    data.A04_BEDEHM = a04_bedehm;
-                    data.A04_BEDODT = a04_bedodt;
-                    data.A04_BEDOHM = a04_bedohm;
-                    data.A04_BEDODIV = a04_bedodiv;
-
-
-                    data.FR_DATE = frdt; // 자료 시작일
-                    data.TO_DATE = todt; // 자료 종료일
-
-                    return MetroLib.SqlHelper.BREAK;
-                });
-
-            }
-
-            return data;
-        }
-
-        private void f_PtntChanged_ASM037(object sender, PtntChangedEventArgs e)
-        {
-            List<CDataASM037_003> list = null;
-            if (e.no == 1)
-            {
-                list = new List<CDataASM037_003>();
-                grdASM010.DataSource = null;
-                grdASM010.DataSource = list;
-            }
-            else
-            {
-                list = grdASM010.DataSource as List<CDataASM037_003>;
-            }
-
-            string strConn = MetroLib.DBHelper.GetConnectionString();
-            using (OleDbConnection conn = new OleDbConnection(strConn))
-            {
-                conn.Open();
-
-                string sysdt = MetroLib.Util.GetSysDate(conn);
-                string systm = MetroLib.Util.GetSysTime(conn);
-
-                // 접수번호, 명일련번호, 환자명이 있으므로 청구내역을 찾는다.
-                CDataASM037_003 data = GetASM037_003(conn, e.frdt, e.todt, e.no, e.cnecno, e.cnecdd, e.eprtno, e.pnm, e.dacd1, e.opcode1);
-                if (data.DEMNO != "")
-                {
-                    data.ReadDataFromEMR(conn, null);
-                }
-                list.Add(data);
-
-                OleDbTransaction tran = null;
-                try
-                {
-                    tran = conn.BeginTransaction();
-
-                    if (e.no == 1)
-                    {
-                        // 모든 TI84_ASM000 자료를 삭제함.
-                        data.DelAll_ASM000(conn, tran);
-
-                        // 모든 자료 삭제
-                        data.DelAllData(conn, tran);
-                    }
-
-                    // TI84_ASM000 저장
-                    data.Into_ASM000(sysdt, systm, m_User, conn, tran, false);
-
-                    // 자료저장
-                    data.InsData(sysdt, systm, m_User, conn, tran, false);
-
-                    tran.Commit();
-
-                    e.Success = true;
-                }
-                catch (Exception ex)
-                {
-                    e.Success = false;
-                    e.FailureMessage = ex.Message;
-
-                    if (tran != null) tran.Rollback();
-                }
-            }
-        }
-
-        private CDataASM037_003 GetASM037_003(OleDbConnection conn, string frdt, string todt, int no, string cnecno, string cnecdd, string eprtno, string pnm, string dacd1, string opcode1)
-        {
-            // eprtno가 뒤에 "00"을 없애버려야 함.
-            if (eprtno.EndsWith("00"))
-                eprtno = eprtno.Substring(0, eprtno.Length - 2);
-
-            // 청구번호를 구한다.
-            string cnectdd = "";
-            string billsno = "";
-            string req_demno = "";
-            string demno = GetDemno(cnecno, conn, ref cnectdd, ref billsno, ref req_demno);
-
-            CDataASM037_003 data = new CDataASM037_003();
+            T data = new T();
             data.Clear();
 
             data.KEYSTR = frdt + "," + todt;
@@ -1558,152 +1279,6 @@ namespace ADD7007E
 
             return data;
         }
-
-        private void f_PtntChanged_ASM024(object sender, PtntChangedEventArgs e)
-        {
-            List<CDataASM024_002> list = null;
-            if (e.no == 1)
-            {
-                list = new List<CDataASM024_002>();
-                grdASM010.DataSource = null;
-                grdASM010.DataSource = list;
-            }
-            else
-            {
-                list = grdASM010.DataSource as List<CDataASM024_002>;
-            }
-
-            string strConn = MetroLib.DBHelper.GetConnectionString();
-            using (OleDbConnection conn = new OleDbConnection(strConn))
-            {
-                conn.Open();
-
-                string sysdt = MetroLib.Util.GetSysDate(conn);
-                string systm = MetroLib.Util.GetSysTime(conn);
-
-                // 접수번호, 명일련번호, 환자명이 있으므로 청구내역을 찾는다.
-                CDataASM024_002 data = GetASM024_002(conn, e.frdt, e.todt, e.no, e.cnecno, e.cnecdd, e.eprtno, e.pnm, e.dacd1, e.opcode1);
-                if (data.DEMNO != "")
-                {
-                    data.ReadDataFromEMR(conn, null);
-                }
-                list.Add(data);
-
-                OleDbTransaction tran = null;
-                try
-                {
-                    tran = conn.BeginTransaction();
-
-                    if (e.no == 1)
-                    {
-                        // 모든 TI84_ASM000 자료를 삭제함.
-                        data.DelAll_ASM000(conn, tran);
-
-                        // 모든 자료 삭제
-                        data.DelAllData(conn, tran);
-                    }
-
-                    // TI84_ASM000 저장
-                    data.Into_ASM000(sysdt, systm, m_User, conn, tran, false);
-
-                    // 자료저장
-                    data.InsData(sysdt, systm, m_User, conn, tran, false);
-
-                    tran.Commit();
-
-                    e.Success = true;
-                }
-                catch (Exception ex)
-                {
-                    e.Success = false;
-                    e.FailureMessage = ex.Message;
-
-                    if (tran != null) tran.Rollback();
-                }
-            }
-        }
-
-        private CDataASM024_002 GetASM024_002(OleDbConnection conn, string frdt, string todt, int no, string cnecno, string cnecdd, string eprtno, string pnm, string dacd1, string opcode1)
-        {
-            // eprtno가 뒤에 "00"을 없애버려야 함.
-            if (eprtno.EndsWith("00"))
-                eprtno = eprtno.Substring(0, eprtno.Length - 2);
-
-            // 청구번호를 구한다.
-            string cnectdd = "";
-            string billsno = "";
-            string req_demno = "";
-            string demno = GetDemno(cnecno, conn, ref cnectdd, ref billsno, ref req_demno);
-
-            CDataASM024_002 data = new CDataASM024_002();
-            data.Clear();
-
-            data.KEYSTR = frdt + "," + todt;
-            data.SEQ = no;
-            data.NO = no;
-            data.CNECNO = cnecno;
-            data.CNECTDD = cnecdd; // 접수일자
-            data.DEMNO = demno;
-            data.EPRTNO = eprtno;
-            data.PNM = pnm; // 심평원에서 준 이름
-            data.BILLSNO = billsno; // 청구서일련번호(접수번호 부여 전인 경우 0, 원청구에 대한 제출인 경우 1, 보완청구이면 심결에 통보된 번호)
-
-            data.DACD = dacd1;
-
-            // 2026.02.20 WOOIL - 청구번호가 있는 경우에만 이하 작업을 한다.
-            if (demno != "")
-            {
-
-                string sql = "";
-                sql = "";
-                sql += Environment.NewLine + "SELECT *";
-                sql += Environment.NewLine + "  FROM TI2A";
-                sql += Environment.NewLine + " WHERE DEMNO='" + req_demno + "'";
-                sql += Environment.NewLine + "   AND EPRTNO='" + eprtno + "'";
-
-                MetroLib.SqlHelper.GetDataRow(sql, conn, delegate(DataRow row)
-                {
-                    data.SEL = true;
-                    data.IOFG = "2";
-                    data.PID = row["PID"].ToString();
-                    data.PNM_TI2A = row["PNM"].ToString();
-                    data.RESID = row["RESID"].ToString();
-                    data.BDEDT = row["BDEDT"].ToString();
-                    data.QFYCD = row["QFYCD"].ToString();
-                    data.GONSGB = row["GONSGB"].ToString();
-
-                    data.BDODT = row["BDODT"].ToString();
-                    data.JRBY = row["JRBY"].ToString();
-                    data.UNISQ = row["UNISQ"].ToString();
-                    data.SIMCS = row["SIMCS"].ToString();
-
-                    data.STEDT = row["STEDT"].ToString();
-
-                    string a04_bedehm = "";
-                    string a04_bedodt = "";
-                    string a04_bedohm = "";
-                    string a04_bedodiv = "";
-
-                    GetA04(data.PID, data.BDEDT, conn, ref a04_bedehm, ref a04_bedodt, ref a04_bedohm, ref a04_bedodiv);
-
-                    data.A04_BEDEHM = a04_bedehm;
-                    data.A04_BEDODT = a04_bedodt;
-                    data.A04_BEDOHM = a04_bedohm;
-                    data.A04_BEDODIV = a04_bedodiv;
-
-
-                    data.FR_DATE = frdt; // 자료 시작일
-                    data.TO_DATE = todt; // 자료 종료일
-
-                    return MetroLib.SqlHelper.BREAK;
-                });
-
-            }
-
-            return data;
-        }
-
-
         private string GetDemno(string p_cnecno, OleDbConnection conn, ref string p_cnectdd, ref string p_billsno, ref string p_req_demno)
         {
             string demno = "";
