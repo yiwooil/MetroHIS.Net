@@ -780,6 +780,8 @@
             this.grdANM_DIAGView.OptionsView.ColumnAutoWidth = false;
             this.grdANM_DIAGView.OptionsView.ShowGroupPanel = false;
             this.grdANM_DIAGView.VertScrollVisibility = DevExpress.XtraGrid.Views.Base.ScrollVisibility.Always;
+            this.grdANM_DIAGView.ShownEditor += new System.EventHandler(this.grdANM_DIAGView_ShownEditor);
+            this.grdANM_DIAGView.CellValueChanged += new DevExpress.XtraGrid.Views.Base.CellValueChangedEventHandler(this.grdANM_DIAGView_CellValueChanged);
             // 
             // gridColumn15
             // 
@@ -874,6 +876,8 @@
             this.grdANM_REFMView.OptionsView.ColumnAutoWidth = false;
             this.grdANM_REFMView.OptionsView.ShowGroupPanel = false;
             this.grdANM_REFMView.VertScrollVisibility = DevExpress.XtraGrid.Views.Base.ScrollVisibility.Always;
+            this.grdANM_REFMView.ShownEditor += new System.EventHandler(this.grdANM_REFMView_ShownEditor);
+            this.grdANM_REFMView.CellValueChanged += new DevExpress.XtraGrid.Views.Base.CellValueChangedEventHandler(this.grdANM_REFMView_CellValueChanged);
             // 
             // gridColumn20
             // 

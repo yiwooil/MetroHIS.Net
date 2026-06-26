@@ -297,6 +297,93 @@ namespace ADD7007E
             });
         }
 
+        private string GetASM037BltsChklstUseYn(string bldodt, OleDbConnection p_conn, OleDbTransaction p_tran)
+        {
+            string wdate = "";
+            if (bldodt.Length >= 8)
+                wdate = bldodt.Substring(0, 8);
+
+            if (wdate == "") return "2";
+
+            bool find = false;
+
+            string sql = "";
+            sql += Environment.NewLine + "SELECT *";
+            sql += Environment.NewLine + "  FROM EMR298";
+            sql += Environment.NewLine + " WHERE PID='" + PID + "'";
+            sql += Environment.NewLine + "   AND BEDEDT='" + A04_BEDEDT + "'";
+            sql += Environment.NewLine + "   AND WDATE='" + wdate + "'";
+            sql += Environment.NewLine + "   AND ISNULL(UPDDT,'')=''";
+
+            MetroLib.SqlHelper.GetDataRow(sql, p_conn, p_tran, delegate(DataRow row)
+            {
+                find = true;
+                return MetroLib.SqlHelper.BREAK;
+            });
+
+            return find ? "1" : "2";
+        }
+
+        private bool AddASM037BloodData(Dictionary<string, int> bldIndexMap, string prscDt, string bldodt, string bldcd, string prknm, decimal unitCnt, string asmBltsChklstUseYn)
+        {
+            if (unitCnt == 0) return false;
+            if (CUtil_ASM010.IsBLDCode(bldcd) == false) return false;
+
+            string unitCntText = unitCnt.ToString("0.#############################");
+
+            int idx;
+            if (!bldIndexMap.TryGetValue(bldcd, out idx))
+            {
+                idx = ASM_PRSC_MDFEE_CD.Count;
+                bldIndexMap[bldcd] = idx;
+
+                // C. 수혈 체크리스트 사용 현황
+                ASM_PRSC_DT.Add(prscDt); // 처방일시
+                ASM_PRSC_UNIT_CNT.Add(unitCntText); // 처방량
+                ASM_BLTS_CHKLST_USE_YN.Add(asmBltsChklstUseYn); // 수혈 체크리스트 사용여부
+                ASM_BLTS_STA_DT.Add(bldodt); // 수혈시작일시
+                ASM_PRSC_BLTS_DGM_NM.Add(prknm); // 수혈제제명
+                ASM_PRSC_MDFEE_CD.Add(bldcd); // 수가코드
+                ASM_BLTS_UNIT_CNT.Add(unitCntText); // 수혈량
+
+                // F. 수혈정보
+                BLTS_STA_DT.Add(bldodt); // 수혈시작일시
+                BLTS_END_DT.Add(bldodt); // 수혈종료일시
+                BLTS_DGM_NM.Add(prknm); // 수혈제제명
+                BLTS_MDFEE_CD.Add(bldcd); // 수가코드
+                BLTS_UNIT_CNT.Add(unitCntText); // 수혈량
+                HG_DCR_YN.Add(""); // Hb저하 발생 여부
+                OPRM_HMRHG_OCUR_YN_CD.Add(""); // 수술 관련 실혈 발생 여부
+                OPRM_MIDD_HMRHG_QTY.Add(""); // 수술 중 실혈량
+                OPRM_AF_DRN_QTY.Add(""); // 수술 후 배액량
+                BLTS_RS_ETC_YN.Add(""); // 그 외 수혈사유 여부
+                BLTS_RS_ETC_TXT.Add(""); // 수혈사유 기타 상세
+            }
+            else
+            {
+                decimal oldCnt = 0;
+                decimal.TryParse(ASM_PRSC_UNIT_CNT[idx], out oldCnt);
+                ASM_PRSC_UNIT_CNT[idx] = (oldCnt + unitCnt).ToString("0.#############################");
+
+                oldCnt = 0;
+                decimal.TryParse(ASM_BLTS_UNIT_CNT[idx], out oldCnt);
+                ASM_BLTS_UNIT_CNT[idx] = (oldCnt + unitCnt).ToString("0.#############################");
+
+                oldCnt = 0;
+                decimal.TryParse(BLTS_UNIT_CNT[idx], out oldCnt);
+                BLTS_UNIT_CNT[idx] = (oldCnt + unitCnt).ToString("0.#############################");
+
+                if (asmBltsChklstUseYn == "1")
+                    ASM_BLTS_CHKLST_USE_YN[idx] = "1";
+
+                BLTS_END_DT[idx] = bldodt; // 수혈종료일시
+            }
+
+            ASM_PRSC_YN = "1";
+            BLTS_YN = "1";
+
+            return true;
+        }
         public void ReadDataFromEMR(OleDbConnection p_conn, OleDbTransaction p_tran)
         {
             System.Windows.Forms.Application.DoEvents();
@@ -439,258 +526,185 @@ namespace ADD7007E
 
             Dictionary<string, int> bldIndexMap = new Dictionary<string, int>();
 
-            if (1 == 1)
+            // TV20 사용
+            bool bFind = false;
+
+            // C. 수혈전 체크리스트 사용 현황 / F. 수혈 정보 (TV20)
+            sql = "";
+            sql += System.Environment.NewLine + "SELECT V20.ODT, V20.OCD, V20.DQTY, V20.DODT, V20.DOHR, V20.DOMN";
+            sql += System.Environment.NewLine + "     , V01.OTM";
+            sql += System.Environment.NewLine + "     , A18.PRICD";
+            sql += System.Environment.NewLine + "     , A02.ISPCD, A02.PRKNM";
+            sql += System.Environment.NewLine + "  FROM TV20 V20 (NOLOCK) INNER JOIN TV01 V01 (NOLOCK) ON V01.PID=V20.PID AND V01.BEDEDT=V20.BEDEDT AND V01.ODT=V20.ODT AND V01.ONO=V20.ONO";
+            sql += System.Environment.NewLine + "                         INNER JOIN TA18 A18 (NOLOCK) ON A18.OCD=V20.OCD AND A18.CREDT=(SELECT MAX(X.CREDT) FROM TA18 X WHERE X.OCD=V20.OCD AND X.CREDT<=V20.ODT)";
+            sql += System.Environment.NewLine + "                         INNER JOIN TA02 A02 (NOLOCK) ON A02.PRICD=A18.PRICD AND A02.CREDT=(SELECT MAX(X.CREDT) FROM TA02 X WHERE X.PRICD=A18.PRICD AND X.CREDT<=V20.ODT)";
+            sql += System.Environment.NewLine + " WHERE V20.PID='" + PID + "'";
+
+            sql += System.Environment.NewLine + "   AND V20.ODIVCD='B'";
+            sql += System.Environment.NewLine + "   AND V20.DSTSCD='Y'";
+            sql += System.Environment.NewLine + " ORDER BY V20.ODT, V20.DODT, V20.DOHR, V20.DOMN, V20.OCD";
+
+            MetroLib.SqlHelper.GetDataRow(sql, p_conn, p_tran, delegate(DataRow row)
             {
-                // TT31 사용
-                sql = "";
-                sql += System.Environment.NewLine + "SELECT T31.EXDT, T31.PRICD, T31.CALQY, A02.ISPCD, A02.PRKNM";
-                sql += System.Environment.NewLine + "  FROM TT31 T31 (NOLOCK) INNER JOIN TA02 A02 (NOLOCK) ON A02.PRICD=T31.PRICD AND A02.CREDT=(SELECT MAX(X.CREDT) FROM TA02 X WHERE X.PRICD=T31.PRICD AND X.CREDT<=T31.EXDT)";
-                sql += System.Environment.NewLine + " WHERE T31.PID='" + PID + "'";
-                sql += System.Environment.NewLine + "   AND T31.BDEDT='" + A04_BEDEDT + "'";
-                sql += System.Environment.NewLine + "   AND ISNULL(T31.CHRLT,'') <> '3'";
-                sql += System.Environment.NewLine + "   AND ISNULL(T31.CALQY,0) <> 0";
-                sql += System.Environment.NewLine + "   AND ISNULL(T31.TTAMT,0) <> 0";
-                sql += System.Environment.NewLine + " ORDER BY T31.EXDT";
+                string odt = row["ODT"].ToString();
+                string otm = row["OTM"].ToString();
+                if (otm.Length > 0 && otm.Length < 4) otm = otm.PadLeft(4, '0');
 
-                MetroLib.SqlHelper.GetDataRow(sql, p_conn, p_tran, delegate(DataRow row)
+                string dodt = row["DODT"].ToString();
+                string dohr = row["DOHR"].ToString();
+                string domn = row["DOMN"].ToString();
+                if (dohr.Length > 0 && dohr.Length < 2) dohr = dohr.PadLeft(2, '0');
+                if (domn.Length > 0 && domn.Length < 2) domn = domn.PadLeft(2, '0');
+
+                string prscDt = odt + otm;
+                string bldodt = dodt == "" ? prscDt : dodt + dohr + domn;
+                string pricd = row["PRICD"].ToString();
+
+                decimal dqty = 0;
+                decimal.TryParse(row["DQTY"].ToString(), out dqty);
+
+                // 그룹수가로 되어있는 경우가 있음.
+                if (pricd.StartsWith("X"))
                 {
-                    string bldodt = row["EXDT"].ToString();
-                    string bldcd = row["ISPCD"].ToString();
-                    string prknm = row["PRKNM"].ToString();
+                    string sql2 = "";
+                    sql2 += Environment.NewLine + "SELECT A02.ISPCD, A02.PRKNM";
+                    sql2 += Environment.NewLine + "  FROM TA02A A02A INNER JOIN TA02 A02 ON A02.PRICD=A02A.SPCD AND A02.CREDT=(SELECT MAX(X.CREDT) FROM TA02 X WHERE X.PRICD=A02.PRICD AND X.CREDT<='" + odt + "')";
+                    sql2 += Environment.NewLine + " WHERE A02A.PRICD='" + pricd + "'";
+                    sql2 += Environment.NewLine + "   AND A02A.CREDT=(SELECT MAX(X.CREDT) FROM TA02A X WHERE X.PRICD=A02A.PRICD AND X.CREDT<='" + odt + "')";
 
-                    decimal calqy = 0;
-                    decimal.TryParse(row["CALQY"].ToString(), out calqy);
-                    string calqyText = calqy.ToString("0.#############################");
-
-                    if (CUtil_ASM010.IsBLDCode(bldcd))
+                    MetroLib.SqlHelper.GetDataRow(sql2, p_conn, p_tran, delegate(DataRow row2)
                     {
-                        int idx;
-                        if (!bldIndexMap.TryGetValue(bldcd, out idx))
-                        {
-                            idx = ASM_PRSC_MDFEE_CD.Count;
-                            bldIndexMap[bldcd] = idx;
+                        string asmBltsChklstUseYn = GetASM037BltsChklstUseYn(bldodt, p_conn, p_tran);
+                        if (AddASM037BloodData(bldIndexMap, prscDt, bldodt, row2["ISPCD"].ToString(), row2["PRKNM"].ToString(), dqty, asmBltsChklstUseYn))
+                            bFind = true;
 
-                            // C. 수혈 체크리스트 사용 현황
-                            ASM_PRSC_DT.Add(bldodt); // 처방일시
-                            ASM_PRSC_UNIT_CNT.Add(calqyText); // 처방량
-                            ASM_BLTS_CHKLST_USE_YN.Add(""); // 수혈 체크리스트 사용여부
-                            ASM_BLTS_STA_DT.Add(bldodt); // 수혈시작일시
-                            ASM_PRSC_BLTS_DGM_NM.Add(prknm); // 수혈제제명
-                            ASM_PRSC_MDFEE_CD.Add(bldcd); // 수가코드
-                            ASM_BLTS_UNIT_CNT.Add(calqyText); // 수혈량
-
-                            // F. 수혈정보
-                            BLTS_STA_DT.Add(bldodt); // 수혈시작일시
-                            BLTS_END_DT.Add(bldodt); // 수혈종료일시
-                            BLTS_DGM_NM.Add(prknm); // 수혈제제명
-                            BLTS_MDFEE_CD.Add(bldcd); // 수가코드
-                            BLTS_UNIT_CNT.Add(calqyText); // 수혈량
-                            HG_DCR_YN.Add(""); // Hb저하 발생 여부
-                            OPRM_HMRHG_OCUR_YN_CD.Add(""); // 수술 관련 실혈 발생 여부
-                            OPRM_MIDD_HMRHG_QTY.Add(""); // 수술 중 실혈량
-                            OPRM_AF_DRN_QTY.Add(""); // 수술 후 배액량
-                            BLTS_RS_ETC_YN.Add(""); // 그 외 수혈사유 여부
-                            BLTS_RS_ETC_TXT.Add(""); // 수혈사유 기타 상세
-                        }
-                        else
-                        {
-                            decimal unitCnt = 0;
-                            decimal.TryParse(ASM_PRSC_UNIT_CNT[idx], out unitCnt);
-                            ASM_PRSC_UNIT_CNT[idx] = (unitCnt + calqy).ToString("0.#############################");
-
-                            unitCnt = 0;
-                            decimal.TryParse(ASM_BLTS_UNIT_CNT[idx], out unitCnt);
-                            ASM_BLTS_UNIT_CNT[idx] = (unitCnt + calqy).ToString("0.#############################");
-
-                            unitCnt = 0;
-                            decimal.TryParse(BLTS_UNIT_CNT[idx], out unitCnt);
-                            BLTS_UNIT_CNT[idx] = (unitCnt + calqy).ToString("0.#############################");
-
-                            BLTS_END_DT[idx] = bldodt; // 수혈종료일시
-                        }
-                    }
-
-                    return MetroLib.SqlHelper.CONTINUE;
-                });
-
-                for (int i = ASM_PRSC_UNIT_CNT.Count - 1; i >= 0; i--)
+                        return MetroLib.SqlHelper.CONTINUE;
+                    });
+                }
+                else
                 {
-                    decimal unitCnt = 0;
-                    decimal.TryParse(ASM_PRSC_UNIT_CNT[i], out unitCnt);
-
-                    if (unitCnt == 0)
-                    {
-                        ASM_PRSC_DT.RemoveAt(i);
-                        ASM_PRSC_UNIT_CNT.RemoveAt(i);
-                        ASM_BLTS_CHKLST_USE_YN.RemoveAt(i);
-                        ASM_BLTS_STA_DT.RemoveAt(i);
-                        ASM_PRSC_BLTS_DGM_NM.RemoveAt(i);
-                        ASM_PRSC_MDFEE_CD.RemoveAt(i);
-                        ASM_BLTS_UNIT_CNT.RemoveAt(i);
-
-                        BLTS_STA_DT.RemoveAt(i);
-                        BLTS_END_DT.RemoveAt(i);
-                        BLTS_DGM_NM.RemoveAt(i);
-                        BLTS_MDFEE_CD.RemoveAt(i);
-                        BLTS_UNIT_CNT.RemoveAt(i);
-                        HG_DCR_YN.RemoveAt(i);
-                        OPRM_HMRHG_OCUR_YN_CD.RemoveAt(i);
-                        OPRM_MIDD_HMRHG_QTY.RemoveAt(i);
-                        OPRM_AF_DRN_QTY.RemoveAt(i);
-                        BLTS_RS_ETC_YN.RemoveAt(i);
-                        BLTS_RS_ETC_TXT.RemoveAt(i);
-                    }
+                    string asmBltsChklstUseYn = GetASM037BltsChklstUseYn(bldodt, p_conn, p_tran);
+                    if (AddASM037BloodData(bldIndexMap, prscDt, bldodt, row["ISPCD"].ToString(), row["PRKNM"].ToString(), dqty, asmBltsChklstUseYn))
+                        bFind = true;
                 }
 
-                if (ASM_PRSC_UNIT_CNT.Count > 0)
-                {
-                    ASM_PRSC_YN = "1";
-                    BLTS_YN = "1";
-                }
-            }
-            else
+                return MetroLib.SqlHelper.CONTINUE;
+            });
+
+            if (bFind == false)
             {
-                // TB08 사용
-                // 사용하지 않으면 삭제하자.
-                sql = "";
-                sql += System.Environment.NewLine + "SELECT B08.BLDODT, A02.PRICD, A02.ISPCD, A02.PRKNM";
-                sql += System.Environment.NewLine + "  FROM TB08 B08 (NOLOCK) INNER JOIN TA18 A18 (NOLOCK) ON A18.OCD=B08.OCD AND A18.CREDT=(SELECT MAX(X.CREDT) FROM TA18 X WHERE X.OCD=B08.OCD AND X.CREDT<=B08.BLDODT)";
-                sql += System.Environment.NewLine + "                         INNER JOIN TA02 A02 (NOLOCK) ON A02.PRICD=A18.PRICD AND A02.CREDT=(SELECT MAX(X.CREDT) FROM TA02 X WHERE X.PRICD=A18.PRICD AND X.CREDT<=B08.BLDODT)";
-                sql += System.Environment.NewLine + " WHERE B08.PID='" + PID + "'";
-                sql += System.Environment.NewLine + "   AND B08.BEDEDT='" + A04_BEDEDT + "'";
-                sql += System.Environment.NewLine + "   AND B08.BLDODT>='" + A04_BEDEDT + "'";
-                sql += System.Environment.NewLine + "   AND ISNULL(B08.BLDRTNDT,'')=''";
-                sql += System.Environment.NewLine + " ORDER BY B08.BLDODT";
-
-                MetroLib.SqlHelper.GetDataRow(sql, p_conn, p_tran, delegate(DataRow row)
+                if (1 == 1)
                 {
-                    string pricd = row["PRICD"].ToString();
-                    string bldodt = row["BLDODT"].ToString();
+                    // TT31 사용
+                    sql = "";
+                    sql += System.Environment.NewLine + "SELECT T31.EXDT, T31.PRICD, T31.CALQY, A02.ISPCD, A02.PRKNM";
+                    sql += System.Environment.NewLine + "  FROM TT31 T31 (NOLOCK) INNER JOIN TA02 A02 (NOLOCK) ON A02.PRICD=T31.PRICD AND A02.CREDT=(SELECT MAX(X.CREDT) FROM TA02 X WHERE X.PRICD=T31.PRICD AND X.CREDT<=T31.EXDT)";
+                    sql += System.Environment.NewLine + " WHERE T31.PID='" + PID + "'";
+                    sql += System.Environment.NewLine + "   AND T31.BDEDT='" + A04_BEDEDT + "'";
+                    sql += System.Environment.NewLine + "   AND ISNULL(T31.CHRLT,'') <> '3'";
+                    sql += System.Environment.NewLine + "   AND ISNULL(T31.CALQY,0) <> 0";
+                    sql += System.Environment.NewLine + "   AND ISNULL(T31.TTAMT,0) <> 0";
+                    sql += System.Environment.NewLine + " ORDER BY T31.EXDT";
 
-                    if (pricd.StartsWith("X"))
+                    MetroLib.SqlHelper.GetDataRow(sql, p_conn, p_tran, delegate(DataRow row)
                     {
-                        string sql2 = "";
-                        sql2 += Environment.NewLine + "SELECT A02.ISPCD, A02.PRKNM";
-                        sql2 += Environment.NewLine + "  FROM TA02A A02A INNER JOIN TA02 A02 ON A02.PRICD=A02A.SPCD AND A02.CREDT=(SELECT MAX(X.CREDT) FROM TA02 X WHERE X.PRICD=A02.PRICD AND X.CREDT<='" + bldodt + "')";
-                        sql2 += Environment.NewLine + " WHERE A02A.PRICD='" + pricd + "'";
-                        sql2 += Environment.NewLine + "   AND A02A.CREDT=(SELECT MAX(X.CREDT) FROM TA02A X WHERE X.PRICD=A02A.PRICD AND X.CREDT<='" + bldodt + "')";
-
-                        MetroLib.SqlHelper.GetDataRow(sql2, p_conn, p_tran, delegate(DataRow row2)
-                        {
-                            string bldcd = row2["ISPCD"].ToString();
-                            string prknm = row2["PRKNM"].ToString();
-
-                            if (CUtil_ASM010.IsBLDCode(bldcd))
-                            {
-                                ASM_PRSC_YN = "1";
-                                BLTS_YN = "1";
-
-                                int idx;
-                                if (!bldIndexMap.TryGetValue(bldcd, out idx))
-                                {
-                                    idx = ASM_PRSC_MDFEE_CD.Count;
-                                    bldIndexMap[bldcd] = idx;
-
-                                    // C. 수혈 체크리스트 사용 현황
-                                    ASM_PRSC_DT.Add(bldodt); // 처방일시
-                                    ASM_PRSC_UNIT_CNT.Add("1"); // 처방량
-                                    ASM_BLTS_CHKLST_USE_YN.Add(""); // 수혈 체크리스트 사용여부
-                                    ASM_BLTS_STA_DT.Add(bldodt); // 수혈시작일시
-                                    ASM_PRSC_BLTS_DGM_NM.Add(prknm); // 수혈제제명
-                                    ASM_PRSC_MDFEE_CD.Add(bldcd); // 수가코드
-                                    ASM_BLTS_UNIT_CNT.Add("1"); // 수혈량
-
-                                    // F. 수혈정보
-                                    BLTS_STA_DT.Add(bldodt); // 수혈시작일시
-                                    BLTS_END_DT.Add(bldodt); // 수혈종료일시
-                                    BLTS_DGM_NM.Add(prknm); // 수혈제제명
-                                    BLTS_MDFEE_CD.Add(bldcd); // 수가코드
-                                    BLTS_UNIT_CNT.Add("1"); // 수혈량
-                                    HG_DCR_YN.Add(""); // Hb저하 발생 여부
-                                    OPRM_HMRHG_OCUR_YN_CD.Add(""); // 수술 관련 실혈 발생 여부
-                                    OPRM_MIDD_HMRHG_QTY.Add(""); // 수술 중 실혈량
-                                    OPRM_AF_DRN_QTY.Add(""); // 수술 후 배액량
-                                    BLTS_RS_ETC_YN.Add(""); // 그 외 수혈사유 여부
-                                    BLTS_RS_ETC_TXT.Add(""); // 수혈사유 기타 상세
-                                }
-                                else
-                                {
-                                    int unitCnt = 0;
-                                    int.TryParse(ASM_PRSC_UNIT_CNT[idx], out unitCnt);
-                                    ASM_PRSC_UNIT_CNT[idx] = (unitCnt + 1).ToString();
-
-                                    unitCnt = 0;
-                                    int.TryParse(ASM_BLTS_UNIT_CNT[idx], out unitCnt);
-                                    ASM_BLTS_UNIT_CNT[idx] = (unitCnt + 1).ToString();
-
-                                    unitCnt = 0;
-                                    int.TryParse(BLTS_UNIT_CNT[idx], out unitCnt);
-                                    BLTS_UNIT_CNT[idx] = (unitCnt + 1).ToString();
-                                    BLTS_END_DT[idx] = bldodt; // 수혈종료일시
-                                }
-                            }
-
-                            return MetroLib.SqlHelper.CONTINUE;
-                        });
-                    }
-                    else
-                    {
+                        string bldodt = row["EXDT"].ToString();
                         string bldcd = row["ISPCD"].ToString();
                         string prknm = row["PRKNM"].ToString();
 
-                        if (CUtil_ASM010.IsBLDCode(bldcd))
+                        decimal calqy = 0;
+                        decimal.TryParse(row["CALQY"].ToString(), out calqy);
+
+                        string asmBltsChklstUseYn = GetASM037BltsChklstUseYn(bldodt, p_conn, p_tran);
+                        AddASM037BloodData(bldIndexMap, bldodt, bldodt, bldcd, prknm, calqy, asmBltsChklstUseYn);
+
+                        return MetroLib.SqlHelper.CONTINUE;
+                    });
+
+                    for (int i = ASM_PRSC_UNIT_CNT.Count - 1; i >= 0; i--)
+                    {
+                        decimal unitCnt = 0;
+                        decimal.TryParse(ASM_PRSC_UNIT_CNT[i], out unitCnt);
+
+                        if (unitCnt == 0)
                         {
-                            ASM_PRSC_YN = "1";
-                            BLTS_YN = "1";
+                            ASM_PRSC_DT.RemoveAt(i);
+                            ASM_PRSC_UNIT_CNT.RemoveAt(i);
+                            ASM_BLTS_CHKLST_USE_YN.RemoveAt(i);
+                            ASM_BLTS_STA_DT.RemoveAt(i);
+                            ASM_PRSC_BLTS_DGM_NM.RemoveAt(i);
+                            ASM_PRSC_MDFEE_CD.RemoveAt(i);
+                            ASM_BLTS_UNIT_CNT.RemoveAt(i);
 
-                            int idx;
-                            if (!bldIndexMap.TryGetValue(bldcd, out idx))
-                            {
-                                idx = ASM_PRSC_MDFEE_CD.Count;
-                                bldIndexMap[bldcd] = idx;
-
-                                // C. 수혈 체크리스트 사용 현황
-                                ASM_PRSC_DT.Add(bldodt); // 처방일시
-                                ASM_PRSC_UNIT_CNT.Add("1"); // 처방량
-                                ASM_BLTS_CHKLST_USE_YN.Add(""); // 수혈 체크리스트 사용여부
-                                ASM_BLTS_STA_DT.Add(bldodt); // 수혈시작일시
-                                ASM_PRSC_BLTS_DGM_NM.Add(prknm); // 수혈제제명
-                                ASM_PRSC_MDFEE_CD.Add(bldcd); // 수가코드
-                                ASM_BLTS_UNIT_CNT.Add("1"); // 수혈량
-
-                                // F. 수혈정보
-                                BLTS_STA_DT.Add(bldodt); // 수혈시작일시
-                                BLTS_END_DT.Add(bldodt); // 수혈종료일시
-                                BLTS_DGM_NM.Add(prknm); // 수혈제제명
-                                BLTS_MDFEE_CD.Add(bldcd); // 수가코드
-                                BLTS_UNIT_CNT.Add("1"); // 수혈량
-                                HG_DCR_YN.Add(""); // Hb저하 발생 여부
-                                OPRM_HMRHG_OCUR_YN_CD.Add(""); // 수술 관련 실혈 발생 여부
-                                OPRM_MIDD_HMRHG_QTY.Add(""); // 수술 중 실혈량
-                                OPRM_AF_DRN_QTY.Add(""); // 수술 후 배액량
-                                BLTS_RS_ETC_YN.Add(""); // 그 외 수혈사유 여부
-                                BLTS_RS_ETC_TXT.Add(""); // 수혈사유 기타 상세
-                            }
-                            else
-                            {
-                                int unitCnt = 0;
-                                int.TryParse(ASM_PRSC_UNIT_CNT[idx], out unitCnt);
-                                ASM_PRSC_UNIT_CNT[idx] = (unitCnt + 1).ToString();
-
-                                unitCnt = 0;
-                                int.TryParse(ASM_BLTS_UNIT_CNT[idx], out unitCnt);
-                                ASM_BLTS_UNIT_CNT[idx] = (unitCnt + 1).ToString();
-
-                                unitCnt = 0;
-                                int.TryParse(BLTS_UNIT_CNT[idx], out unitCnt);
-                                BLTS_UNIT_CNT[idx] = (unitCnt + 1).ToString();
-                                BLTS_END_DT[idx] = bldodt; // 수혈종료일시
-                            }
+                            BLTS_STA_DT.RemoveAt(i);
+                            BLTS_END_DT.RemoveAt(i);
+                            BLTS_DGM_NM.RemoveAt(i);
+                            BLTS_MDFEE_CD.RemoveAt(i);
+                            BLTS_UNIT_CNT.RemoveAt(i);
+                            HG_DCR_YN.RemoveAt(i);
+                            OPRM_HMRHG_OCUR_YN_CD.RemoveAt(i);
+                            OPRM_MIDD_HMRHG_QTY.RemoveAt(i);
+                            OPRM_AF_DRN_QTY.RemoveAt(i);
+                            BLTS_RS_ETC_YN.RemoveAt(i);
+                            BLTS_RS_ETC_TXT.RemoveAt(i);
                         }
                     }
 
-                    return MetroLib.SqlHelper.CONTINUE;
-                });
+                    if (ASM_PRSC_UNIT_CNT.Count > 0)
+                    {
+                        ASM_PRSC_YN = "1";
+                        BLTS_YN = "1";
+                    }
+                    else
+                    {
+                        ASM_PRSC_YN = "2";
+                        BLTS_YN = "2";
+                    }
+                }
+                else
+                {
+                    // TB08 사용
+                    // 사용하지 않으면 삭제하자.
+                    sql = "";
+                    sql += System.Environment.NewLine + "SELECT B08.BLDODT, A02.PRICD, A02.ISPCD, A02.PRKNM";
+                    sql += System.Environment.NewLine + "  FROM TB08 B08 (NOLOCK) INNER JOIN TA18 A18 (NOLOCK) ON A18.OCD=B08.OCD AND A18.CREDT=(SELECT MAX(X.CREDT) FROM TA18 X WHERE X.OCD=B08.OCD AND X.CREDT<=B08.BLDODT)";
+                    sql += System.Environment.NewLine + "                         INNER JOIN TA02 A02 (NOLOCK) ON A02.PRICD=A18.PRICD AND A02.CREDT=(SELECT MAX(X.CREDT) FROM TA02 X WHERE X.PRICD=A18.PRICD AND X.CREDT<=B08.BLDODT)";
+                    sql += System.Environment.NewLine + " WHERE B08.PID='" + PID + "'";
+                    sql += System.Environment.NewLine + "   AND B08.BEDEDT='" + A04_BEDEDT + "'";
+                    sql += System.Environment.NewLine + "   AND B08.BLDODT>='" + A04_BEDEDT + "'";
+                    sql += System.Environment.NewLine + "   AND ISNULL(B08.BLDRTNDT,'')=''";
+                    sql += System.Environment.NewLine + " ORDER BY B08.BLDODT";
+
+                    MetroLib.SqlHelper.GetDataRow(sql, p_conn, p_tran, delegate(DataRow row)
+                    {
+                        string pricd = row["PRICD"].ToString();
+                        string bldodt = row["BLDODT"].ToString();
+
+                        if (pricd.StartsWith("X"))
+                        {
+                            string sql2 = "";
+                            sql2 += Environment.NewLine + "SELECT A02.ISPCD, A02.PRKNM";
+                            sql2 += Environment.NewLine + "  FROM TA02A A02A INNER JOIN TA02 A02 ON A02.PRICD=A02A.SPCD AND A02.CREDT=(SELECT MAX(X.CREDT) FROM TA02 X WHERE X.PRICD=A02.PRICD AND X.CREDT<='" + bldodt + "')";
+                            sql2 += Environment.NewLine + " WHERE A02A.PRICD='" + pricd + "'";
+                            sql2 += Environment.NewLine + "   AND A02A.CREDT=(SELECT MAX(X.CREDT) FROM TA02A X WHERE X.PRICD=A02A.PRICD AND X.CREDT<='" + bldodt + "')";
+
+                            MetroLib.SqlHelper.GetDataRow(sql2, p_conn, p_tran, delegate(DataRow row2)
+                            {
+                                string asmBltsChklstUseYn = GetASM037BltsChklstUseYn(bldodt, p_conn, p_tran);
+                                AddASM037BloodData(bldIndexMap, bldodt, bldodt, row2["ISPCD"].ToString(), row2["PRKNM"].ToString(), 1, asmBltsChklstUseYn);
+
+                                return MetroLib.SqlHelper.CONTINUE;
+                            });
+                        }
+                        else
+                        {
+                            string asmBltsChklstUseYn = GetASM037BltsChklstUseYn(bldodt, p_conn, p_tran);
+                            AddASM037BloodData(bldIndexMap, bldodt, bldodt, row["ISPCD"].ToString(), row["PRKNM"].ToString(), 1, asmBltsChklstUseYn);
+                        }
+
+                        return MetroLib.SqlHelper.CONTINUE;
+                    });
+                }
             }
 
             // 빈혈 진단여부를 설정하기 위한 사전작업
@@ -709,6 +723,15 @@ namespace ADD7007E
                 }
             }
 
+            string anmRefmFrdt = "";
+            string anmRefmTodt = "";
+            if (MetroLib.Util.ValDt(minAsmPrscDt) == true)
+            {
+                DateTime minAsmPrscDate = DateTime.ParseExact(minAsmPrscDt, "yyyyMMdd", null);
+                anmRefmFrdt = minAsmPrscDate.AddDays(-30).ToString("yyyyMMdd");
+                anmRefmTodt = minAsmPrscDt;
+            }
+
             // D. 투약정보
             ANM_DIAG_YN = "2"; // 빈혈 진단(1.Yes 2.No)
             ANM_REFM_YN = "2"; // 빈혈교정 유무(1.Yes 2.No)
@@ -717,21 +740,30 @@ namespace ADD7007E
             sql += System.Environment.NewLine + "SELECT *";
             sql += System.Environment.NewLine + "  FROM TV20 V20 (NOLOCK) INNER JOIN TA18 A18 (NOLOCK) ON A18.OCD=V20.OCD AND A18.CREDT=(SELECT MAX(X.CREDT) FROM TA18 X WHERE X.OCD=V20.OCD AND X.CREDT<=V20.DODT)";
             sql += System.Environment.NewLine + "                         INNER JOIN TA02 A02 (NOLOCK) ON A02.PRICD=A18.PRICD AND A02.CREDT=(SELECT MAX(X.CREDT) FROM TA02 X WHERE X.PRICD=A18.PRICD AND X.CREDT<=V20.DODT)";
-            if (CConfig.BodyNewFg == "1")
-            {
-                sql += System.Environment.NewLine + "                         INNER JOIN TV01A V01A (NOLOCK) ON V01A.BPID=V20.PID AND V01A.BBEDEDT=V20.BEDEDT AND V01A.BBDIV=V20.BDIV AND V01A.BODT=V20.ODT AND V01A.BONO=V20.ONO AND V01A.OCD=V20.OCD";
-            }
-            else
-            {
-                sql += System.Environment.NewLine + "                         INNER JOIN TV01 V01 (NOLOCK) ON V01.PID=V20.PID AND V01.BEDEDT=V20.BEDEDT AND V01.BDIV=V20.BDIV AND V01.ODT=V20.ODT AND V01.ONO=V20.ONO";
-                sql += System.Environment.NewLine + "                         INNER JOIN TV01A V01A (NOLOCK) ON V01A.HDID=V01.HDID AND V01A.OCD=V20.OCD";
-            }
+            //if (CConfig.BodyNewFg == "1")
+            //{
+            //    sql += System.Environment.NewLine + "                         INNER JOIN TV01A V01A (NOLOCK) ON V01A.BPID=V20.PID AND V01A.BBEDEDT=V20.BEDEDT AND V01A.BBDIV=V20.BDIV AND V01A.BODT=V20.ODT AND V01A.BONO=V20.ONO AND V01A.OCD=V20.OCD";
+            //}
+            //else
+            //{
+            //    sql += System.Environment.NewLine + "                         INNER JOIN TV01 V01 (NOLOCK) ON V01.PID=V20.PID AND V01.BEDEDT=V20.BEDEDT AND V01.BDIV=V20.BDIV AND V01.ODT=V20.ODT AND V01.ONO=V20.ONO";
+            //    sql += System.Environment.NewLine + "                         INNER JOIN TV01A V01A (NOLOCK) ON V01A.HDID=V01.HDID AND V01A.OCD=V20.OCD";
+            //}
             sql += System.Environment.NewLine + " WHERE V20.PID='" + PID + "'";
-            sql += System.Environment.NewLine + "   AND V20.BEDEDT='" + A04_BEDEDT + "'";
             sql += System.Environment.NewLine + "   AND V20.ODIVCD LIKE 'M%'";
             sql += System.Environment.NewLine + "   AND V20.DSTSCD = 'Y'";
             sql += System.Environment.NewLine + "   AND ISNULL(V20.CHNGDT,'') = ''";
             sql += System.Environment.NewLine + "   AND V20.DQTY <> 0";
+
+            if (anmRefmFrdt != "" && anmRefmTodt != "")
+            {
+                sql += System.Environment.NewLine + "   AND V20.DODT>='" + anmRefmFrdt + "'";
+                sql += System.Environment.NewLine + "   AND V20.DODT<='" + anmRefmTodt + "'";
+            }
+            else
+            {
+                sql += System.Environment.NewLine + "   AND 1=0";
+            }
             sql += System.Environment.NewLine + " ORDER BY V20.DODT, V20.DOHR, V20.DOMN";
 
             MetroLib.SqlHelper.GetDataRow(sql, p_conn, p_tran, delegate(DataRow row)

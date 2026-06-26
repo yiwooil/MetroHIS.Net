@@ -152,6 +152,8 @@ namespace ADD7007E
         private DevExpress.XtraGrid.Views.Grid.GridView m_view;
         private CDataASM037_003 m_data;
         private bool m_prscDateEditByUser = false;
+        private bool m_anmDiagSymEditByUser = false;
+        private bool m_anmRefmCdEditByUser = false;
 
         public ADD7007_ASM037_003()
         {
@@ -416,6 +418,167 @@ namespace ADD7007E
 
             SortPRSCByPrscDate();
         }
+
+        private string GetFirstSoprDate()
+        {
+            List<SOPR> list = grdSOPR.DataSource as List<SOPR>;
+            if (list == null) return "";
+
+            string firstSoprDate = "";
+            foreach (SOPR data in list)
+            {
+                string soprDate = (data.ASM_OPRM_IPAT_DT_DATE ?? "").Trim();
+                if (soprDate.Length >= 8)
+                    soprDate = soprDate.Substring(0, 8);
+
+                if (MetroLib.Util.ValDt(soprDate) == false) continue;
+
+                if (firstSoprDate == "" || firstSoprDate.CompareTo(soprDate) > 0)
+                    firstSoprDate = soprDate;
+            }
+
+            return firstSoprDate;
+        }
+
+        private string GetDiagNameFromTZ16A(string sickSym)
+        {
+            sickSym = (sickSym ?? "").Trim();
+            if (sickSym == "") return "";
+
+            string code = sickSym.Replace("'", "''");
+
+            string diagNm = "";
+            string strConn = MetroLib.DBHelper.GetConnectionString();
+            using (OleDbConnection conn = new OleDbConnection(strConn))
+            {
+                conn.Open();
+
+                string soprDate = GetFirstSoprDate();
+                if (soprDate == "")
+                    soprDate = MetroLib.Util.GetSysDate(conn);
+
+                string sql = "";
+                sql += Environment.NewLine + "SELECT TOP 1 KORNM";
+                sql += Environment.NewLine + "  FROM TZ16A Z16";
+                sql += Environment.NewLine + " WHERE Z16.CODE='" + code + "'";
+                sql += Environment.NewLine + "   AND CASE WHEN ISNULL(Z16.CREDT,'')='' THEN '19990101' ELSE Z16.CREDT END<='" + soprDate + "'";
+                sql += Environment.NewLine + "   AND CASE WHEN ISNULL(Z16.EXPDT,'')='' THEN '99991231' ELSE Z16.EXPDT END>='" + soprDate + "'";
+                sql += Environment.NewLine + " ORDER BY Z16.SEQNO";
+
+                MetroLib.SqlHelper.GetDataRow(sql, conn, null, delegate(DataRow row)
+                {
+                    diagNm = row["KORNM"].ToString();
+                    return MetroLib.SqlHelper.BREAK;
+                });
+            }
+
+            return diagNm;
+        }
+
+        private void grdANM_DIAGView_ShownEditor(object sender, EventArgs e)
+        {
+            m_anmDiagSymEditByUser = false;
+            if (grdANM_DIAGView.FocusedColumn == null) return;
+
+            if (grdANM_DIAGView.FocusedColumn.FieldName == "SICK_SYM")
+                m_anmDiagSymEditByUser = true;
+        }
+
+        private void grdANM_DIAGView_CellValueChanged(object sender, DevExpress.XtraGrid.Views.Base.CellValueChangedEventArgs e)
+        {
+            if (e.Column.FieldName != "SICK_SYM") return;
+            if (m_anmDiagSymEditByUser == false) return;
+
+            m_anmDiagSymEditByUser = false;
+
+            ANM_DIAG data = grdANM_DIAGView.GetRow(e.RowHandle) as ANM_DIAG;
+            if (data == null) return;
+
+            string sickSym = "";
+            if (e.Value != null)
+                sickSym = e.Value.ToString().Trim().ToUpper();
+
+            data.SICK_SYM = sickSym;
+
+            try
+            {
+                data.DIAG_NM = GetDiagNameFromTZ16A(sickSym);
+                grdANM_DIAGView.RefreshRow(e.RowHandle);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private string GetMdsNameFromTI09(string mdsCd)
+        {
+            mdsCd = (mdsCd ?? "").Trim();
+            if (mdsCd == "") return "";
+
+            string pcode = mdsCd.Replace("'", "''");
+
+            string mdsNm = "";
+            string strConn = MetroLib.DBHelper.GetConnectionString();
+            using (OleDbConnection conn = new OleDbConnection(strConn))
+            {
+                conn.Open();
+
+                string soprDate = GetFirstSoprDate();
+                if (soprDate == "")
+                    soprDate = MetroLib.Util.GetSysDate(conn);
+
+                string sql = "";
+                sql += Environment.NewLine + "SELECT PCODNM";
+                sql += Environment.NewLine + "  FROM TI09 I09";
+                sql += Environment.NewLine + " WHERE I09.GUBUN='3'";
+                sql += Environment.NewLine + "   AND I09.PCODE='" + pcode + "'";
+                sql += Environment.NewLine + "   AND I09.ADTDT=(SELECT MAX(X.ADTDT) FROM TI09 X WHERE X.GUBUN=I09.GUBUN AND X.PCODE=I09.PCODE AND X.ADTDT<='" + soprDate + "')";
+
+                MetroLib.SqlHelper.GetDataRow(sql, conn, null, delegate(DataRow row)
+                {
+                    mdsNm = row["PCODNM"].ToString();
+                    return MetroLib.SqlHelper.BREAK;
+                });
+            }
+
+            return mdsNm;
+        }
+
+        private void grdANM_REFMView_ShownEditor(object sender, EventArgs e)
+        {
+            m_anmRefmCdEditByUser = false;
+            if (grdANM_REFMView.FocusedColumn == null) return;
+
+            if (grdANM_REFMView.FocusedColumn.FieldName == "MDS_CD")
+                m_anmRefmCdEditByUser = true;
+        }
+
+        private void grdANM_REFMView_CellValueChanged(object sender, DevExpress.XtraGrid.Views.Base.CellValueChangedEventArgs e)
+        {
+            if (e.Column.FieldName != "MDS_CD") return;
+            if (m_anmRefmCdEditByUser == false) return;
+
+            m_anmRefmCdEditByUser = false;
+
+            ANM_REFM data = grdANM_REFMView.GetRow(e.RowHandle) as ANM_REFM;
+            if (data == null) return;
+
+            string mdsCd = "";
+            if (e.Value != null)
+                mdsCd = e.Value.ToString().Trim();
+
+            try
+            {
+                data.MDS_NM = GetMdsNameFromTI09(mdsCd);
+                grdANM_REFMView.RefreshRow(e.RowHandle);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
         private void ApplySoprControlsEnabled()
         {
             bool soprEnabled = rbSOPR_YN_1.Checked;
@@ -543,7 +706,7 @@ namespace ADD7007E
 
             m_data.LFB_FS_YN = CUtil.GetRBString(rbLFB_FS_YN_1, rbLFB_FS_YN_2); // 척추후방고정술 실시여부(1.Yes, 2.No)
             m_data.LFB_FS_LVL = CUtil.GetRBString(rbLFB_FS_LVL_1, rbLFB_FS_LVL_2, rbLFB_FS_LVL_3); // 척추후방고정술 Level(1,2,3)
-            m_data.KNJN_RPMT_YN = CUtil.GetRBString(rbKNJN_RPMT_YN_1, rbKNJN_RPMT_YN_1); // 슬관절치환술 실시여부(1.Yes 2.No)
+            m_data.KNJN_RPMT_YN = CUtil.GetRBString(rbKNJN_RPMT_YN_1, rbKNJN_RPMT_YN_2); // 슬관절치환술 실시여부(1.Yes 2.No)
             m_data.KNJN_RPMT_RGN_CD = CUtil.GetRBString(rbKNJN_RPMT_RGN_CD_1, rbKNJN_RPMT_RGN_CD_2); // 슬관절치환술 부위(1.단측 2.양측)
 
             // C. 수혈 체크리스트 사용 현황 (단일값)

@@ -1521,7 +1521,7 @@ namespace ADD7007E
             for (int i = 0; i < data.SPRM_IPAT_DT.Count; i++)
             {
                 dynReq.Tables["TBL_IPAT_DSCG"].AddRow();
-                dynReq.Tables["TBL_IPAT_DSCG"].Rows[i]["SPRM_IPAT_DT"].Value = data.SPRM_DSCG_DT[i]; // 입실일시
+                dynReq.Tables["TBL_IPAT_DSCG"].Rows[i]["SPRM_IPAT_DT"].Value = data.SPRM_IPAT_DT[i]; // 입실일시
                 dynReq.Tables["TBL_IPAT_DSCG"].Rows[i]["SPRM_IPAT_RS_CD"].Value = data.SPRM_IPAT_RS_CD[i]; // 입실사유
                 if (data.SPRM_IPAT_RS_CD[i] == "4")
                 {
