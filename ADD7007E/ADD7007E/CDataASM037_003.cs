@@ -724,13 +724,34 @@ namespace ADD7007E
                 }
             }
 
+            // 빈혈교정 투약정보 조회기간은 수술실 입실일자 중 가장 빠른 일자를 기준으로 한다.
+            string minOprmIpatDt = "";
+            for (int i = 0; i < ASM_OPRM_IPAT_DT.Count; i++)
+            {
+                string oprmIpatDt = ASM_OPRM_IPAT_DT[i];
+                if (oprmIpatDt.Length >= 8)
+                {
+                    oprmIpatDt = oprmIpatDt.Substring(0, 8);
+
+                    if (MetroLib.Util.ValDt(oprmIpatDt) == false)
+                    {
+                        continue;
+                    }
+
+                    if (minOprmIpatDt == "" || minOprmIpatDt.CompareTo(oprmIpatDt) > 0)
+                    {
+                        minOprmIpatDt = oprmIpatDt;
+                    }
+                }
+            }
+
             string anmRefmFrdt = "";
             string anmRefmTodt = "";
-            if (MetroLib.Util.ValDt(minAsmPrscDt) == true)
+            if (MetroLib.Util.ValDt(minOprmIpatDt) == true)
             {
-                DateTime minAsmPrscDate = DateTime.ParseExact(minAsmPrscDt, "yyyyMMdd", null);
-                anmRefmFrdt = minAsmPrscDate.AddDays(-30).ToString("yyyyMMdd");
-                anmRefmTodt = minAsmPrscDt;
+                DateTime minOprmIpatDate = DateTime.ParseExact(minOprmIpatDt, "yyyyMMdd", null);
+                anmRefmFrdt = minOprmIpatDate.AddDays(-30).ToString("yyyyMMdd");
+                anmRefmTodt = minOprmIpatDt;
             }
 
             // D. 투약정보
