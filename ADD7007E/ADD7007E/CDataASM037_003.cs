@@ -539,9 +539,10 @@ namespace ADD7007E
             sql += System.Environment.NewLine + "                         INNER JOIN TA18 A18 (NOLOCK) ON A18.OCD=V20.OCD AND A18.CREDT=(SELECT MAX(X.CREDT) FROM TA18 X WHERE X.OCD=V20.OCD AND X.CREDT<=V20.ODT)";
             sql += System.Environment.NewLine + "                         INNER JOIN TA02 A02 (NOLOCK) ON A02.PRICD=A18.PRICD AND A02.CREDT=(SELECT MAX(X.CREDT) FROM TA02 X WHERE X.PRICD=A18.PRICD AND X.CREDT<=V20.ODT)";
             sql += System.Environment.NewLine + " WHERE V20.PID='" + PID + "'";
-
+            sql += System.Environment.NewLine + "   AND V20.BEDEDT='" + A04_BEDEDT + "'";
             sql += System.Environment.NewLine + "   AND V20.ODIVCD='B'";
             sql += System.Environment.NewLine + "   AND V20.DSTSCD='Y'";
+            sql += System.Environment.NewLine + "   AND ISNULL(V20.CHNGDT,'')=''";
             sql += System.Environment.NewLine + " ORDER BY V20.ODT, V20.DODT, V20.DOHR, V20.DOMN, V20.OCD";
 
             MetroLib.SqlHelper.GetDataRow(sql, p_conn, p_tran, delegate(DataRow row)
