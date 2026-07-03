@@ -330,12 +330,13 @@ namespace ADD7007E
             if (CUtil_ASM010.IsBLDCode(bldcd) == false) return false;
 
             string unitCntText = unitCnt.ToString("0.#############################");
+            string bldIndexKey = bldcd + "," + bldodt;
 
             int idx;
-            if (!bldIndexMap.TryGetValue(bldcd, out idx))
+            if (!bldIndexMap.TryGetValue(bldIndexKey, out idx))
             {
                 idx = ASM_PRSC_MDFEE_CD.Count;
-                bldIndexMap[bldcd] = idx;
+                bldIndexMap[bldIndexKey] = idx;
 
                 // C. 수혈 체크리스트 사용 현황
                 ASM_PRSC_DT.Add(prscDt); // 처방일시

@@ -1096,6 +1096,8 @@
             this.grdBLTSView.OptionsView.ColumnAutoWidth = false;
             this.grdBLTSView.OptionsView.ShowGroupPanel = false;
             this.grdBLTSView.VertScrollVisibility = DevExpress.XtraGrid.Views.Base.ScrollVisibility.Always;
+            this.grdBLTSView.ShownEditor += new System.EventHandler(this.grdBLTSView_ShownEditor);
+            this.grdBLTSView.CellValueChanged += new DevExpress.XtraGrid.Views.Base.CellValueChangedEventHandler(this.grdBLTSView_CellValueChanged);
             // 
             // gridColumn27
             // 

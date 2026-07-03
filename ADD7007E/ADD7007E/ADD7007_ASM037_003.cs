@@ -152,6 +152,8 @@ namespace ADD7007E
         private DevExpress.XtraGrid.Views.Grid.GridView m_view;
         private CDataASM037_003 m_data;
         private bool m_prscDateEditByUser = false;
+        private bool m_prscMdfCdEditByUser = false;
+        private bool m_bltsMdfCdEditByUser = false;
         private bool m_anmDiagSymEditByUser = false;
         private bool m_anmRefmCdEditByUser = false;
 
@@ -397,26 +399,59 @@ namespace ADD7007E
         private void grdPRSCView_ShownEditor(object sender, EventArgs e)
         {
             m_prscDateEditByUser = false;
+            m_prscMdfCdEditByUser = false;
             if (grdPRSCView.FocusedColumn == null) return;
 
             if (grdPRSCView.FocusedColumn.FieldName == "ASM_PRSC_DT_DATE")
                 m_prscDateEditByUser = true;
+
+            if (grdPRSCView.FocusedColumn.FieldName == "ASM_PRSC_MDFEE_CD")
+                m_prscMdfCdEditByUser = true;
         }
 
         private void grdPRSCView_CellValueChanged(object sender, DevExpress.XtraGrid.Views.Base.CellValueChangedEventArgs e)
         {
-            if (e.Column.FieldName != "ASM_PRSC_DT_DATE") return;
-            if (m_prscDateEditByUser == false) return;
+            if (e.Column.FieldName == "ASM_PRSC_DT_DATE")
+            {
+                if (m_prscDateEditByUser == false) return;
 
-            m_prscDateEditByUser = false;
+                m_prscDateEditByUser = false;
 
-            string prscDate = "";
-            if (e.Value != null)
-                prscDate = e.Value.ToString().Trim();
+                string prscDate = "";
+                if (e.Value != null)
+                    prscDate = e.Value.ToString().Trim();
 
-            if (prscDate.Length != 8) return;
+                if (prscDate.Length != 8) return;
 
-            SortPRSCByPrscDate();
+                SortPRSCByPrscDate();
+                return;
+            }
+
+            if (e.Column.FieldName == "ASM_PRSC_MDFEE_CD")
+            {
+                if (m_prscMdfCdEditByUser == false) return;
+
+                m_prscMdfCdEditByUser = false;
+
+                PRSC data = grdPRSCView.GetRow(e.RowHandle) as PRSC;
+                if (data == null) return;
+
+                string mdfCd = "";
+                if (e.Value != null)
+                    mdfCd = e.Value.ToString().Trim();
+
+                try
+                {
+                    data.ASM_PRSC_BLTS_DGM_NM = GetPrscBltsDgmNameFromTI09(mdfCd, data);
+                    grdPRSCView.RefreshRow(e.RowHandle);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+
+                return;
+            }
         }
 
         private string GetFirstSoprDate()
@@ -511,14 +546,152 @@ namespace ADD7007E
             }
         }
 
+        private void grdBLTSView_ShownEditor(object sender, EventArgs e)
+        {
+            m_bltsMdfCdEditByUser = false;
+            if (grdBLTSView.FocusedColumn == null) return;
+
+            if (grdBLTSView.FocusedColumn.FieldName == "BLTS_MDFEE_CD")
+                m_bltsMdfCdEditByUser = true;
+        }
+
+        private void grdBLTSView_CellValueChanged(object sender, DevExpress.XtraGrid.Views.Base.CellValueChangedEventArgs e)
+        {
+            if (e.Column.FieldName != "BLTS_MDFEE_CD") return;
+            if (m_bltsMdfCdEditByUser == false) return;
+
+            m_bltsMdfCdEditByUser = false;
+
+            BLTS data = grdBLTSView.GetRow(e.RowHandle) as BLTS;
+            if (data == null) return;
+
+            string mdfCd = "";
+            if (e.Value != null)
+                mdfCd = e.Value.ToString().Trim();
+
+            try
+            {
+                data.BLTS_DGM_NM = GetBltsDgmNameFromTI09(mdfCd, data);
+                grdBLTSView.RefreshRow(e.RowHandle);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private string GetPrscBaseDate(PRSC data, OleDbConnection conn)
+        {
+            string baseDate = "";
+
+            if (data != null)
+            {
+                baseDate = (data.ASM_BLTS_STA_DT_DATE ?? "").Trim();
+                if (baseDate.Length >= 8)
+                    baseDate = baseDate.Substring(0, 8);
+
+                if (MetroLib.Util.ValDt(baseDate) == true)
+                    return baseDate;
+
+                baseDate = (data.ASM_PRSC_DT_TIME ?? "").Trim();
+                if (baseDate.Length >= 8)
+                    baseDate = baseDate.Substring(0, 8);
+
+                if (MetroLib.Util.ValDt(baseDate) == true)
+                    return baseDate;
+
+                baseDate = (txtIPAT_DD.Text ?? "").Trim();
+                if (baseDate.Length >= 8)
+                    baseDate = baseDate.Substring(0, 8);
+
+                if (MetroLib.Util.ValDt(baseDate) == true)
+                    return baseDate;
+            }
+
+            return MetroLib.Util.GetSysDate(conn);
+        }
+
+        private string GetPcodNameFromTI09(OleDbConnection conn, string pcode, string gubun, string adtdt)
+        {
+            pcode = (pcode ?? "").Trim();
+            gubun = (gubun ?? "").Trim();
+            adtdt = (adtdt ?? "").Trim();
+
+            if (pcode == "" || gubun == "") return "";
+
+            if (adtdt.Length >= 8)
+                adtdt = adtdt.Substring(0, 8);
+
+            if (MetroLib.Util.ValDt(adtdt) == false)
+                adtdt = MetroLib.Util.GetSysDate(conn);
+
+            string pcodnm = "";
+            string sql = "";
+            sql += Environment.NewLine + "SELECT PCODENM";
+            sql += Environment.NewLine + "  FROM TI09 I09";
+            sql += Environment.NewLine + " WHERE I09.GUBUN='" + gubun + "'";
+            sql += Environment.NewLine + "   AND I09.PCODE='" + pcode + "'";
+            sql += Environment.NewLine + "   AND I09.ADTDT=(SELECT MAX(X.ADTDT) FROM TI09 X WHERE X.GUBUN=I09.GUBUN AND X.PCODE=I09.PCODE AND X.ADTDT<='" + adtdt + "')";
+
+            MetroLib.SqlHelper.GetDataRow(sql, conn, null, delegate(DataRow row)
+            {
+                pcodnm = row["PCODENM"].ToString();
+                return MetroLib.SqlHelper.BREAK;
+            });
+
+            return pcodnm;
+        }
+
+        private string GetPrscBltsDgmNameFromTI09(string mdfCd, PRSC data)
+        {
+            string strConn = MetroLib.DBHelper.GetConnectionString();
+            using (OleDbConnection conn = new OleDbConnection(strConn))
+            {
+                conn.Open();
+
+                string baseDate = GetPrscBaseDate(data, conn);
+                return GetPcodNameFromTI09(conn, mdfCd, "1", baseDate);
+            }
+        }
+
+        private string GetBltsBaseDate(BLTS data, OleDbConnection conn)
+        {
+            string baseDate = "";
+
+            if (data != null)
+            {
+                baseDate = (data.BLTS_STA_DT_DATE ?? "").Trim();
+                if (baseDate.Length >= 8)
+                    baseDate = baseDate.Substring(0, 8);
+
+                if (MetroLib.Util.ValDt(baseDate) == true)
+                    return baseDate;
+
+                baseDate = (txtIPAT_DD.Text ?? "").Trim();
+                if (baseDate.Length >= 8)
+                    baseDate = baseDate.Substring(0, 8);
+
+                if (MetroLib.Util.ValDt(baseDate) == true)
+                    return baseDate;
+            }
+
+            return MetroLib.Util.GetSysDate(conn);
+        }
+
+        private string GetBltsDgmNameFromTI09(string mdfCd, BLTS data)
+        {
+            string strConn = MetroLib.DBHelper.GetConnectionString();
+            using (OleDbConnection conn = new OleDbConnection(strConn))
+            {
+                conn.Open();
+
+                string baseDate = GetBltsBaseDate(data, conn);
+                return GetPcodNameFromTI09(conn, mdfCd, "1", baseDate);
+            }
+        }
+
         private string GetMdsNameFromTI09(string mdsCd)
         {
-            mdsCd = (mdsCd ?? "").Trim();
-            if (mdsCd == "") return "";
-
-            string pcode = mdsCd.Replace("'", "''");
-
-            string mdsNm = "";
             string strConn = MetroLib.DBHelper.GetConnectionString();
             using (OleDbConnection conn = new OleDbConnection(strConn))
             {
@@ -528,21 +701,8 @@ namespace ADD7007E
                 if (soprDate == "")
                     soprDate = MetroLib.Util.GetSysDate(conn);
 
-                string sql = "";
-                sql += Environment.NewLine + "SELECT PCODNM";
-                sql += Environment.NewLine + "  FROM TI09 I09";
-                sql += Environment.NewLine + " WHERE I09.GUBUN='3'";
-                sql += Environment.NewLine + "   AND I09.PCODE='" + pcode + "'";
-                sql += Environment.NewLine + "   AND I09.ADTDT=(SELECT MAX(X.ADTDT) FROM TI09 X WHERE X.GUBUN=I09.GUBUN AND X.PCODE=I09.PCODE AND X.ADTDT<='" + soprDate + "')";
-
-                MetroLib.SqlHelper.GetDataRow(sql, conn, null, delegate(DataRow row)
-                {
-                    mdsNm = row["PCODNM"].ToString();
-                    return MetroLib.SqlHelper.BREAK;
-                });
+                return GetPcodNameFromTI09(conn, mdsCd, "3", soprDate);
             }
-
-            return mdsNm;
         }
 
         private void grdANM_REFMView_ShownEditor(object sender, EventArgs e)
