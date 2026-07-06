@@ -424,6 +424,15 @@ namespace ADD7007E
                 string opodt = row["OPODT"].ToString();
                 string opohr = row["OPOHR"].ToString();
                 string opomn = row["OPOMN"].ToString();
+                string anshr = row["ANSHR"].ToString();
+                string ansmn = row["ANSMN"].ToString();
+
+                // 입실시간이 입력되지 않았으면 마취시작 시간으로 처리(구로예스)
+                if (orinhr == "0" && orinmn == "0")
+                {
+                    orinhr = anshr;
+                    orinmn = ansmn;
+                }
 
                 if (opsdt == "") opsdt = opdt;
                 if (orinhr.Length == 1) orinhr = "0" + orinhr;
