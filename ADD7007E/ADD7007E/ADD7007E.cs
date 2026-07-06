@@ -764,19 +764,7 @@ namespace ADD7007E
             {
                 string typeName = GetTypename();
                 DevExpress.XtraGrid.Views.Grid.GridView view = null;
-                if (typeName == "수술의예방적항생제사용")
-                {
-                    view = grdASM010View;
-                }
-                else if (typeName == "마취")
-                {
-                    view = grdASM010View;
-                }
-                else
-                {
-                    MessageBox.Show("준비 중입니다.");
-                    return;
-                }
+                view = grdASM010View;
 
                 for (int row = 0; row < view.DataRowCount; row++)
                 {
