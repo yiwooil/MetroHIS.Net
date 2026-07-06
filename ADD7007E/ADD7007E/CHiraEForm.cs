@@ -2218,7 +2218,7 @@ namespace ADD7007E
                 dynReq.Tables["TBL_ANM_REFM_MDS"].Columns.Add("MDS_NM"); // 약품명
                 dynReq.Tables["TBL_ANM_REFM_MDS"].Columns.Add("MDS_CD"); // 약품코드
 
-                for (int i = 0; i < data.SICK_SYM.Count; i++)
+                for (int i = 0; i < data.MDS_NM.Count; i++)
                 {
                     dynReq.Tables["TBL_ANM_REFM_MDS"].AddRow();
                     dynReq.Tables["TBL_ANM_REFM_MDS"].Rows[i]["MDS_NM"].Value = data.MDS_NM[i];
@@ -2276,7 +2276,7 @@ namespace ADD7007E
                     dynReq.Tables["TBL_BLTS_ENFC_TXT"].Rows[i]["HG_DCR_YN"].Value = data.HG_DCR_YN[i];
                     dynReq.Tables["TBL_BLTS_ENFC_TXT"].Rows[i]["OPRM_HMRHG_OCUR_YN_CD"].Value = data.OPRM_HMRHG_OCUR_YN_CD[i];
                     dynReq.Tables["TBL_BLTS_ENFC_TXT"].Rows[i]["OPRM_MIDD_HMRHG_QTY"].Value = data.OPRM_MIDD_HMRHG_QTY[i];
-                    dynReq.Tables["TBL_BLTS_ENFC_TXT"].Rows[i]["OPRM_AF_DRN_QTY"].Value = data.OPRM_AF_DRN_QTY[i];
+                    dynReq.Tables["TBL_BLTS_ENFC_TXT"].Rows[i]["OPRM_AF_DRN_QTY"].Value = data.OPRM_HMRHG_OCUR_YN_CD[i] == "2" ? data.OPRM_AF_DRN_QTY[i] : ""; // 수술 후 배액량
                     dynReq.Tables["TBL_BLTS_ENFC_TXT"].Rows[i]["BLTS_RS_ETC_YN"].Value = data.BLTS_RS_ETC_YN[i];
                     dynReq.Tables["TBL_BLTS_ENFC_TXT"].Rows[i]["BLTS_RS_ETC_TXT"].Value = data.BLTS_RS_ETC_TXT[i];
                 }

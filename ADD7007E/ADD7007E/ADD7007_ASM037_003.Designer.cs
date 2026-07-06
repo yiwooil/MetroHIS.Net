@@ -464,7 +464,7 @@
             this.panel9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel9.Controls.Add(this.rbKNJN_RPMT_RGN_CD_2);
             this.panel9.Controls.Add(this.rbKNJN_RPMT_RGN_CD_1);
-            this.panel9.Location = new System.Drawing.Point(428, 279);
+            this.panel9.Location = new System.Drawing.Point(428, 276);
             this.panel9.Name = "panel9";
             this.panel9.Size = new System.Drawing.Size(241, 23);
             this.panel9.TabIndex = 164;
@@ -483,7 +483,7 @@
             // rbKNJN_RPMT_RGN_CD_1
             // 
             this.rbKNJN_RPMT_RGN_CD_1.AutoSize = true;
-            this.rbKNJN_RPMT_RGN_CD_1.Location = new System.Drawing.Point(4, 1);
+            this.rbKNJN_RPMT_RGN_CD_1.Location = new System.Drawing.Point(4, 2);
             this.rbKNJN_RPMT_RGN_CD_1.Name = "rbKNJN_RPMT_RGN_CD_1";
             this.rbKNJN_RPMT_RGN_CD_1.Size = new System.Drawing.Size(47, 16);
             this.rbKNJN_RPMT_RGN_CD_1.TabIndex = 12;
@@ -675,8 +675,8 @@
             this.grdPRSCView.OptionsView.ColumnAutoWidth = false;
             this.grdPRSCView.OptionsView.ShowGroupPanel = false;
             this.grdPRSCView.VertScrollVisibility = DevExpress.XtraGrid.Views.Base.ScrollVisibility.Always;
-            this.grdPRSCView.ShownEditor += new System.EventHandler(this.grdPRSCView_ShownEditor);
             this.grdPRSCView.CellValueChanged += new DevExpress.XtraGrid.Views.Base.CellValueChangedEventHandler(this.grdPRSCView_CellValueChanged);
+            this.grdPRSCView.ShownEditor += new System.EventHandler(this.grdPRSCView_ShownEditor);
             // 
             // gridColumn7
             // 
@@ -780,8 +780,8 @@
             this.grdANM_DIAGView.OptionsView.ColumnAutoWidth = false;
             this.grdANM_DIAGView.OptionsView.ShowGroupPanel = false;
             this.grdANM_DIAGView.VertScrollVisibility = DevExpress.XtraGrid.Views.Base.ScrollVisibility.Always;
-            this.grdANM_DIAGView.ShownEditor += new System.EventHandler(this.grdANM_DIAGView_ShownEditor);
             this.grdANM_DIAGView.CellValueChanged += new DevExpress.XtraGrid.Views.Base.CellValueChangedEventHandler(this.grdANM_DIAGView_CellValueChanged);
+            this.grdANM_DIAGView.ShownEditor += new System.EventHandler(this.grdANM_DIAGView_ShownEditor);
             // 
             // gridColumn15
             // 
@@ -876,8 +876,8 @@
             this.grdANM_REFMView.OptionsView.ColumnAutoWidth = false;
             this.grdANM_REFMView.OptionsView.ShowGroupPanel = false;
             this.grdANM_REFMView.VertScrollVisibility = DevExpress.XtraGrid.Views.Base.ScrollVisibility.Always;
-            this.grdANM_REFMView.ShownEditor += new System.EventHandler(this.grdANM_REFMView_ShownEditor);
             this.grdANM_REFMView.CellValueChanged += new DevExpress.XtraGrid.Views.Base.CellValueChangedEventHandler(this.grdANM_REFMView_CellValueChanged);
+            this.grdANM_REFMView.ShownEditor += new System.EventHandler(this.grdANM_REFMView_ShownEditor);
             // 
             // gridColumn20
             // 
@@ -1044,7 +1044,7 @@
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(735, 344);
+            this.label16.Location = new System.Drawing.Point(735, 345);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(149, 12);
             this.label16.TabIndex = 11;
@@ -1096,8 +1096,8 @@
             this.grdBLTSView.OptionsView.ColumnAutoWidth = false;
             this.grdBLTSView.OptionsView.ShowGroupPanel = false;
             this.grdBLTSView.VertScrollVisibility = DevExpress.XtraGrid.Views.Base.ScrollVisibility.Always;
-            this.grdBLTSView.ShownEditor += new System.EventHandler(this.grdBLTSView_ShownEditor);
             this.grdBLTSView.CellValueChanged += new DevExpress.XtraGrid.Views.Base.CellValueChangedEventHandler(this.grdBLTSView_CellValueChanged);
+            this.grdBLTSView.ShownEditor += new System.EventHandler(this.grdBLTSView_ShownEditor);
             // 
             // gridColumn27
             // 

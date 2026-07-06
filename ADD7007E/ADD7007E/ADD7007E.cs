@@ -974,6 +974,8 @@ namespace ADD7007E
             grdASM010.DataSource = null;
 
             RefreshGrid();
+
+            chkSendAll.BringToFront();
         }
 
         private void btnExcept_Click(object sender, EventArgs e)
