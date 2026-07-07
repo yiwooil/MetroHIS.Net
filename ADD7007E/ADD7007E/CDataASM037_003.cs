@@ -357,7 +357,7 @@ namespace ADD7007E
                 OPRM_HMRHG_OCUR_YN_CD.Add(""); // 수술 관련 실혈 발생 여부
                 OPRM_MIDD_HMRHG_QTY.Add(""); // 수술 중 실혈량
                 OPRM_AF_DRN_QTY.Add(""); // 수술 후 배액량
-                BLTS_RS_ETC_YN.Add(""); // 그 외 수혈사유 여부
+                BLTS_RS_ETC_YN.Add("2"); // 그 외 수혈사유 여부
                 BLTS_RS_ETC_TXT.Add(""); // 수혈사유 기타 상세
             }
             else
