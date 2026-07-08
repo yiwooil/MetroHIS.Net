@@ -297,8 +297,33 @@ namespace ADD7007E
             });
         }
 
-        private string GetASM037BltsChklstUseYn(string bldodt, OleDbConnection p_conn, OleDbTransaction p_tran)
+        private string GetASM037BltsChklstUseYnFromTI88B(OleDbConnection p_conn, OleDbTransaction p_tran)
         {
+            string value = "";
+
+            string sql = "";
+            sql += Environment.NewLine + "SELECT FLD1QTY";
+            sql += Environment.NewLine + "  FROM TI88B";
+            sql += Environment.NewLine + " WHERE MST1CD='A'";
+            sql += Environment.NewLine + "   AND MST2CD='EFormASM'";
+            sql += Environment.NewLine + "   AND MST3CD='ASM037'";
+            sql += Environment.NewLine + "   AND MST4CD='ASM_BLTS_CHKLST_USE_YN'";
+
+            MetroLib.SqlHelper.GetDataRow(sql, p_conn, p_tran, delegate(DataRow row)
+            {
+                value = row["FLD1QTY"].ToString().Trim();
+                return MetroLib.SqlHelper.BREAK;
+            });
+
+            return value;
+        }
+
+        private string GetASM037BltsChklstUseYn(string bldodt, string asm_blts_chklst_use_yn, OleDbConnection p_conn, OleDbTransaction p_tran)
+        {
+            asm_blts_chklst_use_yn = (asm_blts_chklst_use_yn ?? "").Trim();
+            if (asm_blts_chklst_use_yn != "")
+                return asm_blts_chklst_use_yn;
+
             string wdate = "";
             if (bldodt.Length >= 8)
                 wdate = bldodt.Substring(0, 8);
@@ -390,6 +415,8 @@ namespace ADD7007E
             System.Windows.Forms.Application.DoEvents();
 
             ClearMe();
+
+            string asm_blts_chklst_use_yn = GetASM037BltsChklstUseYnFromTI88B(p_conn, p_tran);
 
             // A. 기본정보
             IPAT_DD = BDEDT; // 입원일자(YYYYMMDD)
@@ -585,7 +612,7 @@ namespace ADD7007E
 
                     MetroLib.SqlHelper.GetDataRow(sql2, p_conn, p_tran, delegate(DataRow row2)
                     {
-                        string asmBltsChklstUseYn = GetASM037BltsChklstUseYn(bldodt, p_conn, p_tran);
+                        string asmBltsChklstUseYn = GetASM037BltsChklstUseYn(bldodt, asm_blts_chklst_use_yn, p_conn, p_tran);
                         if (AddASM037BloodData(bldIndexMap, prscDt, bldodt, row2["ISPCD"].ToString(), row2["PRKNM"].ToString(), dqty, asmBltsChklstUseYn))
                             bFind = true;
 
@@ -594,7 +621,7 @@ namespace ADD7007E
                 }
                 else
                 {
-                    string asmBltsChklstUseYn = GetASM037BltsChklstUseYn(bldodt, p_conn, p_tran);
+                    string asmBltsChklstUseYn = GetASM037BltsChklstUseYn(bldodt, asm_blts_chklst_use_yn, p_conn, p_tran);
                     if (AddASM037BloodData(bldIndexMap, prscDt, bldodt, row["ISPCD"].ToString(), row["PRKNM"].ToString(), dqty, asmBltsChklstUseYn))
                         bFind = true;
                 }
@@ -626,7 +653,7 @@ namespace ADD7007E
                         decimal calqy = 0;
                         decimal.TryParse(row["CALQY"].ToString(), out calqy);
 
-                        string asmBltsChklstUseYn = GetASM037BltsChklstUseYn(bldodt, p_conn, p_tran);
+                        string asmBltsChklstUseYn = GetASM037BltsChklstUseYn(bldodt, asm_blts_chklst_use_yn, p_conn, p_tran);
                         AddASM037BloodData(bldIndexMap, bldodt, bldodt, bldcd, prknm, calqy, asmBltsChklstUseYn);
 
                         return MetroLib.SqlHelper.CONTINUE;
@@ -701,7 +728,7 @@ namespace ADD7007E
 
                             MetroLib.SqlHelper.GetDataRow(sql2, p_conn, p_tran, delegate(DataRow row2)
                             {
-                                string asmBltsChklstUseYn = GetASM037BltsChklstUseYn(bldodt, p_conn, p_tran);
+                                string asmBltsChklstUseYn = GetASM037BltsChklstUseYn(bldodt, asm_blts_chklst_use_yn, p_conn, p_tran);
                                 AddASM037BloodData(bldIndexMap, bldodt, bldodt, row2["ISPCD"].ToString(), row2["PRKNM"].ToString(), 1, asmBltsChklstUseYn);
 
                                 return MetroLib.SqlHelper.CONTINUE;
@@ -709,7 +736,7 @@ namespace ADD7007E
                         }
                         else
                         {
-                            string asmBltsChklstUseYn = GetASM037BltsChklstUseYn(bldodt, p_conn, p_tran);
+                            string asmBltsChklstUseYn = GetASM037BltsChklstUseYn(bldodt, asm_blts_chklst_use_yn, p_conn, p_tran);
                             AddASM037BloodData(bldIndexMap, bldodt, bldodt, row["ISPCD"].ToString(), row["PRKNM"].ToString(), 1, asmBltsChklstUseYn);
                         }
 
