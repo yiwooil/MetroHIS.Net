@@ -611,36 +611,36 @@ namespace ADD7007E
             return MetroLib.Util.GetSysDate(conn);
         }
 
-        private string GetPcodNameFromTI09(OleDbConnection conn, string pcode, string gubun, string adtdt)
-        {
-            pcode = (pcode ?? "").Trim();
-            gubun = (gubun ?? "").Trim();
-            adtdt = (adtdt ?? "").Trim();
-
-            if (pcode == "" || gubun == "") return "";
-
-            if (adtdt.Length >= 8)
-                adtdt = adtdt.Substring(0, 8);
-
-            if (MetroLib.Util.ValDt(adtdt) == false)
-                adtdt = MetroLib.Util.GetSysDate(conn);
-
-            string pcodnm = "";
-            string sql = "";
-            sql += Environment.NewLine + "SELECT PCODENM";
-            sql += Environment.NewLine + "  FROM TI09 I09";
-            sql += Environment.NewLine + " WHERE I09.GUBUN='" + gubun + "'";
-            sql += Environment.NewLine + "   AND I09.PCODE='" + pcode + "'";
-            sql += Environment.NewLine + "   AND I09.ADTDT=(SELECT MAX(X.ADTDT) FROM TI09 X WHERE X.GUBUN=I09.GUBUN AND X.PCODE=I09.PCODE AND X.ADTDT<='" + adtdt + "')";
-
-            MetroLib.SqlHelper.GetDataRow(sql, conn, null, delegate(DataRow row)
-            {
-                pcodnm = row["PCODENM"].ToString();
-                return MetroLib.SqlHelper.BREAK;
-            });
-
-            return pcodnm;
-        }
+        //private string GetPcodNameFromTI09(OleDbConnection conn, string pcode, string gubun, string adtdt)
+        //{
+        //    pcode = (pcode ?? "").Trim();
+        //    gubun = (gubun ?? "").Trim();
+        //    adtdt = (adtdt ?? "").Trim();
+        //
+        //    if (pcode == "" || gubun == "") return "";
+        //
+        //    if (adtdt.Length >= 8)
+        //        adtdt = adtdt.Substring(0, 8);
+        //
+        //    if (MetroLib.Util.ValDt(adtdt) == false)
+        //        adtdt = MetroLib.Util.GetSysDate(conn);
+        //
+        //    string pcodnm = "";
+        //    string sql = "";
+        //    sql += Environment.NewLine + "SELECT PCODENM";
+        //    sql += Environment.NewLine + "  FROM TI09 I09";
+        //    sql += Environment.NewLine + " WHERE I09.GUBUN='" + gubun + "'";
+        //    sql += Environment.NewLine + "   AND I09.PCODE='" + pcode + "'";
+        //    sql += Environment.NewLine + "   AND I09.ADTDT=(SELECT MAX(X.ADTDT) FROM TI09 X WHERE X.GUBUN=I09.GUBUN AND X.PCODE=I09.PCODE AND X.ADTDT<='" + adtdt + "')";
+        //
+        //    MetroLib.SqlHelper.GetDataRow(sql, conn, null, delegate(DataRow row)
+        //    {
+        //        pcodnm = row["PCODENM"].ToString();
+        //        return MetroLib.SqlHelper.BREAK;
+        //    });
+        //
+        //    return pcodnm;
+        //}
 
         private string GetPrscBltsDgmNameFromTI09(string mdfCd, PRSC data)
         {
@@ -650,7 +650,7 @@ namespace ADD7007E
                 conn.Open();
 
                 string baseDate = GetPrscBaseDate(data, conn);
-                return GetPcodNameFromTI09(conn, mdfCd, "1", baseDate);
+                return CUtilDB.GetPCODENM(mdfCd, "1", baseDate, conn);
             }
         }
 
@@ -686,7 +686,7 @@ namespace ADD7007E
                 conn.Open();
 
                 string baseDate = GetBltsBaseDate(data, conn);
-                return GetPcodNameFromTI09(conn, mdfCd, "1", baseDate);
+                return CUtilDB.GetPCODENM(mdfCd, "1", baseDate, conn);
             }
         }
 
@@ -701,7 +701,7 @@ namespace ADD7007E
                 if (soprDate == "")
                     soprDate = MetroLib.Util.GetSysDate(conn);
 
-                return GetPcodNameFromTI09(conn, mdsCd, "3", soprDate);
+                return CUtilDB.GetPCODENM(mdsCd, "3", soprDate, conn);
             }
         }
 
@@ -1115,6 +1115,16 @@ namespace ADD7007E
             RefreshGrid();
         }
 
+        private void btnDelRowBLTS_Click(object sender, EventArgs e)
+        {
+            int focusedRowHandle = grdBLTSView.FocusedRowHandle;
+            if (focusedRowHandle < 0) return;
+
+            List<BLTS> list = (List<BLTS>)grdBLTS.DataSource;
+            list.RemoveAt(focusedRowHandle);
+            RefreshGrid();
+        }
+
         private void btnSend_Click(object sender, EventArgs e)
         {
             SendTF(false);
@@ -1282,5 +1292,6 @@ namespace ADD7007E
         {
             ApplySoprControlsEnabled();
         }
+
     }
 }

@@ -1374,6 +1374,7 @@
             this.btnDelRowBLTS.TabIndex = 216;
             this.btnDelRowBLTS.Text = "-";
             this.btnDelRowBLTS.UseVisualStyleBackColor = true;
+            this.btnDelRowBLTS.Click += new System.EventHandler(this.btnDelRowBLTS_Click);
             // 
             // btnInsRowBLTS
             // 

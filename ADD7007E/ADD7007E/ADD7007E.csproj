@@ -222,6 +222,7 @@
     <Compile Include="CQuery_ASM037.cs" />
     <Compile Include="CQuery_ASM049.cs" />
     <Compile Include="CUtil.cs" />
+    <Compile Include="CUtilDB.cs" />
     <Compile Include="CUtil_ASM010.cs" />
     <Compile Include="CUtil_ASM035.cs" />
     <Compile Include="CUtil_ASM037.cs" />

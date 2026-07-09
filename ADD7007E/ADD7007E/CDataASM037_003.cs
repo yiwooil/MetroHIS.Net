@@ -297,26 +297,26 @@ namespace ADD7007E
             });
         }
 
-        private string GetASM037BltsChklstUseYnFromTI88B(OleDbConnection p_conn, OleDbTransaction p_tran)
-        {
-            string value = "";
-
-            string sql = "";
-            sql += Environment.NewLine + "SELECT FLD1QTY";
-            sql += Environment.NewLine + "  FROM TI88B";
-            sql += Environment.NewLine + " WHERE MST1CD='A'";
-            sql += Environment.NewLine + "   AND MST2CD='EFormASM'";
-            sql += Environment.NewLine + "   AND MST3CD='ASM037'";
-            sql += Environment.NewLine + "   AND MST4CD='ASM_BLTS_CHKLST_USE_YN'";
-
-            MetroLib.SqlHelper.GetDataRow(sql, p_conn, p_tran, delegate(DataRow row)
-            {
-                value = row["FLD1QTY"].ToString().Trim();
-                return MetroLib.SqlHelper.BREAK;
-            });
-
-            return value;
-        }
+        //private string GetASM037BltsChklstUseYnFromTI88B(OleDbConnection p_conn, OleDbTransaction p_tran)
+        //{
+        //    string value = "";
+        //
+        //    string sql = "";
+        //    sql += Environment.NewLine + "SELECT FLD1QTY";
+        //    sql += Environment.NewLine + "  FROM TI88B";
+        //    sql += Environment.NewLine + " WHERE MST1CD='A'";
+        //    sql += Environment.NewLine + "   AND MST2CD='EFormASM'";
+        //    sql += Environment.NewLine + "   AND MST3CD='ASM037'";
+        //    sql += Environment.NewLine + "   AND MST4CD='ASM_BLTS_CHKLST_USE_YN'";
+        //
+        //    MetroLib.SqlHelper.GetDataRow(sql, p_conn, p_tran, delegate(DataRow row)
+        //    {
+        //        value = row["FLD1QTY"].ToString().Trim();
+        //        return MetroLib.SqlHelper.BREAK;
+        //    });
+        //
+        //    return value;
+        //}
 
         private string GetASM037BltsChklstUseYn(string bldodt, string asm_blts_chklst_use_yn, OleDbConnection p_conn, OleDbTransaction p_tran)
         {
@@ -416,7 +416,7 @@ namespace ADD7007E
 
             ClearMe();
 
-            string asm_blts_chklst_use_yn = GetASM037BltsChklstUseYnFromTI88B(p_conn, p_tran);
+            string asm_blts_chklst_use_yn = CUtilDB.ReadTI88B("ASM037", "ASM_BLTS_CHKLST_USE_YN", p_conn, p_tran);
 
             // A. 기본정보
             IPAT_DD = BDEDT; // 입원일자(YYYYMMDD)
@@ -911,6 +911,26 @@ namespace ADD7007E
 
                     return MetroLib.StrHelper.CONTINUE;
                 });
+            }
+
+            // 2026.07.09 WOOIL - 작성하지 않는 경우라고 함.
+            bool bAllNo = false;
+            if (FR_DATE != "" && BDEDT != "" && BDEDT.CompareTo(FR_DATE) < 0) bAllNo = true;
+            if (TO_DATE != "" && BDODT != "" && BDODT.CompareTo(TO_DATE) > 0) bAllNo = true;
+            
+            if (bAllNo){
+                SOPR_YN = "2"; // 수술 여부(1.Yes 2.No)
+                LFB_FS_YN = "2"; // 척추후방고정술 실시여부
+                KNJN_RPMT_YN = "2"; // 슬관절치환술 실시여부
+
+                ASM_PRSC_YN = "2"; // 처방여부
+
+                ANM_DIAG_YN = "2"; // 빈혈 진단
+                ANM_REFM_YN = "2"; // 빈혈교정 유무
+
+                HG_EXM_ENFC_YN = "2"; // Hb검사 시행여부
+
+                BLTS_YN = "2"; // 수혈 시행여부
             }
 
         }
