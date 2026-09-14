@@ -801,5 +801,109 @@ namespace UP_TI09_DRG_BOSANG
 
             return urlSource;
         }
+
+        private void btnRelease_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Cursor.Current = Cursors.WaitCursor;
+                this.ShowProgressForm("", "배포 자료 만들기 중입니다.");
+                this.Release();
+                this.CloseProgressForm("", "");
+                Cursor.Current = Cursors.Default;
+
+            }
+            catch (Exception ex)
+            {
+                this.CloseProgressForm("", "");
+                Cursor.Current = Cursors.Default;
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void Release()
+        {
+            // 경로와 확장자를 제외한 파일제목을 사용한다.
+            string fileTitle = Path.GetFileNameWithoutExtension(txtFilename.Text.Trim());
+
+            if (string.IsNullOrEmpty(fileTitle)) throw new Exception("엑셀 파일을 선택해주세요.");
+
+            // Make 함수에서 사용하는 데이터베이스에 연결한다.
+            string connectionString = GetServerConnectionString_CODE();
+
+            using (OleDbConnection conn = new OleDbConnection(connectionString))
+            {
+                conn.Open();
+
+                using (OleDbTransaction tran = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        // DB 서버의 오늘 날짜를 yyyyMMdd 형식으로 가져온다.
+                        string sysdt = MetroLib.Util.GetSysDate(conn, tran);
+                        int seq = 1;
+
+                        // 오늘 날짜의 최대 SEQ 다음 값을 구한다. 자료가 없으면 1이다.
+                        string sql = "";
+                        sql += Environment.NewLine + "SELECT ISNULL(MAX(CAST(SEQ AS INT)), 0) + 1 AS NEXT_SEQ";
+                        sql += Environment.NewLine + "  FROM H01A";
+                        sql += Environment.NewLine + " WHERE CREDT = ?";
+
+                        List<object> para = new List<object>();
+                        para.Add(sysdt);
+
+                        MetroLib.SqlHelper.GetDataReader(sql, para, conn, tran, delegate(OleDbDataReader reader)
+                        {
+                            seq = Convert.ToInt32(reader["NEXT_SEQ"]);
+                            return MetroLib.SqlHelper.BREAK;
+                        });
+
+                        // 오늘 생성되거나 변경된 자료를 배포 테이블에 복사한다.
+                        string tableName = "TI09_DRG_BOSANG_" + sysdt + "_" + seq.ToString() + "_0";
+
+                        sql = "";
+                        sql += Environment.NewLine + "SELECT *";
+                        sql += Environment.NewLine + "  INTO [" + tableName + "]";
+                        sql += Environment.NewLine + "  FROM TI09_DRG_BOSANG";
+                        sql += Environment.NewLine + " WHERE CREDT = ?";
+                        sql += Environment.NewLine + "    OR CHGDT = ?";
+
+                        para.Clear();
+                        para.Add(sysdt);
+                        para.Add(sysdt);
+
+                        MetroLib.SqlHelper.ExecuteSql(sql, para, conn, tran);
+
+                        // 배포 테이블에 대한 정보를 H01에 등록한다.
+                        sql = "";
+                        sql += Environment.NewLine + "INSERT INTO H01";
+                        sql += Environment.NewLine + "       (CREDT, SEQ, RMK, HOSGRD, TBLNM, COLKEY, COLLST, COLTYP)";
+                        sql += Environment.NewLine + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+                        // OleDb 파라미터는 SQL의 물음표 순서대로 추가한다.
+                        para.Clear();
+                        para.Add(sysdt);
+                        para.Add(seq);
+                        para.Add(fileTitle);
+                        para.Add("0");
+                        para.Add("TI09_DRG_BOSANG");
+                        para.Add("PCODE,ADTDT,GUBUN");
+                        para.Add("PCODE,ADTDT,GUBUN,BOSANG_RT,PCODENM,SPEC,BUNCD,MKCNM,METERIAL,MKCNMK,PTYPE,PDUT,GUB_GB,OPR_GB,NOTI_NO,M_CAT,M_CAT_NM,D_CAT,REMARK,ENDDT,CREDT,CHGDT");
+                        para.Add("C;C;C;N;C;C;C;C;C;C;C;C;C;C;C;C;C;C;C;C;C;C");
+
+                        MetroLib.SqlHelper.ExecuteSql(sql, para, conn, tran);
+
+                        // 두 작업이 모두 성공한 경우에만 확정한다.
+                        tran.Commit();
+                    }
+                    catch
+                    {
+                        // 오류가 발생하면 테이블 생성과 H01 등록을 함께 취소한다.
+                        tran.Rollback();
+                        throw;
+                    }
+                }
+            }
+        }
     }
 }

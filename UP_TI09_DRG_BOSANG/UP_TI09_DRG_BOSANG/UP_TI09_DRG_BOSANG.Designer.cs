@@ -32,7 +32,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.btnMake = new System.Windows.Forms.Button();
             this.btnFile = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnRelease = new System.Windows.Forms.Button();
             this.txtGubun = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.grdExcel = new DevExpress.XtraGrid.GridControl();
@@ -213,15 +213,16 @@
             this.btnFile.UseVisualStyleBackColor = true;
             this.btnFile.Click += new System.EventHandler(this.btnFile_Click);
             // 
-            // button1
+            // btnRelease
             // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Location = new System.Drawing.Point(1018, 11);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(127, 23);
-            this.button1.TabIndex = 49;
-            this.button1.Text = "② 배포 자료 만들기";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnRelease.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnRelease.Location = new System.Drawing.Point(1018, 11);
+            this.btnRelease.Name = "btnRelease";
+            this.btnRelease.Size = new System.Drawing.Size(127, 23);
+            this.btnRelease.TabIndex = 49;
+            this.btnRelease.Text = "③ 배포 자료 만들기";
+            this.btnRelease.UseVisualStyleBackColor = true;
+            this.btnRelease.Click += new System.EventHandler(this.btnRelease_Click);
             // 
             // txtGubun
             // 
@@ -1595,7 +1596,7 @@
             this.Controls.Add(this.grdExcel);
             this.Controls.Add(this.txtGubun);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnRelease);
             this.Controls.Add(this.btnMake);
             this.Controls.Add(this.btnFile);
             this.Controls.Add(this.txtFilename);
@@ -1615,7 +1616,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnMake;
         private System.Windows.Forms.Button btnFile;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnRelease;
         private System.Windows.Forms.TextBox txtGubun;
         private System.Windows.Forms.Label label2;
         private DevExpress.XtraGrid.GridControl grdExcel;
