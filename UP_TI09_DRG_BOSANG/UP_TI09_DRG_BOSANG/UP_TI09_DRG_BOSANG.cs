@@ -812,6 +812,8 @@ namespace UP_TI09_DRG_BOSANG
                 this.CloseProgressForm("", "");
                 Cursor.Current = Cursors.Default;
 
+                MessageBox.Show("작업이 완료되었습니다.");
+
             }
             catch (Exception ex)
             {
@@ -876,7 +878,7 @@ namespace UP_TI09_DRG_BOSANG
 
                         // 배포 테이블에 대한 정보를 H01에 등록한다.
                         sql = "";
-                        sql += Environment.NewLine + "INSERT INTO H01";
+                        sql += Environment.NewLine + "INSERT INTO H01A";
                         sql += Environment.NewLine + "       (CREDT, SEQ, RMK, HOSGRD, TBLNM, COLKEY, COLLST, COLTYP)";
                         sql += Environment.NewLine + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 

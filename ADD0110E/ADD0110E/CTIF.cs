@@ -333,7 +333,7 @@ namespace ADD0110E
             INREFCD2 = val[99]; // 100
             DRG7_SEQ1 = val[100]; // 101
             DRG7_POS2 = val[101]; // 102
-            DRG7_ELINENO = val[102]; // 103
+            //DIRCD = val[102]; // 103
 
             int int_pos1 = 0;
             int.TryParse(IPOS1, out int_pos1);
