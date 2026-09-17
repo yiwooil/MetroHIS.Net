@@ -172,7 +172,7 @@ namespace ADD0112E
 
                 // 진료과
                 cboDptcd.Items.Clear();
-                sql = "SELECT DPTCD, DPTNM FROM TA09 (nolock) WHERE DPTDIV='1' ORDER BY DPTCD";
+                sql = "SELECT DPTCD, DPTNM FROM TA09 (nolock) WHERE DPTDIV IN ('1','9') ORDER BY DPTDIV,DPTCD";
                 using (OleDbCommand cmd = new OleDbCommand(sql, conn))
                 {
                     OleDbDataReader reader = cmd.ExecuteReader();
