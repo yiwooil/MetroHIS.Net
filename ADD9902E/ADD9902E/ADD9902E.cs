@@ -99,8 +99,9 @@ namespace ADD9902E
                     });
 
                     // 대행청구 기관 목록
+                    /* 2026.10.08 WOOIL - textbox에 기관기호를 입력하는 것으로 수정함.
                     cboREDEM.Items.Clear();
-
+                    
                     sql = "";
                     sql += Environment.NewLine + "SELECT CDNM";
                     sql += Environment.NewLine + "  FROM TI88";
@@ -112,6 +113,7 @@ namespace ADD9902E
                         cboREDEM.Items.Add(reader["CDNM"].ToString());
                         return MetroLib.SqlHelper.CONTINUE;
                     });
+                    */
 
                     // 서면 명세서 출력 버전 목록
                     cboPrtVer.Items.Clear();
@@ -131,15 +133,17 @@ namespace ADD9902E
                     txtWorkRID.Text = ReadTA88_HOSPITAL("48", "FLD2QTY", multi, conn);
                     txtDemNmSanje.Text = ReadTA88_HOSPITAL("48", "FLD3QTY", multi, conn);
 
-                    string redem = ReadTA88_HOSPITAL("101", "FLD2QTY", multi, conn);
+                    txtREDEM.Text = ReadTA88_HOSPITAL("101", "FLD2QTY", multi, conn);
 
                     // DropDownList에서도 목록에 없는 저장값 표시
+                    /* 2026.10.08 WOOIL - textbox에 입력하는 것으로 수정함.
                     if (redem != "" && cboREDEM.FindStringExact(redem) < 0)
                     {
                         cboREDEM.Items.Add(redem);
                     }
 
                     cboREDEM.Text = redem;
+                    */ 
 
                     // 오늘 기준 병원종별
                     string hosJBcd = HospitalJong(sysdate, multi, conn);
@@ -523,7 +527,7 @@ namespace ADD9902E
             string workNM = txtWorkNM.Text;
             string workRID = txtWorkRID.Text;
             string demNmSanje = txtDemNmSanje.Text;
-            string redem = cboREDEM.Text;
+            string redem = txtREDEM.Text;
             string prtVer = cboPrtVer.SelectedIndex.ToString();
 
             string strConn = MetroLib.DBHelper.GetConnectionString();
@@ -608,5 +612,6 @@ namespace ADD9902E
                 form.ShowDialog(this);
             }
         }
+
     }
 }
