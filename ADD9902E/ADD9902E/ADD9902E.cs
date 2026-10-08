@@ -499,6 +499,8 @@ namespace ADD9902E
                 Cursor.Current = Cursors.Default;
 
                 MessageBox.Show("저장되었습니다.");
+
+                this.GetHosInfo();// 재조회
             }
             catch (Exception ex)
             {
