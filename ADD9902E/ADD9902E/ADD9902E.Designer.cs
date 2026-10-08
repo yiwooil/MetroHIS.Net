@@ -61,19 +61,18 @@
             this.txtOkDnoPaCare = new System.Windows.Forms.TextBox();
             this.txtPaCareVer = new System.Windows.Forms.TextBox();
             this.lblClaimAgency = new System.Windows.Forms.Label();
-            this.cboREDEM = new System.Windows.Forms.ComboBox();
-            this.btnOtherID = new System.Windows.Forms.Button();
             this.lblPrintVersion = new System.Windows.Forms.Label();
             this.cboPrtVer = new System.Windows.Forms.ComboBox();
+            this.txtREDEM = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(898, 22);
+            this.btnSave.Location = new System.Drawing.Point(791, 17);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 2;
-            this.btnSave.Text = "저장(S)";
+            this.btnSave.Text = "저장";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
@@ -153,7 +152,7 @@
             // 
             this.txtHosAddr.Location = new System.Drawing.Point(414, 63);
             this.txtHosAddr.Name = "txtHosAddr";
-            this.txtHosAddr.Size = new System.Drawing.Size(429, 21);
+            this.txtHosAddr.Size = new System.Drawing.Size(452, 21);
             this.txtHosAddr.TabIndex = 12;
             // 
             // lblRepresentative
@@ -207,7 +206,7 @@
             // lblIndustrialClaimant
             // 
             this.lblIndustrialClaimant.Font = new System.Drawing.Font("굴림", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.lblIndustrialClaimant.Location = new System.Drawing.Point(671, 116);
+            this.lblIndustrialClaimant.Location = new System.Drawing.Point(678, 116);
             this.lblIndustrialClaimant.Name = "lblIndustrialClaimant";
             this.lblIndustrialClaimant.Size = new System.Drawing.Size(75, 23);
             this.lblIndustrialClaimant.TabIndex = 19;
@@ -216,9 +215,9 @@
             // 
             // txtDemNmSanje
             // 
-            this.txtDemNmSanje.Location = new System.Drawing.Point(745, 117);
+            this.txtDemNmSanje.Location = new System.Drawing.Point(752, 117);
             this.txtDemNmSanje.Name = "txtDemNmSanje";
-            this.txtDemNmSanje.Size = new System.Drawing.Size(96, 21);
+            this.txtDemNmSanje.Size = new System.Drawing.Size(114, 21);
             this.txtDemNmSanje.TabIndex = 20;
             // 
             // lblInspection
@@ -234,7 +233,7 @@
             // lblInternalMedicine
             // 
             this.lblInternalMedicine.Font = new System.Drawing.Font("굴림", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.lblInternalMedicine.Location = new System.Drawing.Point(131, 156);
+            this.lblInternalMedicine.Location = new System.Drawing.Point(64, 182);
             this.lblInternalMedicine.Name = "lblInternalMedicine";
             this.lblInternalMedicine.Size = new System.Drawing.Size(70, 23);
             this.lblInternalMedicine.TabIndex = 22;
@@ -244,10 +243,10 @@
             // txtOkDno
             // 
             this.txtOkDno.Font = new System.Drawing.Font("돋움체", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.txtOkDno.Location = new System.Drawing.Point(203, 158);
+            this.txtOkDno.Location = new System.Drawing.Point(136, 184);
             this.txtOkDno.Name = "txtOkDno";
             this.txtOkDno.ReadOnly = true;
-            this.txtOkDno.Size = new System.Drawing.Size(281, 21);
+            this.txtOkDno.Size = new System.Drawing.Size(261, 21);
             this.txtOkDno.TabIndex = 23;
             this.txtOkDno.TabStop = false;
             this.txtOkDno.Text = "999999999999999999999999999999999999";
@@ -256,7 +255,7 @@
             // txtEDIVer
             // 
             this.txtEDIVer.Font = new System.Drawing.Font("돋움체", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.txtEDIVer.Location = new System.Drawing.Point(485, 158);
+            this.txtEDIVer.Location = new System.Drawing.Point(398, 184);
             this.txtEDIVer.Name = "txtEDIVer";
             this.txtEDIVer.ReadOnly = true;
             this.txtEDIVer.Size = new System.Drawing.Size(55, 21);
@@ -268,7 +267,7 @@
             // lblPsychiatry
             // 
             this.lblPsychiatry.Font = new System.Drawing.Font("굴림", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.lblPsychiatry.Location = new System.Drawing.Point(131, 178);
+            this.lblPsychiatry.Location = new System.Drawing.Point(64, 204);
             this.lblPsychiatry.Name = "lblPsychiatry";
             this.lblPsychiatry.Size = new System.Drawing.Size(70, 23);
             this.lblPsychiatry.TabIndex = 25;
@@ -278,10 +277,10 @@
             // txtOkDnoPHY
             // 
             this.txtOkDnoPHY.Font = new System.Drawing.Font("돋움체", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.txtOkDnoPHY.Location = new System.Drawing.Point(203, 180);
+            this.txtOkDnoPHY.Location = new System.Drawing.Point(136, 206);
             this.txtOkDnoPHY.Name = "txtOkDnoPHY";
             this.txtOkDnoPHY.ReadOnly = true;
-            this.txtOkDnoPHY.Size = new System.Drawing.Size(281, 21);
+            this.txtOkDnoPHY.Size = new System.Drawing.Size(261, 21);
             this.txtOkDnoPHY.TabIndex = 26;
             this.txtOkDnoPHY.TabStop = false;
             this.txtOkDnoPHY.Text = "999999999999999999999999999999999999";
@@ -290,7 +289,7 @@
             // txtPHYVer
             // 
             this.txtPHYVer.Font = new System.Drawing.Font("돋움체", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.txtPHYVer.Location = new System.Drawing.Point(485, 180);
+            this.txtPHYVer.Location = new System.Drawing.Point(398, 206);
             this.txtPHYVer.Name = "txtPHYVer";
             this.txtPHYVer.ReadOnly = true;
             this.txtPHYVer.Size = new System.Drawing.Size(55, 21);
@@ -302,7 +301,7 @@
             // lblDrg
             // 
             this.lblDrg.Font = new System.Drawing.Font("굴림", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.lblDrg.Location = new System.Drawing.Point(131, 200);
+            this.lblDrg.Location = new System.Drawing.Point(64, 226);
             this.lblDrg.Name = "lblDrg";
             this.lblDrg.Size = new System.Drawing.Size(70, 23);
             this.lblDrg.TabIndex = 28;
@@ -312,10 +311,10 @@
             // txtOkDnoDRG
             // 
             this.txtOkDnoDRG.Font = new System.Drawing.Font("돋움체", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.txtOkDnoDRG.Location = new System.Drawing.Point(203, 202);
+            this.txtOkDnoDRG.Location = new System.Drawing.Point(136, 228);
             this.txtOkDnoDRG.Name = "txtOkDnoDRG";
             this.txtOkDnoDRG.ReadOnly = true;
-            this.txtOkDnoDRG.Size = new System.Drawing.Size(281, 21);
+            this.txtOkDnoDRG.Size = new System.Drawing.Size(261, 21);
             this.txtOkDnoDRG.TabIndex = 29;
             this.txtOkDnoDRG.TabStop = false;
             this.txtOkDnoDRG.Text = "999999999999999999999999999999999999";
@@ -324,7 +323,7 @@
             // txtDRGVer
             // 
             this.txtDRGVer.Font = new System.Drawing.Font("돋움체", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.txtDRGVer.Location = new System.Drawing.Point(485, 202);
+            this.txtDRGVer.Location = new System.Drawing.Point(398, 228);
             this.txtDRGVer.Name = "txtDRGVer";
             this.txtDRGVer.ReadOnly = true;
             this.txtDRGVer.Size = new System.Drawing.Size(55, 21);
@@ -336,7 +335,7 @@
             // lblHemodialysis
             // 
             this.lblHemodialysis.Font = new System.Drawing.Font("굴림", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.lblHemodialysis.Location = new System.Drawing.Point(131, 222);
+            this.lblHemodialysis.Location = new System.Drawing.Point(64, 248);
             this.lblHemodialysis.Name = "lblHemodialysis";
             this.lblHemodialysis.Size = new System.Drawing.Size(70, 23);
             this.lblHemodialysis.TabIndex = 31;
@@ -346,10 +345,10 @@
             // txtOkDnoBlood
             // 
             this.txtOkDnoBlood.Font = new System.Drawing.Font("돋움체", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.txtOkDnoBlood.Location = new System.Drawing.Point(203, 224);
+            this.txtOkDnoBlood.Location = new System.Drawing.Point(136, 250);
             this.txtOkDnoBlood.Name = "txtOkDnoBlood";
             this.txtOkDnoBlood.ReadOnly = true;
-            this.txtOkDnoBlood.Size = new System.Drawing.Size(281, 21);
+            this.txtOkDnoBlood.Size = new System.Drawing.Size(261, 21);
             this.txtOkDnoBlood.TabIndex = 32;
             this.txtOkDnoBlood.TabStop = false;
             this.txtOkDnoBlood.Text = "999999999999999999999999999999999999";
@@ -358,7 +357,7 @@
             // txtBloodVer
             // 
             this.txtBloodVer.Font = new System.Drawing.Font("돋움체", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.txtBloodVer.Location = new System.Drawing.Point(485, 224);
+            this.txtBloodVer.Location = new System.Drawing.Point(398, 250);
             this.txtBloodVer.Name = "txtBloodVer";
             this.txtBloodVer.ReadOnly = true;
             this.txtBloodVer.Size = new System.Drawing.Size(55, 21);
@@ -370,7 +369,7 @@
             // lblDental
             // 
             this.lblDental.Font = new System.Drawing.Font("굴림", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.lblDental.Location = new System.Drawing.Point(568, 156);
+            this.lblDental.Location = new System.Drawing.Point(481, 182);
             this.lblDental.Name = "lblDental";
             this.lblDental.Size = new System.Drawing.Size(70, 23);
             this.lblDental.TabIndex = 34;
@@ -380,10 +379,10 @@
             // txtOkDnoDENT
             // 
             this.txtOkDnoDENT.Font = new System.Drawing.Font("돋움체", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.txtOkDnoDENT.Location = new System.Drawing.Point(636, 158);
+            this.txtOkDnoDENT.Location = new System.Drawing.Point(549, 184);
             this.txtOkDnoDENT.Name = "txtOkDnoDENT";
             this.txtOkDnoDENT.ReadOnly = true;
-            this.txtOkDnoDENT.Size = new System.Drawing.Size(281, 21);
+            this.txtOkDnoDENT.Size = new System.Drawing.Size(261, 21);
             this.txtOkDnoDENT.TabIndex = 35;
             this.txtOkDnoDENT.TabStop = false;
             this.txtOkDnoDENT.Text = "999999999999999999999999999999999999";
@@ -392,7 +391,7 @@
             // txtDENTVer
             // 
             this.txtDENTVer.Font = new System.Drawing.Font("돋움체", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.txtDENTVer.Location = new System.Drawing.Point(918, 158);
+            this.txtDENTVer.Location = new System.Drawing.Point(811, 184);
             this.txtDENTVer.Name = "txtDENTVer";
             this.txtDENTVer.ReadOnly = true;
             this.txtDENTVer.Size = new System.Drawing.Size(55, 21);
@@ -404,7 +403,7 @@
             // lblOrientalMedicine
             // 
             this.lblOrientalMedicine.Font = new System.Drawing.Font("굴림", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.lblOrientalMedicine.Location = new System.Drawing.Point(568, 178);
+            this.lblOrientalMedicine.Location = new System.Drawing.Point(481, 204);
             this.lblOrientalMedicine.Name = "lblOrientalMedicine";
             this.lblOrientalMedicine.Size = new System.Drawing.Size(70, 23);
             this.lblOrientalMedicine.TabIndex = 37;
@@ -414,10 +413,10 @@
             // txtOkDnoHAN
             // 
             this.txtOkDnoHAN.Font = new System.Drawing.Font("돋움체", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.txtOkDnoHAN.Location = new System.Drawing.Point(636, 180);
+            this.txtOkDnoHAN.Location = new System.Drawing.Point(549, 206);
             this.txtOkDnoHAN.Name = "txtOkDnoHAN";
             this.txtOkDnoHAN.ReadOnly = true;
-            this.txtOkDnoHAN.Size = new System.Drawing.Size(281, 21);
+            this.txtOkDnoHAN.Size = new System.Drawing.Size(261, 21);
             this.txtOkDnoHAN.TabIndex = 38;
             this.txtOkDnoHAN.TabStop = false;
             this.txtOkDnoHAN.Text = "999999999999999999999999999999999999";
@@ -426,7 +425,7 @@
             // txtHANVer
             // 
             this.txtHANVer.Font = new System.Drawing.Font("돋움체", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.txtHANVer.Location = new System.Drawing.Point(918, 180);
+            this.txtHANVer.Location = new System.Drawing.Point(811, 206);
             this.txtHANVer.Name = "txtHANVer";
             this.txtHANVer.ReadOnly = true;
             this.txtHANVer.Size = new System.Drawing.Size(55, 21);
@@ -438,7 +437,7 @@
             // lblNursing
             // 
             this.lblNursing.Font = new System.Drawing.Font("굴림", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.lblNursing.Location = new System.Drawing.Point(568, 200);
+            this.lblNursing.Location = new System.Drawing.Point(481, 226);
             this.lblNursing.Name = "lblNursing";
             this.lblNursing.Size = new System.Drawing.Size(70, 23);
             this.lblNursing.TabIndex = 40;
@@ -448,10 +447,10 @@
             // txtOkDnoYOYANG
             // 
             this.txtOkDnoYOYANG.Font = new System.Drawing.Font("돋움체", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.txtOkDnoYOYANG.Location = new System.Drawing.Point(636, 202);
+            this.txtOkDnoYOYANG.Location = new System.Drawing.Point(549, 228);
             this.txtOkDnoYOYANG.Name = "txtOkDnoYOYANG";
             this.txtOkDnoYOYANG.ReadOnly = true;
-            this.txtOkDnoYOYANG.Size = new System.Drawing.Size(281, 21);
+            this.txtOkDnoYOYANG.Size = new System.Drawing.Size(261, 21);
             this.txtOkDnoYOYANG.TabIndex = 41;
             this.txtOkDnoYOYANG.TabStop = false;
             this.txtOkDnoYOYANG.Text = "999999999999999999999999999999999999";
@@ -460,7 +459,7 @@
             // txtYOYANGVer
             // 
             this.txtYOYANGVer.Font = new System.Drawing.Font("돋움체", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.txtYOYANGVer.Location = new System.Drawing.Point(918, 202);
+            this.txtYOYANGVer.Location = new System.Drawing.Point(811, 228);
             this.txtYOYANGVer.Name = "txtYOYANGVer";
             this.txtYOYANGVer.ReadOnly = true;
             this.txtYOYANGVer.Size = new System.Drawing.Size(55, 21);
@@ -472,7 +471,7 @@
             // lblRehabilitation
             // 
             this.lblRehabilitation.Font = new System.Drawing.Font("굴림", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.lblRehabilitation.Location = new System.Drawing.Point(568, 222);
+            this.lblRehabilitation.Location = new System.Drawing.Point(481, 248);
             this.lblRehabilitation.Name = "lblRehabilitation";
             this.lblRehabilitation.Size = new System.Drawing.Size(70, 23);
             this.lblRehabilitation.TabIndex = 43;
@@ -482,10 +481,10 @@
             // txtOkDnoPaCare
             // 
             this.txtOkDnoPaCare.Font = new System.Drawing.Font("돋움체", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.txtOkDnoPaCare.Location = new System.Drawing.Point(636, 224);
+            this.txtOkDnoPaCare.Location = new System.Drawing.Point(549, 250);
             this.txtOkDnoPaCare.Name = "txtOkDnoPaCare";
             this.txtOkDnoPaCare.ReadOnly = true;
-            this.txtOkDnoPaCare.Size = new System.Drawing.Size(281, 21);
+            this.txtOkDnoPaCare.Size = new System.Drawing.Size(261, 21);
             this.txtOkDnoPaCare.TabIndex = 44;
             this.txtOkDnoPaCare.TabStop = false;
             this.txtOkDnoPaCare.Text = "999999999999999999999999999999999999";
@@ -494,7 +493,7 @@
             // txtPaCareVer
             // 
             this.txtPaCareVer.Font = new System.Drawing.Font("돋움체", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.txtPaCareVer.Location = new System.Drawing.Point(918, 224);
+            this.txtPaCareVer.Location = new System.Drawing.Point(811, 250);
             this.txtPaCareVer.Name = "txtPaCareVer";
             this.txtPaCareVer.ReadOnly = true;
             this.txtPaCareVer.Size = new System.Drawing.Size(55, 21);
@@ -506,35 +505,17 @@
             // lblClaimAgency
             // 
             this.lblClaimAgency.Font = new System.Drawing.Font("굴림", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.lblClaimAgency.Location = new System.Drawing.Point(24, 260);
+            this.lblClaimAgency.Location = new System.Drawing.Point(24, 303);
             this.lblClaimAgency.Name = "lblClaimAgency";
             this.lblClaimAgency.Size = new System.Drawing.Size(108, 23);
             this.lblClaimAgency.TabIndex = 46;
             this.lblClaimAgency.Text = "Ⅶ.대행청구 기관";
             this.lblClaimAgency.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // cboREDEM
-            // 
-            this.cboREDEM.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboREDEM.FormattingEnabled = true;
-            this.cboREDEM.Location = new System.Drawing.Point(132, 264);
-            this.cboREDEM.Name = "cboREDEM";
-            this.cboREDEM.Size = new System.Drawing.Size(166, 20);
-            this.cboREDEM.TabIndex = 47;
-            // 
-            // btnOtherID
-            // 
-            this.btnOtherID.Location = new System.Drawing.Point(314, 262);
-            this.btnOtherID.Name = "btnOtherID";
-            this.btnOtherID.Size = new System.Drawing.Size(75, 23);
-            this.btnOtherID.TabIndex = 48;
-            this.btnOtherID.Text = "신규등록";
-            this.btnOtherID.UseVisualStyleBackColor = true;
-            // 
             // lblPrintVersion
             // 
             this.lblPrintVersion.Font = new System.Drawing.Font("굴림", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.lblPrintVersion.Location = new System.Drawing.Point(483, 274);
+            this.lblPrintVersion.Location = new System.Drawing.Point(604, 343);
             this.lblPrintVersion.Name = "lblPrintVersion";
             this.lblPrintVersion.Size = new System.Drawing.Size(166, 23);
             this.lblPrintVersion.TabIndex = 49;
@@ -546,17 +527,25 @@
             // 
             this.cboPrtVer.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboPrtVer.FormattingEnabled = true;
-            this.cboPrtVer.Location = new System.Drawing.Point(650, 275);
+            this.cboPrtVer.Location = new System.Drawing.Point(771, 344);
             this.cboPrtVer.Name = "cboPrtVer";
             this.cboPrtVer.Size = new System.Drawing.Size(99, 20);
             this.cboPrtVer.TabIndex = 50;
             this.cboPrtVer.Visible = false;
             // 
+            // txtREDEM
+            // 
+            this.txtREDEM.Location = new System.Drawing.Point(136, 304);
+            this.txtREDEM.Name = "txtREDEM";
+            this.txtREDEM.Size = new System.Drawing.Size(164, 21);
+            this.txtREDEM.TabIndex = 51;
+            // 
             // ADD9902E
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1006, 375);
+            this.ClientSize = new System.Drawing.Size(908, 366);
+            this.Controls.Add(this.txtREDEM);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.lblHospitalCode);
             this.Controls.Add(this.txtHosId);
@@ -601,8 +590,6 @@
             this.Controls.Add(this.txtOkDnoPaCare);
             this.Controls.Add(this.txtPaCareVer);
             this.Controls.Add(this.lblClaimAgency);
-            this.Controls.Add(this.cboREDEM);
-            this.Controls.Add(this.btnOtherID);
             this.Controls.Add(this.lblPrintVersion);
             this.Controls.Add(this.cboPrtVer);
             this.Font = new System.Drawing.Font("굴림", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
@@ -664,10 +651,9 @@
         private System.Windows.Forms.TextBox txtOkDnoPaCare;
         private System.Windows.Forms.TextBox txtPaCareVer;
         private System.Windows.Forms.Label lblClaimAgency;
-        private System.Windows.Forms.ComboBox cboREDEM;
-        private System.Windows.Forms.Button btnOtherID;
         private System.Windows.Forms.Label lblPrintVersion;
         private System.Windows.Forms.ComboBox cboPrtVer;
+        private System.Windows.Forms.TextBox txtREDEM;
     }
 }
 
