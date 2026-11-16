@@ -1130,37 +1130,64 @@ namespace ADD0390E
             }
             if (demno == "") return;
 
-            // 접수번호를 구한다.
-            if (p_k2.Substring(0, 1) == "6")
-            {
-                sql = "";
-                sql = sql + Environment.NewLine + "SELECT TOP 1 X.CNECTNO ";
-                sql = sql + Environment.NewLine + "  FROM TIE_N0102 X ";
-                sql = sql + Environment.NewLine + " WHERE X.DEMNO='" + demno + "' ";
-                sql = sql + Environment.NewLine + " ORDER BY X.CNECTDD DESC ";
-            }
-            else if (p_k2.Substring(0, 1) == "5")
-            {
-                sql = "";
-                sql = sql + Environment.NewLine + "SELECT TOP 1 X.ACCNO AS CNECTNO ";
-                sql = sql + Environment.NewLine + "  FROM TIE_I010 X ";
-                sql = sql + Environment.NewLine + " WHERE X.DEMNO='" + demno + "' ";
-                sql = sql + Environment.NewLine + " ORDER BY X.REPDT DESC ";
-            }
-            else
-            {
-                sql = "";
-                sql = sql + Environment.NewLine + "SELECT TOP 1 X.CNECTNO ";
-                sql = sql + Environment.NewLine + "  FROM TIE_F0102 X ";
-                sql = sql + Environment.NewLine + " WHERE X.DEMNO='" + demno + "' ";
-                sql = sql + Environment.NewLine + " ORDER BY X.CNECTDD DESC ";
-            }
             string cnecno = "";
-            MetroLib.SqlHelper.GetDataReader(sql, p_conn, p_tran, delegate(OleDbDataReader reader){
-                cnecno = reader["CNECTNO"].ToString();
-                return false;
-            });
+            List<Object> para = new List<Object>();
+
+            // 2026.11.13 WOOIL - 보험·보호는 TIE_H010의 접수번호를 우선 사용한다.
+            if (p_k2.StartsWith("2") || p_k2.StartsWith("3"))
+            {
+                sql = "";
+                sql += Environment.NewLine + "SELECT CNECNO ";
+                sql += Environment.NewLine + "  FROM TIE_H010 ";
+                sql += Environment.NewLine + " WHERE DEMNO = ? ";
+
+                para.Clear();
+                para.Add(demno);
+
+                MetroLib.SqlHelper.GetDataReader(sql, para, p_conn, p_tran,
+                    delegate(OleDbDataReader reader)
+                    {
+                        cnecno = reader["CNECNO"].ToString();
+                        return MetroLib.SqlHelper.BREAK;
+                    });
+            }
+
+
+            // 접수번호를 구한다.(TIE_H010의 접수번호 필드에 값이 없으면.)
+            if (cnecno == "")
+            {
+                if (p_k2.Substring(0, 1) == "6")
+                {
+                    sql = "";
+                    sql = sql + Environment.NewLine + "SELECT TOP 1 X.CNECTNO ";
+                    sql = sql + Environment.NewLine + "  FROM TIE_N0102 X ";
+                    sql = sql + Environment.NewLine + " WHERE X.DEMNO='" + demno + "' ";
+                    sql = sql + Environment.NewLine + " ORDER BY X.CNECTDD DESC ";
+                }
+                else if (p_k2.Substring(0, 1) == "5")
+                {
+                    sql = "";
+                    sql = sql + Environment.NewLine + "SELECT TOP 1 X.ACCNO AS CNECTNO ";
+                    sql = sql + Environment.NewLine + "  FROM TIE_I010 X ";
+                    sql = sql + Environment.NewLine + " WHERE X.DEMNO='" + demno + "' ";
+                    sql = sql + Environment.NewLine + " ORDER BY X.REPDT DESC ";
+                }
+                else
+                {
+                    sql = "";
+                    sql = sql + Environment.NewLine + "SELECT TOP 1 X.CNECTNO ";
+                    sql = sql + Environment.NewLine + "  FROM TIE_F0102 X ";
+                    sql = sql + Environment.NewLine + " WHERE X.DEMNO='" + demno + "' ";
+                    sql = sql + Environment.NewLine + " ORDER BY X.CNECTDD DESC ";
+                }
+                MetroLib.SqlHelper.GetDataReader(sql, p_conn, p_tran, delegate(OleDbDataReader reader)
+                {
+                    cnecno = reader["CNECTNO"].ToString();
+                    return false;
+                });
+            }
             p_cnecno = cnecno;
+
             int int_eprtno = 0;
             int.TryParse(eprtno, out int_eprtno);
             // 접수증에서 없으면 심결에서 찾아본다.
@@ -1207,12 +1234,13 @@ namespace ADD0390E
             if (eprtno == "") return; // 명일련번호가 없으면 중지.
 
             // 반송사유를 구한다.
+            string sauDemno = demno.Length > 10 ? demno.Substring(0, 10) : demno;
             if (p_k2.Substring(0, 1) == "6"){
                 sql = "";
                 sql = sql + Environment.NewLine + "SELECT JJRMK ";
                 sql = sql + Environment.NewLine + "  FROM TIE_N0203 ";
                 sql = sql + Environment.NewLine + " WHERE CNECNO='" + p_cnecno + "' ";
-                sql = sql + Environment.NewLine + "   AND DEMNO='" + demno + "' ";
+                sql = sql + Environment.NewLine + "   AND DEMNO='" + sauDemno + "' ";
                 sql = sql + Environment.NewLine + "   AND CONVERT(NUMERIC,EPRTNO)=" + int_eprtno.ToString() + " ";
                 sql = sql + Environment.NewLine + "   AND LNO=0 ";
             }
@@ -1222,7 +1250,7 @@ namespace ADD0390E
                 sql = sql + Environment.NewLine + "SELECT JJRMK ";
                 sql = sql + Environment.NewLine + "  FROM TIE_F0203_062 ";
                 sql = sql + Environment.NewLine + " WHERE CNECNO='" + p_cnecno + "' ";
-                sql = sql + Environment.NewLine + "   AND DEMNO='" + demno + "' ";
+                sql = sql + Environment.NewLine + "   AND DEMNO='" + sauDemno + "' ";
                 sql = sql + Environment.NewLine + "   AND CONVERT(NUMERIC,EPRTNO)=" + int_eprtno.ToString() + " ";
                 sql = sql + Environment.NewLine + "   AND LNO=0 ";
             }
@@ -1232,7 +1260,7 @@ namespace ADD0390E
                 sql = sql + Environment.NewLine + "SELECT JJRMK ";
                 sql = sql + Environment.NewLine + "  FROM TIE_F0603_062 ";
                 sql = sql + Environment.NewLine + " WHERE CNECNO='" + p_cnecno + "' ";
-                sql = sql + Environment.NewLine + "   AND DEMNO='" + demno + "' ";
+                sql = sql + Environment.NewLine + "   AND DEMNO='" + sauDemno + "' ";
                 sql = sql + Environment.NewLine + "   AND CONVERT(NUMERIC,EPRTNO)=" + int_eprtno.ToString() + " ";
                 sql = sql + Environment.NewLine + "   AND LNO=0 ";
             }
