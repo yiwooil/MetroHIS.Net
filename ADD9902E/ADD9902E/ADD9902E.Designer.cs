@@ -61,10 +61,9 @@
             this.txtOkDnoPaCare = new System.Windows.Forms.TextBox();
             this.txtPaCareVer = new System.Windows.Forms.TextBox();
             this.lblClaimAgency = new System.Windows.Forms.Label();
-            this.cboREDEM = new System.Windows.Forms.ComboBox();
-            this.btnOtherID = new System.Windows.Forms.Button();
             this.lblPrintVersion = new System.Windows.Forms.Label();
             this.cboPrtVer = new System.Windows.Forms.ComboBox();
+            this.txtREDEM = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // btnSave
@@ -73,7 +72,7 @@
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 2;
-            this.btnSave.Text = "저장(S)";
+            this.btnSave.Text = "저장";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
@@ -506,30 +505,12 @@
             // lblClaimAgency
             // 
             this.lblClaimAgency.Font = new System.Drawing.Font("굴림", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.lblClaimAgency.Location = new System.Drawing.Point(24, 301);
+            this.lblClaimAgency.Location = new System.Drawing.Point(24, 303);
             this.lblClaimAgency.Name = "lblClaimAgency";
             this.lblClaimAgency.Size = new System.Drawing.Size(108, 23);
             this.lblClaimAgency.TabIndex = 46;
             this.lblClaimAgency.Text = "Ⅶ.대행청구 기관";
             this.lblClaimAgency.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // cboREDEM
-            // 
-            this.cboREDEM.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboREDEM.FormattingEnabled = true;
-            this.cboREDEM.Location = new System.Drawing.Point(132, 305);
-            this.cboREDEM.Name = "cboREDEM";
-            this.cboREDEM.Size = new System.Drawing.Size(166, 20);
-            this.cboREDEM.TabIndex = 47;
-            // 
-            // btnOtherID
-            // 
-            this.btnOtherID.Location = new System.Drawing.Point(314, 303);
-            this.btnOtherID.Name = "btnOtherID";
-            this.btnOtherID.Size = new System.Drawing.Size(75, 23);
-            this.btnOtherID.TabIndex = 48;
-            this.btnOtherID.Text = "신규등록";
-            this.btnOtherID.UseVisualStyleBackColor = true;
             // 
             // lblPrintVersion
             // 
@@ -552,11 +533,19 @@
             this.cboPrtVer.TabIndex = 50;
             this.cboPrtVer.Visible = false;
             // 
+            // txtREDEM
+            // 
+            this.txtREDEM.Location = new System.Drawing.Point(136, 304);
+            this.txtREDEM.Name = "txtREDEM";
+            this.txtREDEM.Size = new System.Drawing.Size(164, 21);
+            this.txtREDEM.TabIndex = 51;
+            // 
             // ADD9902E
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(908, 366);
+            this.Controls.Add(this.txtREDEM);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.lblHospitalCode);
             this.Controls.Add(this.txtHosId);
@@ -601,8 +590,6 @@
             this.Controls.Add(this.txtOkDnoPaCare);
             this.Controls.Add(this.txtPaCareVer);
             this.Controls.Add(this.lblClaimAgency);
-            this.Controls.Add(this.cboREDEM);
-            this.Controls.Add(this.btnOtherID);
             this.Controls.Add(this.lblPrintVersion);
             this.Controls.Add(this.cboPrtVer);
             this.Font = new System.Drawing.Font("굴림", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
@@ -664,10 +651,9 @@
         private System.Windows.Forms.TextBox txtOkDnoPaCare;
         private System.Windows.Forms.TextBox txtPaCareVer;
         private System.Windows.Forms.Label lblClaimAgency;
-        private System.Windows.Forms.ComboBox cboREDEM;
-        private System.Windows.Forms.Button btnOtherID;
         private System.Windows.Forms.Label lblPrintVersion;
         private System.Windows.Forms.ComboBox cboPrtVer;
+        private System.Windows.Forms.TextBox txtREDEM;
     }
 }
 
